@@ -5,7 +5,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#if defined(DARWIN)
+#include <sys/malloc.h>
+#else
 #include <malloc.h>
+#endif
 #include <iconv.h>
 
 #ifdef _USE_XFT
