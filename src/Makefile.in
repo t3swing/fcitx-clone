@@ -66,6 +66,8 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 AMTAR = @AMTAR@
 AWK = @AWK@
 CC = @CC@
+CXX = @CXX@
+CYGPATH_W = @CYGPATH_W@
 DEPDIR = @DEPDIR@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 PACKAGE = @PACKAGE@
@@ -78,9 +80,11 @@ XFT_LIBS = @XFT_LIBS@
 X_CFLAGS = @X_CFLAGS@
 X_LIBS = @X_LIBS@
 am__include = @am__include@
+am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
 install_sh = @install_sh@
-bin_PROGRAMS = fcitx
+mkdir_p = @mkdir_p@
+bin_PROGRAMS = fcitx fcitx.xft
 AM_CFLAGS = -O2 -fno-strength-reduce
 INCLUDES = -I$(top_srcdir)/lib -I$(top_srcdir)/xpm
 fcitx_SOURCES = \
@@ -92,10 +96,27 @@ fcitx_SOURCES = \
   version.h wbx.c wbx.h xim.c xim.h
 
 fcitx_LDADD = ../lib/libXimd.a
+
+fcitx_xft_SOURCES = \
+  IC.c IC.h ime.c ime.h InputWindow.c InputWindow.h KeyList.c \
+  KeyList.h main.c main.h MainWindow.c MainWindow.h \
+  MyErrorsHandlers.c MyErrorsHandlers.h punc.c punc.h py.c PYFA.c \
+  PYFA.h py.h pyMapTable.c pyMapTable.h pyParser.c pyParser.h \
+  SetLocale.c SetLocale.h sp.c sp.h tools.c tools.h ui.c ui.h \
+  version.h wbx.c wbx.h xim.c xim.h
+
+fcitx_xft_OBJECTS = \
+  IC.o ime.o KeyList.o main.o MainWindow.o MyErrorsHandlers.o \
+  punc.o PYFA.o pyMapTable.o pyParser.o SetLocale.o sp.o xim.o \
+  InputWindow.xft.o py.xft.o tools.xft.o ui.xft.o wbx.xft.o
+
+fcitx_xft_LDADD = ../lib/libXimd.a
+fcitx_xft_AM_CFLAGS = ${CFLAGS} ${XFT_CFLAGS}
+fcitx_xft_LDFLAGS = ${LIBS} ${XFT_LIBS}
 subdir = src
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = version.h
-bin_PROGRAMS = fcitx$(EXEEXT)
+bin_PROGRAMS = fcitx$(EXEEXT) fcitx.xft$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
 am_fcitx_OBJECTS = IC.$(OBJEXT) ime.$(OBJEXT) InputWindow.$(OBJEXT) \
@@ -107,6 +128,7 @@ am_fcitx_OBJECTS = IC.$(OBJEXT) ime.$(OBJEXT) InputWindow.$(OBJEXT) \
 fcitx_OBJECTS = $(am_fcitx_OBJECTS)
 fcitx_DEPENDENCIES = ../lib/libXimd.a
 fcitx_LDFLAGS =
+fcitx_xft_DEPENDENCIES = ../lib/libXimd.a
 
 DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
@@ -171,6 +193,9 @@ clean-binPROGRAMS:
 fcitx$(EXEEXT): $(fcitx_OBJECTS) $(fcitx_DEPENDENCIES) 
 	@rm -f fcitx$(EXEEXT)
 	$(LINK) $(fcitx_LDFLAGS) $(fcitx_OBJECTS) $(fcitx_LDADD) $(LIBS)
+fcitx.xft$(EXEEXT): $(fcitx_xft_OBJECTS) $(fcitx_xft_DEPENDENCIES) 
+	@rm -f fcitx.xft$(EXEEXT)
+	$(LINK) $(fcitx_xft_LDFLAGS) $(fcitx_xft_OBJECTS) $(fcitx_xft_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT) core *.core
@@ -354,6 +379,9 @@ uninstall-am: uninstall-binPROGRAMS uninstall-info-am
 	mostlyclean-generic tags uninstall uninstall-am \
 	uninstall-binPROGRAMS uninstall-info-am
 
+
+%.xft.o: %.c
+	$(COMPILE) ${fcitx_xft_AM_CFLAGS} -c `test -f '$<' || echo '$(srcdir)/'`$< -o $@
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

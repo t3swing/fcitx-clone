@@ -4041,13 +4041,13 @@ else
 fi
 
 
-if test "x$have_xft" = "xtrue"; then
-  LIBS="$LIBS $X_LIBS $XFT_LIBS"
-  CFLAGS="$CFLAGS $X_CFLAGS $XFT_CFLAGS"
-else
+#if test "x$have_xft" = "xtrue"; then
+#  LIBS="$LIBS $X_LIBS $XFT_LIBS"
+#  CFLAGS="$CFLAGS $X_CFLAGS $XFT_CFLAGS"
+#else
   LIBS="$LIBS $X_LIBS -lX11"
   CFLAGS="$CFLAGS $X_CFLAGS"
-fi
+#fi
 
 CFLAGS="$CFLAGS -Wall -Werror"
 
