@@ -4,6 +4,9 @@
 AC_INIT(src/main.c)
 AM_INIT_AUTOMAKE(fcitx, 2.0.2)
 
+dnl Find out what type of system we are
+AC_CANONICAL_HOST
+
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
@@ -66,6 +69,21 @@ else
   CFLAGS="$CFLAGS $X_CFLAGS"
 fi
 
+AC_MSG_CHECKING(for OS-dependent information)
+case "$host" in
+  *-linux* )
+    AC_MSG_RESULT([Linux ($host) found.])
+    ;;
+  *-darwin* )
+    AC_MSG_RESULT([Darwin (Mac OS X) ($host) found.])
+    AC_DEFINE(DARWIN)
+    LIBS="$LIBS -liconv"
+    ;;
+  *)
+    AC_MSG_RESULT([Unknown system type $host found.])
+    ;;
+esac
+
 CFLAGS="$CFLAGS -Wall -Werror"
 
 # Checks for typedefs, structures, and compiler characteristics.
@@ -73,9 +91,8 @@ AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 
 # Checks for library functions.
-AC_FUNC_FORK                         # Not work: autoconf-2.13(redhat 7.2)
+AC_FUNC_FORK
 AC_FUNC_MALLOC
-#AC_CHECK_FUNCS([fork vfork malloc]) # Does work: redhat7.2
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([memmove memset mkdir setlocale strcasecmp strstr strtol])
 
