@@ -367,7 +367,7 @@ lei'nang'ti 类囊体
 niu'niu'nie'nie 扭扭捏捏
 lao'niu 老牛
 ren'ou 人偶
-ling'lue 领略
+ling'lve 领略
 ri'nei 日内
 ren'liu 人流
 lao'nian 老年
@@ -378,7 +378,7 @@ long'nv 龙女
 ri'ri 日日
 nei'ren 内人
 liu'lang'gou 流浪狗
-ling'lue'dao 领略到
+ling'lve'dao 领略到
 ren'lao'xin'bu'lao 人老心不老
 e'lang 恶狼
 e'luo'si'wa 俄罗斯娃
@@ -712,7 +712,7 @@ liang'liang'qiang'qiang 踉踉跄跄
 rou'nen 柔嫩
 ru'niu'fu'zhong 如牛负重
 lei'ren'yuan 类人猿
-lu'lue 掳掠
+lu'lve 掳掠
 ling'ling'xing'xing 零零星星
 li'luan 离乱
 ri'luo'xi'shan 日落西山
@@ -1176,7 +1176,7 @@ ling'ren'xin'wei 令人欣慰
 ling'ren'xin'zui 令人心醉
 lei'ru'yu'xia 泪如雨下
 ling'ren'zhu'mu 令人瞩目
-lue'ren'zhi'mei 掠人之美
+lve'ren'zhi'mei 掠人之美
 lin'ran'zheng'qi 凛然正气
 ling'ren'za'she 令人咋舌
 li'ri'zhong'tian 丽日中天
@@ -1435,7 +1435,7 @@ li'lu'jian 藜芦碱
 ruo'neng 若能
 re'lai 惹来
 luo'luo 落落
-ai'lue'te 艾略特
+ai'lve'te 艾略特
 rong'lu 荣禄
 li'lu 藜芦
 lan'lv'zao 蓝绿藻
@@ -1520,8 +1520,8 @@ e'ni 呃逆
 la'la'dui 啦啦队
 lian'luo 连络
 luo'lan 罗兰
-lue'lue 略略
-lue'lun 略论
+lve'lve 略略
+lve'lun 略论
 lei'ri 累日
 lei'luan 累卵
 nei'lian'dan'bai 内联蛋白
@@ -1919,7 +1919,7 @@ re'li'xue'liu 热力学流
 luo'rao'huan 螺绕环
 luo'lun'ci'tiao'jian 洛伦兹条件
 e'liu'xian'quan 扼流线圈
-lue'ru'she 掠入射
+lve'ru'she 掠入射
 luo'lan'yuan 罗兰圆
 rui'li'san'she 瑞利散射
 luo'lun'ci'yin'shu 洛伦兹因数
@@ -1992,7 +1992,7 @@ la'li'tou 瘌痢头
 ni'long'si 尼龙丝
 ni'long'sheng 尼龙绳
 la'lang'pei 拉郎配
-ru'lue'li 儒略历
+ru'lve'li 儒略历
 lv'ling'jin 绿领巾
 nv'er'qiang 女儿墙
 ren'lai'feng 人来疯
@@ -2656,7 +2656,7 @@ li'nu 貍奴
 ling'ren 领人
 ling'lai 领来
 ling'lai'ling'qu 领来领去
-ling'lue'chu 领略出
+ling'lve'chu 领略出
 ang'ang'zang'zang 肮肮脏脏
 liu'lao'lao 刘姥姥
 liu'lao'lao'jin'da'guan'yuan 刘姥姥进大观园
@@ -3217,7 +3217,7 @@ lang'ben'shi'tu 狼奔豕突
 ruo'bu'sheng'yi 弱不胜衣
 nian'bu'chu'liu 蔫不出溜
 lao'bu'shi 落不是
-lue'biao'cun'xin 略表寸心
+lve'biao'cun'xin 略表寸心
 luan'bing 乱兵
 liu'bian 溜边
 liao'biao'cun'xin 聊表寸心
@@ -3256,7 +3256,7 @@ rou'bo'gu'bing 肉薄骨并
 ru'bi'shi'zhi 如臂使指
 ruo'bu'hao'nong 弱不好弄
 nei'bu'jian'du 内部监督
-lue'biao'xin'yi 略表心意
+lve'biao'xin'yi 略表心意
 nei'bin 内宾
 nei'bu'shi'wu 内部事务
 nei'bu'kan'wu 内部刊物
@@ -3325,7 +3325,7 @@ li'bi 礼毕
 luan'beng 乱蹦
 lei'bing 累病
 lang'bei'tao'cuan 狼狈逃窜
-lue'biao 略表
+lve'biao 略表
 lao'biao 老表
 lei'bo 擂钵
 la'ba 拉巴
@@ -4256,7 +4256,7 @@ luan'chou 鸾俦
 lei'ci 诔词
 nu'chi 怒叱
 na'cu'xie'xi 拿粗挟细
-lue'cheng 略称
+lve'cheng 略称
 lv'ci'san'fan 屡次三番
 liang'ci'san'fan 两次三番
 li'chen 历陈
@@ -4294,7 +4294,7 @@ rong'ci'zhui'ju 冗词赘句
 lian'chuang 连闯
 li'cuo'qun'xiong 力挫群雄
 lian'cheng'yi'pian 连成一片
-lue'chang 略长
+lve'chang 略长
 ruan'cai 软材
 lei'ci 类次
 nong'cun'gai'ge 农村改革
@@ -4941,7 +4941,7 @@ li'chu 犁锄
 li'cheng 理成
 li'cha 理查
 li'cai'zhuan'jia 理财专家
-lue'chuan 略传
+lve'chuan 略传
 lei'ci'san'fan 累次三番
 lian'chu 连出
 lian'chi 连吃
@@ -5453,7 +5453,7 @@ lv'di 绿地
 lian'da 联大
 liang'dian 粮店
 ren'dao'zhu'yi 人道主义
-lue'duo 掠夺
+lve'duo 掠夺
 la'ding'mei'zhou 拉丁美洲
 lian'dai 连带
 lao'da'nan 老大难
@@ -5482,7 +5482,7 @@ lao'da'niang 老大娘
 lou'dian 漏电
 lie'dao 列岛
 lao'dong'ri 劳动日
-lue'dai 略带
+lve'dai 略带
 niu'dun 牛顿
 re'du 热度
 lao'da'ye 老大爷
@@ -5533,7 +5533,7 @@ ru'ding 入定
 lang'dang 浪荡
 ren'ding 人丁
 niu'dou 牛痘
-lue'duo'yu 略多于
+lve'duo'yu 略多于
 lao'diao'chong'tan 老调重弹
 ruan'ding'zi 软钉子
 liao'dong 撩动
@@ -5611,8 +5611,8 @@ niu'dao'ge'ji 牛刀割鸡
 ren'duo'zui'za 人多嘴杂
 ri'dong'yue'xi 日东月西
 ru'du'bu'pa'hu 乳犊不怕虎
-lue'da 略大
-lue'dai'suan'wei 略带酸味
+lve'da 略大
+lve'dai'suan'wei 略带酸味
 ao'du 凹度
 lv'dai 履带
 lan'ding 懒定
@@ -5635,10 +5635,10 @@ nian'du'ji'hua 年度计划
 re'dang'liang 热当量
 la'ding'yu 拉丁语
 lv'ding'er'xi 氯丁二烯
-lue'di'fei'xing 掠地飞行
+lve'di'fei'xing 掠地飞行
 la'ding'hua 拉丁化
 lu'duo 掳夺
-lue'duo'zhe 掠夺者
+lve'duo'zhe 掠夺者
 ai'dou 挨斗
 lin'dai 林带
 liu'dan 榴弹
@@ -5722,7 +5722,7 @@ ling'dao'dai'tou 领导带头
 ling'dao'di'wei 领导地位
 liang'di'fen'ju 两地分居
 ling'dao'fu'ze 领导负责
-lue'di'gong'cheng 掠地攻城
+lve'di'gong'cheng 掠地攻城
 li'dun 利钝
 li'dao 利导
 lao'dong'he'tong 劳动合同
@@ -5914,7 +5914,7 @@ a'ding'cheng 吖啶橙
 a'ding 吖啶
 luo'dan'ming 罗丹明
 lian'dan'bai 连蛋白
-lue'du 略读
+lve'du 略读
 nei'du'su 内毒素
 rou'du'gan'jun'su 肉毒杆菌素
 nei'de 内的
@@ -5987,7 +5987,7 @@ nao'de 闹得
 nan'da'nv'xiao 男大女小
 lian'dai'bao'zheng 连带保证
 ruo'dui 弱队
-lue'dong 略懂
+lve'dong 略懂
 li'dian 锂电
 luo'di'xiang 落地箱
 li'dian'chi 锂电池
@@ -6058,7 +6058,7 @@ nei'dan 内丹
 lan'diao 烂掉
 liao'dou 料斗
 niu'dao 牛刀
-lue'di 掠地
+lve'di 掠地
 ai'deng 矮凳
 lan'dui 篮队
 ai'diao 哀吊
@@ -6191,7 +6191,7 @@ an'dao 暗道
 liu'dui 留队
 neng'dao 能到
 ning'dong 凝冻
-lue'di 略低
+lve'di 略低
 leng'de 冷得
 li'duan 理短
 nong'diao 弄掉
@@ -6485,9 +6485,9 @@ li'dao 理到
 li'ding 理定
 li'de 理得
 li'dang'ru'ci 理当如此
-lue'da'yu 略大于
-lue'di'yu 略低于
-lue'duo 略夺
+lve'da'yu 略大于
+lve'di'yu 略低于
+lve'duo 略夺
 liao'dao 聊到
 liao'de 聊得
 ruan'dou 软兜
@@ -6749,7 +6749,7 @@ na'da'ding 拿大顶
 ao'de'sa 敖德萨
 liao'dou'er 料豆儿
 rao'dong'mai 桡动脉
-lue'duo'xing 掠夺性
+lve'duo'xing 掠夺性
 en'ding'er 摁钉儿
 lan'dian'ke 蓝点颏
 lao'dong'shou'duan 劳动手段
@@ -8785,7 +8785,7 @@ niu'guo 扭过
 nan'guai 难怪
 li'guo'xiang 李国祥
 ai'guo 爱国
-lue'guo 略过
+lve'guo 略过
 ren'gong'hu'xi 人工呼吸
 nian'geng 年庚
 ru'guo 入锅
@@ -8855,9 +8855,9 @@ lin'guo 邻国
 ren'gou 认购
 lao'gai 劳改
 luo'gu 锣鼓
-lue'gao'yu 略高于
+lve'gao'yu 略高于
 nian'guan 年关
-lue'guo 掠过
+lve'guo 掠过
 neng'gong'qiao'jiang 能工巧匠
 la'guan'xi 拉关系
 lei'guan 雷管
@@ -9059,7 +9059,7 @@ lai'gui 来归
 lan'guan'wu'li 滥官污吏
 lan'gu 懒骨
 liu'guang'yi'cai 流光溢彩
-lue'gao'yi'chou 略高一筹
+lve'gao'yi'chou 略高一筹
 lei'gong 雷汞
 li'gong'yuan'jiang 立功援奖
 li'guo'yi'min 利国益民
@@ -9360,7 +9360,7 @@ ri'gui 日晷
 ri'gong 日工
 liu'ge 留个
 neng'gei 能给
-lue'gao 略高
+lve'gao 略高
 leng'gui 冷柜
 nong'ge 弄个
 lie'gou 鬣狗
@@ -10199,7 +10199,7 @@ ling'jiao'mo'zuo'ji'tou 菱角磨作鸡头
 liu'jin'shuo'shi 流金铄石
 liu'jie'san'shi 六街三市
 lv'jin'lv'tui 旅进旅退
-lue'ji'yuan'qing 略迹原情
+lve'ji'yuan'qing 略迹原情
 lun'ji'jia'sui 沦肌浃髓
 nan'ji'bei'dou 南箕北斗
 nan'jin'dong'jian 南金东箭
@@ -10217,11 +10217,11 @@ an'ju'gong'cheng 安居工程
 an'jian'xian'suo 案件线索
 lian'jie'cong'jian 廉洁从检
 an'jian'cai'liao 案件材料
-lue'ju'chu'xing 略具雏形
-lue'ju 略具
+lve'ju'chu'xing 略具雏形
+lve'ju 略具
 lei'jin 累进
-lue'jia 略加
-lue'jian'yi'ban 略见一斑
+lve'jia 略加
+lve'jian'yi'ban 略见一斑
 luo'ji'tui'li 逻辑推理
 li'ju 力矩
 luo'ji'she'ji 逻辑设计
@@ -10873,7 +10873,7 @@ lian'ji'zhen'duan 联机诊断
 lin'jie'tong'lu'ce'shi'chan'sheng'fa 临界通路测试产生法
 ruan'jian'que'xian 软件缺陷
 ruan'jian'geng'gai'bao'gao 软件更改报告
-ruan'jian'rong'cuo'ce'lue 软件容错策略
+ruan'jian'rong'cuo'ce'lve 软件容错策略
 lu'jing'fen'xi 路径分析
 ren'ji'huan'jing'xi'tong 人机环境系统
 luo'ji'she'bei 逻辑设备
@@ -10987,7 +10987,7 @@ nai'ji 耐饥
 li'jia 里加
 luo'ju 螺距
 neng'ji 能级
-lue'jian 略见
+lve'jian 略见
 na'jia 那架
 leng'jin 冷噤
 rou'ji 柔技
@@ -11025,7 +11025,7 @@ liang'ji 量计
 ling'jin 领近
 lu'jia 炉架
 luan'ji 乱挤
-lue'ji 略记
+lve'ji 略记
 nan'ji 南祭
 nan'ju 难局
 neng'jian 能见
@@ -11288,8 +11288,8 @@ nian'jun 捻军
 li'jiu 梨酒
 lin'jun 淋菌
 li'jian'shi 理监事
-lue'jia'xiu'shi 略加修饰
-lue'jia'dian'zhui 略加点缀
+lve'jia'xiu'shi 略加修饰
+lve'jia'dian'zhui 略加点缀
 li'jing 粒径
 lei'ji'ta'ren 累及他人
 lei'ji'wu'gu 累及无辜
@@ -11999,7 +11999,7 @@ neng'kan'neng'ting 能看能听
 ai'ku 捱苦
 li'ke'da'xue 理科大学
 li'kui'xin'xu 理亏心虚
-lue'ke 略可
+lve'ke 略可
 nan'kui 赧愧
 ruan'kou'gai 软口盖
 lian'kong 连空
@@ -12752,7 +12752,7 @@ lian'ming 连名
 nei'ming 内明
 nuo'mi'ji 糯米鸡
 ning'mi 宁谧
-lue'mei 掠美
+lve'mei 掠美
 ai'min 哀愍
 ai'min 哀悯
 lian'mu 恋母
@@ -12789,7 +12789,7 @@ li'man'ke'ji'de 黎曼可积的
 lie'mei'ci'suan'fa 列梅兹算法
 ling'min'du'xin'xi 灵敏度信息
 nei'mo 内模
-lue'mian'su'du 掠面速度
+lve'mian'su'du 掠面速度
 la'mo'er'xuan'jin 拉莫尔旋进
 la'mo'er'pin'lv 拉莫尔频率
 liu'mi'du'shi'liang 流密度矢量
@@ -13347,7 +13347,7 @@ a'pa'qi 阿帕奇
 nian'piao 年票
 li'pai 力排
 ai'pu'sheng 爱普生
-lue'pian 略偏
+lve'pian 略偏
 ni'po'er 尼泊尔
 ling'pei 另配
 na'po'li 那坡里
@@ -13712,7 +13712,7 @@ lou'qi 漏气
 lie'qu 猎取
 lian'qiu 链球
 ling'qi'lu'zao 另起炉灶
-lue'qu 略去
+lve'qu 略去
 rui'qi 锐气
 lao'qu 捞取
 lei'qiu 垒球
@@ -13748,7 +13748,7 @@ lao'qi 老气
 ren'qi'zi'liu 任其自流
 liang'qi 两讫
 li'qun'suo'ju 离群索居
-lue'qu 掠取
+lve'qu 掠取
 lao'qi'heng'qiu 老气横秋
 ri'qing'yue'jie 日清月结
 lan'quan 揽权
@@ -14156,7 +14156,7 @@ an'quan'shi'bie 安全识别
 leng'qi'dong 冷启动
 an'quan'cao'zuo'xi'tong 安全操作系统
 an'quan'lei 安全类
-an'quan'ce'lue 安全策略
+an'quan'ce'lve 安全策略
 an'quan'wang'guan 安全网关
 lei'qiu'chang 垒球场
 an'quan'chu'kou 安全出口
@@ -14373,7 +14373,7 @@ li'qu 理去
 li'qu'xin'xu 理屈心虚
 li'qi 理起
 li'qi'lai 理起来
-lue'qu 略取
+lve'qu 略取
 liao'qi 聊起
 liao'qi'lai 聊起来
 lian'qi 连起
@@ -15013,7 +15013,7 @@ lu'si'shui'shou 鹿死谁手
 liu'sheng'ji 留声机
 liu'shi 流食
 liu'shen'wu'zhu 六神无主
-lue'sheng'yi'chou 略胜一筹
+lve'sheng'yi'chou 略胜一筹
 ni'si 溺死
 liang'shan'shan 亮闪闪
 rou'shi'xing 肉食性
@@ -15143,7 +15143,7 @@ long'sheng'jiu'zi 龙生九子
 lu'si'bu'ze'yin 鹿死不择音
 lv'shuang'zhi'jie 履霜之戒
 luan'shi'bu'di 卵石不敌
-lue'shi'zhi'wu 略识之无
+lve'shi'zhi'wu 略识之无
 na'san'ban'si 拿三搬四
 nan'shan'ke'yi 南山可移
 nei'sheng'wai'wang 内圣外王
@@ -15165,7 +15165,7 @@ e'shi'ju'xia 恶湿居下
 niu'sheng 牛绳
 lou'su 漏诉
 lian'sheng'cheng'hao 连声称好
-lue'shu 略述
+lve'shu 略述
 nan'shi 男式
 lun'shi 轮式
 nei'she 内设
@@ -15385,7 +15385,7 @@ ling'shu 零数
 li'shen'yang'ming 立身扬名
 li'shi'yi'su 离世异俗
 lao'suan 酪酸
-lue'shi'zhi'jian 略识之见
+lve'shi'zhi'jian 略识之见
 liang'shi'zheng'you 良师诤友
 luan'shi'zhi'yin 乱世之音
 nong'shui 浓睡
@@ -15664,7 +15664,7 @@ lian'she 连射
 luo'si 罗斯
 luo'su 罗素
 li'shi 力士
-lue'shi 略施
+lve'shi 略施
 lian'si'wei'guan 连丝微管
 ang'si 盎斯
 nei'shou'dan'bai 内收蛋白
@@ -15848,7 +15848,7 @@ lian'shen 连身
 ruan'shi 软式
 luo'shan 罗衫
 luo'san 罗伞
-lue'shuo 略说
+lve'shuo 略说
 e'shi 愕视
 lei'shu 类属
 an'shi'gao 安世高
@@ -16336,7 +16336,7 @@ ou'shu'pai 偶数排
 ou'shu'hao 偶数号
 le'shu 勒赎
 nin'shuo 您说
-lue'sha 掠杀
+lve'sha 掠杀
 ai'shang 捱上
 nian'shen'nian'gui 捻神捻鬼
 liang'shu 梁书
@@ -16348,8 +16348,8 @@ lv'shi 率师
 lv'shou'shi'ren 率兽食人
 li'shang 理上
 li'shi'guo 理事国
-lue'shu'da'yi 略述大意
-lue'sheng 略胜
+lve'shu'da'yi 略述大意
+lve'sheng 略胜
 liu'suan'ye 硫酸液
 liu'suan'gai 硫酸钙
 lei'shi 累事
@@ -16589,7 +16589,7 @@ lao'shi 牢实
 lian'shou 连手
 liang'se 亮色
 nan'shu 难属
-lue'shi 掠视
+lve'shi 掠视
 ran'she 蚺蛇
 ling'shu 领属
 nuo'shen 傩神
@@ -16746,7 +16746,7 @@ li'ti'ji'he 立体几何
 a'tu 阿土
 ou'tu 呕吐
 na'tou 那头
-lue'tong 略同
+lve'tong 略同
 lan'tan 篮坛
 lao'tai'po 老太婆
 liang'tai 凉台
@@ -16853,7 +16853,7 @@ lv'tiao 律条
 nai'tou 奶头
 lei'ting'wan'jun 雷霆万钧
 liang'tang'tang 亮堂堂
-lue'tu 略图
+lve'tu 略图
 ling'tang 令堂
 le'tao'tao 乐陶陶
 ni'ti 拟题
@@ -17271,7 +17271,7 @@ lai'te 赖特
 lao'tao 老饕
 lu'tang 炉膛
 luan'tu 乱图
-lue'tan 略谈
+lve'tan 略谈
 nan'te 南特
 ru'tao 褥套
 er'tang'di 二堂弟
@@ -17550,7 +17550,7 @@ ren'wu 任务
 na'wei 哪位
 lian'wo 连我
 li'wan 理完
-lue'wei 略微
+lve'wei 略微
 lun'wen 论文
 ren'wu'lan 任务栏
 ren'wu'liang 任务量
@@ -17574,7 +17574,7 @@ nuo'wo 挪窝
 e'wai 额外
 re'wo 惹我
 lao'wai 老外
-lue'wei 略为
+lve'wei 略为
 la'wo 拉我
 long'wen 龙文
 lian'wang 联网
@@ -18115,7 +18115,7 @@ liu'wan 留完
 ni'wen 逆温
 lun'wang'shi 沦亡史
 li'wu'chang'shi 理无常是
-lue'wei'hao'zhuan 略为好转
+lve'wei'hao'zhuan 略为好转
 niao'wu 鸟屋
 niao'wo'shi 鸟窝式
 liang'wan 晾完
@@ -18582,7 +18582,7 @@ li'xing 力行
 lian'xu'qu 连续区
 ruan'xian 软线
 lun'xing 轮形
-lue'xiao 略小
+lve'xiao 略小
 nei'xing 内行
 nei'xian'an 内酰胺
 lv'xing'he'tong 履行合同
@@ -18698,7 +18698,7 @@ liu'xue'ren'yuan 留学人员
 lai'xue 赖学
 li'xian 里弦
 li'xiang 里巷
-lue'xun 略逊
+lve'xun 略逊
 lang'xin 狼心
 lao'xia 捞虾
 lei'xiang 擂响
@@ -18892,8 +18892,8 @@ ou'xin 呕心
 nan'xing 男星
 nan'xing'hua 男性化
 ruan'xing 软性
-lue'xian 略显
-lue'xie 略写
+lve'xian 略显
+lve'xie 略写
 lian'xu'gong'yi 连续工艺
 lian'xu'pei'yang'wu 连续培养物
 lian'xu'pei'yang 连续培养
@@ -18996,7 +18996,7 @@ nai'xie 哪些
 ling'xu 另许
 ling'xun 另寻
 lian'xiao 连销
-lue'xiu 略修
+lve'xiu 略修
 liu'xiang 留香
 liu'xing'qu 流行曲
 ren'xiao'qi'da 人小气大
@@ -19012,7 +19012,7 @@ lu'xian'er 露馅儿
 lai'xiang 来想
 li'xian 蠡县
 ling'xian 灵县
-lue'xian 略嫌
+lve'xian 略嫌
 nei'xiong 内兄
 na'xiang 那项
 nai'xiong 乃兄
@@ -19488,7 +19488,7 @@ li'xue'shi 理学士
 li'xue'jia 理学家
 li'xue'yuan 理学院
 li'xue'bo'shi 理学博士
-lue'xun'yi'chou 略逊一筹
+lve'xun'yi'chou 略逊一筹
 li'xian'ti 粒腺体
 lian'xia 连下
 lian'xia'qu 连下去
@@ -19771,7 +19771,7 @@ ou'yuan 欧元
 li'ya'peng 李亚鹏
 lu'yin'peng 录音棚
 nan'yang 南阳
-lue'you 略有
+lve'you 略有
 ni'ya 尼亚
 ling'yi'hui'shi 另一回事
 nan'you 男友
@@ -19862,7 +19862,7 @@ liu'yue 六月
 lao'yan'guang 老眼光
 li'ya'jie 李亚捷
 lian'yao 炼药
-lue'you'chu'ru 略有出入
+lve'you'chu'ru 略有出入
 nai'yao'xing 耐药性
 nai'yao 耐药
 nan'you 难有
@@ -19879,7 +19879,7 @@ lie'yan'hong'chun 烈焰红唇
 ou'yu 偶遇
 lian'yi 涟漪
 e'yu'lei 鳄鱼泪
-lue'you'bu'tong 略有不同
+lve'you'bu'tong 略有不同
 na'yang'zuo 那样做
 na'yi'ke 那一刻
 na'yi'nian 那一年
@@ -20092,7 +20092,7 @@ lv'yin'chang 绿茵场
 lao'yi'ba 捞一把
 liu'you'yu'di 留有余地
 lv'you'di 旅游地
-lue'ying 掠影
+lve'ying 掠影
 lan'yao 拦腰
 nao'yi'xue 脑溢血
 lao'yi'tao 老一套
@@ -20172,7 +20172,7 @@ ren'yan'chou'mi 人烟稠密
 nuo'yi 挪移
 nan'yu'qi'chi 难于启齿
 long'yin'hu'xiao 龙吟虎啸
-lue'yu 略语
+lve'yu 略语
 ren'yi'dao'de 仁义道德
 rou'yu 肉欲
 ren'yang'ma'fan 人仰马翻
@@ -20598,7 +20598,7 @@ nan'yi'wang'huai 难以忘怀
 er'yue'fen 二月份
 ru'yang 汝阳
 lin'yi 临猗
-lue'yang 略阳
+lve'yang 略阳
 luo'yuan 罗源
 lin'yi 临邑
 long'yao 隆尧
@@ -20630,7 +20630,7 @@ er'yuan'xian 洱源县
 na'yong'xian 纳雍县
 an'yue'xian 安岳县
 lin'you'xian 麟游县
-lue'yang'xian 略阳县
+lve'yang'xian 略阳县
 lin'yi'xian 临猗县
 lin'yi'xian 临邑县
 lai'yang'xian 莱阳县
@@ -21370,9 +21370,9 @@ liang'yi 凉椅
 lei'yan'wang'wang 泪眼汪汪
 lv'yi 率意
 lang'ya 琅琊
-lue'you'suo'wen 略有所闻
-lue'yan'zhi 略言之
-lue'yu'biao 略语表
+lve'you'suo'wen 略有所闻
+lve'yan'zhi 略言之
+lve'yu'biao 略语表
 lei'yue'jing'nian 累月经年
 e'yin 讹音
 lian'you 连有
@@ -21836,7 +21836,7 @@ lv'zheng 律政
 e'zhang 鹅掌
 leng'zhan 冷战
 liu'zuo 留作
-lue'zuo 略作
+lve'zuo 略作
 na'zhe'ji'mao'dang'ling'jian 拿着鸡毛当令箭
 lei'zhui 累赘
 nv'zi'wu'cai'bian'shi'de 女子无才便是德
@@ -21881,7 +21881,7 @@ ao'zhan 鏖战
 lan'zhe 拦着
 nei'zai 内在
 lan'zhu 拦住
-lue'zhi'yi'er 略知一二
+lve'zhi'yi'er 略知一二
 nao'zhi 脑汁
 an'zhong 暗中
 na'zhi 那支
@@ -22199,7 +22199,7 @@ e'zui'qiang'jiu 恶醉强酒
 ren'zhen'xue'xi 认真学习
 li'zu'ben'zhi 立足本职
 lian'zao 连遭
-lue'zhi 略知
+lve'zhi 略知
 lun'zuo 轮作
 nan'zun'nv'bei 男尊女卑
 luo'zhi 罗致
@@ -22341,7 +22341,7 @@ liang'zi'li'xue 量子力学
 lin'zhen'mo'dao 临阵磨刀
 li'zi 李子
 leng'zhui 棱锥
-lue'zhi'pi'mao 略知皮毛
+lve'zhi'pi'mao 略知皮毛
 le'zhe 乐者
 lian'zu 敛足
 luo'zhi'ru'fei 落纸如飞
@@ -22738,7 +22738,7 @@ nan'zu 男足
 nan'zai 男仔
 lian'zhan 连战
 lian'zhuang 连庄
-lue'zhu 略注
+lve'zhu 略注
 lun'zhi 轮值
 nei'zhong 内中
 nei'zhuan 内转
@@ -23160,7 +23160,7 @@ ni'zhi 逆知
 ni'zhe 逆着
 ni'zhuan'er'jin 逆转而进
 an'zhu 庵主
-lue'zou 掠走
+lve'zou 掠走
 ai'zhe 捱着
 liang'zhu 梁柱
 liang'zhou 凉州
@@ -24786,7 +24786,7 @@ bo'en 伯恩
 bo'lao'niao 伯劳鸟
 bo'er 伯尔
 bu'lei'dui 布雷队
-bing'lue 兵略
+bing'lve 兵略
 bie'na 别拿
 bei'ren 孛人
 ba'le 把了
@@ -27381,7 +27381,7 @@ bi'hu 壁虎
 bei'fu 被服
 biao'hu'gong'ren 裱糊工人
 bei'hu'shi 被忽视
-bei'hu'lue'le 被忽略了
+bei'hu'lve'le 被忽略了
 bao'he'zhuang'tai 饱和状态
 bao'he'ji 饱和剂
 bai'he 白河
@@ -30959,7 +30959,7 @@ bing'qiao 冰橇
 bian'qian 便签
 bo'qia 博洽
 bai'quan'fei'sheng 百犬吠声
-bei'qin'lue'zhe 被侵略者
+bei'qin'lve'zhe 被侵略者
 bao'quan'sheng'yu 保全盛誉
 bao'qian'ling 鲍千灵
 bu'shuang 不爽
@@ -35638,7 +35638,7 @@ chi'ni 吃你
 cang'lin 仓廪
 cheng'nian'ren 成年人
 cun'ren 村人
-ce'lue 策略
+ce'lve 策略
 cheng'liang 乘凉
 cai'lu 财路
 cheng'ren'ban 成人版
@@ -35684,7 +35684,7 @@ cong'er 从而
 chu'lao'qian 出老千
 chi'ren'bu'tu'gu'tou 吃人不吐骨头
 chun'li 纯利
-cong'lue 从略
+cong'lve 从略
 chuan'ren 穿人
 chen'nian 陈年
 cong'rong'bu'po 从容不迫
@@ -35808,7 +35808,7 @@ ci'ri 次日
 chu'li 矗立
 can'liu 残留
 can'lian 残联
-cu'lue 粗略
+cu'lve 粗略
 chu'ru'jing 出入境
 chang'ren 常任
 chan'lian 蝉联
@@ -35896,7 +35896,7 @@ chao'ran'wu'wai 超然物外
 chu'nu 触怒
 cha'lu 茶炉
 chong'luan'die'zhang 重峦叠嶂
-cai'lue 才略
+cai'lve 才略
 chi'lao'bao 吃劳保
 chu'lei 畜类
 chi'leng 齿冷
@@ -35913,7 +35913,7 @@ ci'rang 辞让
 chi'ling 饬令
 chu'ren'yi'biao 出人意表
 chen'nian'lao'zhang 陈年老账
-cai'lue'guo'ren 才略过人
+cai'lve'guo'ren 才略过人
 ce'ran 恻然
 can'li 惨厉
 chan'ning 谗佞
@@ -35961,8 +35961,8 @@ cai'li 财礼
 cui'lv'se 翠绿色
 cui'niao 翠鸟
 cui'nie'kuang 翠镍矿
-cu'lue'xu'shu 粗略叙述
-cu'lue'di 粗略地
+cu'lve'xu'shu 粗略叙述
+cu'lve'di 粗略地
 cu'lu'wu'li 粗鲁无礼
 chu'lu 初露
 chuang'ling 窗棂
@@ -35979,7 +35979,7 @@ chi'li 斥力
 cai'liao'chang 材料厂
 cai'liao'fei 材料费
 chang'lang 长廊
-ce'lue'xing 策略性
+ce'lve'xing 策略性
 chang'an'miao 长安庙
 chu'li'ji 处理机
 chu'li'wen'ti 处理问题
@@ -35995,7 +35995,7 @@ chan'liang'qu 产粮区
 cha'e'xuan'ju 差额选举
 chan'ru'zhi 产乳汁
 ce'er'xi'ting 侧耳细听
-chuan'lue 传略
+chuan'lve 传略
 chuang'li'shui 创利税
 cong'lai'mei'you 从来没有
 cong'na'yi'hou 从那以后
@@ -36410,7 +36410,7 @@ chao'liu'shui'xian 超流水线
 chuan'lian'zu'ni 串联阻尼
 chuan'lian'duan'jie 串联端接
 chou'e'bao'wen 丑恶报文
-ce'lue'guan'li'ji'gou 策略管理机构
+ce'lve'guan'li'ji'gou 策略管理机构
 chu'na'chu 出纳处
 chi'lun'chang 齿轮厂
 cai'liao'ji'suan'xu're'xi'shu 材料计算蓄热系数
@@ -36437,7 +36437,7 @@ chuan're'jie'zhi'you'zhuang'zai'beng 传热介质油装载泵
 chi'lun'chuan'dong'zuan'ji 齿轮传动钻机
 ci'lian'xu'xing 次连续性
 ci'lian'xu'ying'she 次连续映射
-ce'lue'gai'jin'die'dai 策略改进迭代
+ce'lve'gai'jin'die'dai 策略改进迭代
 chong'liang 冲量
 ceng'liu 层流
 cha'li'ding'lv 查理定律
@@ -36552,7 +36552,7 @@ chao'lu'zai 抄录在
 chao'lu'bian'mu 抄录编目
 cai'liao'li'xue 材料力学
 cai'neng 材能
-cai'lue 材略
+cai'lve 材略
 cun'nv 村女
 chen'ni'zai 沉溺在
 chong'lai 冲来
@@ -36756,7 +36756,7 @@ chu'er 雏儿
 chong'ru 宠辱
 chong'ai'you'jia 宠爱有加
 chou'an'hui 筹安会
-chou'lue 筹略
+chou'lve 筹略
 chan'lai'chan'qu 缠来缠去
 chan'rao'zai 缠绕在
 chan'rao'zhe 缠绕着
@@ -41930,7 +41930,7 @@ cai'mi 采蜜
 cai'mai 采买
 chang'mao 长矛
 chan'mian'qi'chuang 缠绵凄怆
-chong'man'qin'lue'xing 充满侵略性
+chong'man'qin'lve'xing 充满侵略性
 chang'ming 昌明
 cu'mai 促脉
 cong'ming'rui'zhi 聪明睿智
@@ -47966,7 +47966,7 @@ duan'luo'biao'ji 段落标记
 da'niu 大牛
 dao'luan 捣乱
 dao'li 道理
-diao'lue 调略
+diao'lve 调略
 da'ni 打你
 deng'ni 等你
 di'li 地理
@@ -48192,7 +48192,7 @@ dian'lu 电炉
 diu'le'bang 丢了棒
 die'luo 跌落
 dian're 电热
-da'lue 大略
+da'lve 大略
 dian'nao'you'xi 电脑游戏
 du'le 读了
 da'ren'you'da'liang 大人有大量
@@ -48254,7 +48254,7 @@ dui'liu 对流
 dao'ren 到任
 du'li'xing 独立性
 diao'li 调离
-dan'lue 胆略
+dan'lve 胆略
 duan'ran 断然
 duan'ni 端倪
 diao'ren 调任
@@ -48443,7 +48443,7 @@ di'er'dai 第二代
 di'er'jie'duan 第二阶段
 di'er'ba'shou 第二把手
 di'er'ji'du 第二季度
-di'er'bu'zhan'lue'mu'biao 第二步战略目标
+di'er'bu'zhan'lve'mu'biao 第二步战略目标
 deng'liang 等量
 di'er'pi 第二批
 di'liu'shi 第六十
@@ -49159,9 +49159,9 @@ da'ni 大逆
 da'lv 大率
 da'li'si 大理寺
 da'li'yuan 大理院
-da'lue'zai 大略在
-da'lue'you 大略有
-da'lue'shi 大略是
+da'lve'zai 大略在
+da'lve'you 大略有
+da'lve'shi 大略是
 da'li 大粒
 da'lian'ren 大连人
 da'lian'gang 大连港
@@ -49490,7 +49490,7 @@ dai'lai 戴来
 dai'lai'dai'qu 戴来戴去
 dai'ao'xin 戴奥辛
 dang'an'gui 档案柜
-dan'lue'guo'ren 胆略过人
+dan'lve'guo'ren 胆略过人
 dan'luo 胆落
 dao'ru 蹈入
 duan'lian'chu 锻链出
@@ -60531,7 +60531,7 @@ da'zeng 大增
 du'zhe 读者
 dang'zi 档子
 da'zuo 大作
-da'zhan'lue 大战略
+da'zhan'lve 大战略
 da'zhe'deng'long 打着灯笼
 di'zhi'zong'xian 地址总线
 ding'zui 定罪
@@ -61676,7 +61676,7 @@ hun'luan 混乱
 hui'er 会儿
 hu'la'quan 呼啦圈
 he'le'er'bu'wei 何乐而不为
-fang'lue 方略
+fang'lve 方略
 fu'li 浮力
 hao'nan 好难
 hen'nan'bi'mian 很难避免
@@ -61692,7 +61692,7 @@ fa'lao'sao 发牢骚
 he'lai 何来
 he'nan'ren 河南人
 ha'li'bo'te 哈里波特
-hu'lue 忽略
+hu'lve 忽略
 hu'luan 胡乱
 fang'ru 放入
 hen'luan 很乱
@@ -61743,7 +61743,7 @@ feng'ren 缝纫
 feng'ren'ji 缝纫机
 fa'la'li 法拉利
 fei'lv'bin 菲律宾
-hu'lue'bu'ji 忽略不计
+hu'lve'bu'ji 忽略不计
 hen'ruo 很弱
 fa'lv'bao'hu 法律保护
 han'lao'bao'shou 旱涝保收
@@ -62236,7 +62236,7 @@ fang'lin 芳邻
 hong'ran'da'xiao 哄然大笑
 hui'lin 惠临
 hou'lian 厚脸
-fei'lue 飞掠
+fei'lve 飞掠
 hun'luan 昏乱
 feng'liu'ru'ya 风流儒雅
 fan'lao 烦劳
@@ -63338,7 +63338,7 @@ he'li'he'qing 合理合情
 he'li'mi'zhi 合理密植
 he'ling 合领
 hou'li 后里
-hou'lue'jiao 后掠角
+hou'lve'jiao 后掠角
 hui'le 回了
 hui'ren 回人
 hui'lu'zhi'zai 回禄之灾
@@ -63585,7 +63585,7 @@ fu'li'ji 浮力计
 fu'lai 浮来
 fu'lai'fu'qu 浮来浮去
 fu'ni 浮泥
-fu'lue 浮掠
+fu'lve 浮掠
 hao'ru 浩如
 hao'ru'yan'qi 浩如烟气
 hong'le 烘了
@@ -63654,7 +63654,7 @@ hu'nan'ren 湖南人
 hu'li 湖里
 hun'ren 浑人
 hun'ran'tian'cheng 浑然天成
-fen'lue 焚掠
+fen'lve 焚掠
 hou'lei 猴类
 hou'nan'zai 猴囡仔
 hua'ren 画人
@@ -65363,7 +65363,7 @@ hou'ci 厚赐
 huo'chong 获宠
 he'chu 荷锄
 hua'cheng 花城
-hong'cai'da'lue 宏才大略
+hong'cai'da'lve 宏才大略
 he'chang'fu'duan 鹤长凫短
 hao'chu'feng'tou 好出风头
 hu'cha 胡茬
@@ -66745,7 +66745,7 @@ ha'di'lun 哈迪伦
 ha'dai 哈代
 huo'dong'li'lun 活动理论
 fen'duan'fa 分段法
-fen'duan'ce'lue 分段策略
+fen'duan'ce'lve 分段策略
 hu'dong'lun 互动论
 huo'dong'yi'cun'xing'qiang'hua'ji'zhi 活动依存性强化机制
 hai'de'gui'yin'li'lun 海德归因理论
@@ -68613,7 +68613,7 @@ hun'he'tiao'jian 混合条件
 fu'hao'ji'suan 符号计算
 fu'he'xin'pu'sen'gong'shi 复合辛普森公式
 fa'han'shu'fa 罚函数法
-hun'he'ce'lue 混合策略
+hun'he'ce'lve 混合策略
 hui'fu'chong'liang 恢复冲量
 hui'fu'xi'shu 恢复系数
 huo'hua'ji'shi'qi 火花计时器
@@ -69347,7 +69347,7 @@ huai'gu 怀古
 fu'gao 讣告
 hu'guang 弧光
 hui'gui'xian 回归线
-fu'guang'lue'ying 浮光掠影
+fu'guang'lve'ying 浮光掠影
 feng'gong'shou'fa 奉公守法
 fu'gui'bu'neng'yin 富贵不能淫
 hua'gu'xi 花鼓戏
@@ -73214,7 +73214,7 @@ fu'qing 福清
 hen'qiong 很穷
 hong'qiao 红桥
 huo'qiu 霍邱
-fan'qin'lue'zhan'zheng 反侵略战争
+fan'qin'lve'zhan'zheng 反侵略战争
 fen'qu'biao 分区表
 he'qi'hu'tu 何其糊涂
 hua'qiao'wei'yuan'hui 华侨委员会
@@ -73367,8 +73367,8 @@ hua'qian'chang 化纤厂
 fan'quan'pang'er 反犬旁儿
 fan'qi'dao 反其道
 fan'qi'dao'er'xing 反其道而行
-fan'qin'lue 反侵略
-fan'qin'lue'zhan 反侵略战
+fan'qin'lve 反侵略
+fan'qin'lve'zhan 反侵略战
 fan'qing'bao 反情报
 fan'qing'fu'ming 反清复明
 fan'qian 反潜
@@ -80506,7 +80506,7 @@ fa'zhan'qian'jing 发展前景
 fa'zhan'qu'shi 发展趋势
 fa'zhan'shui'ping 发展水平
 fa'zhan'su'du 发展速度
-fa'zhan'zhan'lue 发展战略
+fa'zhan'zhan'lve 发展战略
 fa'zhan'dang'yuan 发展党员
 fa'zhan'xun'su 发展迅速
 fa'zi'nei'xin 发自内心
@@ -80784,7 +80784,7 @@ hua'zhong'you'shi 画中有诗
 hai'zhong'yin'xian 害忠隐贤
 hao'zhi'yi'xia 好志以暇
 fei'zhou'e 非洲鳄
-he'zhan'lue 核战略
+he'zhan'lve 核战略
 he'zhuang'zhi 核装置
 fan'zhen 藩镇
 fu'zhuang'shang 服装商
@@ -81719,7 +81719,7 @@ gen'ni 跟你
 guo'ran 果然
 geng'nan 更难
 gai'lv 概率
-gong'lue 攻略
+gong'lve 攻略
 ge'lan'di'ya 格兰蒂亚
 guan'li'quan'xian 管理权限
 gong'ren 工人
@@ -82037,7 +82037,7 @@ ge'nv 歌女
 gan'lan'you 橄榄油
 gui'lu 归路
 gan'nian 感念
-gai'lue 概略
+gai'lve 概略
 guan'le'qi 管乐器
 gu'ruo'jin'tang 固若金汤
 gu'li'wu'yuan 孤立无援
@@ -82669,9 +82669,9 @@ gai'lv'zuo'biao'zhi 概率坐标纸
 gai'lv'dan'wei'mo'xing 概率单位模型
 gai'lv'yi'ma 概率译码
 guan'lian'xi'tong 关联系统
-ga'li'lue'bian'huan 伽利略变换
-ga'li'lue'xiang'dui'xing'yuan'li 伽利略相对性原理
-ga'li'lue'bu'bian'xing 伽利略不变性
+ga'li'lve'bian'huan 伽利略变换
+ga'li'lve'xiang'dui'xing'yuan'li 伽利略相对性原理
+ga'li'lve'bu'bian'xing 伽利略不变性
 gu'li'xi 孤立系
 guan'liang'zhang'liang 惯量张量
 guan'liang'tuo'qiu 惯量椭球
@@ -82726,7 +82726,7 @@ gong'rang 拱让
 guo'ao'dui 国奥队
 gui'na'fa 归纳法
 gen'liu'jun 根瘤菌
-ga'li'lue 伽利略
+ga'li'lve 伽利略
 gou'lou'bing 佝瘘病
 guang'liang'zi 光量子
 guang'liang'ji 光亮剂
@@ -82832,7 +82832,7 @@ gong'ren'bu'bei 攻人不备
 gong'ren'zhi'duan 攻人之短
 gong'lai 攻来
 gong'lai'gong'qu 攻来攻去
-gong'lue 攻掠
+gong'lve 攻掠
 geng'lou 更漏
 geng'nian 更黏
 gu'lei'zuo'wu 谷类作物
@@ -82997,7 +82997,7 @@ gan'en'jie 感恩节
 gao'lai'gao'qu 搞来搞去
 gai'er'bu'lun 概而不论
 gai'lv'lun 概率论
-gai'lue'xing 概略性
+gai'lve'xing 概略性
 ge'luo'mi'ke 葛罗米柯
 gai'ri 该日
 gai'nian 该年
@@ -83709,8 +83709,8 @@ gu'bu'zi'feng 固步自封
 gui'bu'xiang'gui 鬼不像鬼
 gong'cheng'shi 工程师
 guo'chan 国产
-gong'cheng'lue'di 攻城略地
-gong'cheng'lue'di 攻城掠地
+gong'cheng'lve'di 攻城略地
+gong'cheng'lve'di 攻城掠地
 gong'cheng'zhan 攻城战
 gan'cui 干脆
 guo'cheng'zhong 过程中
@@ -87453,7 +87453,7 @@ gong'ji'hua 共极化
 gong'jian'she 共溅射
 gui'jin'shu 贵金属
 guang'ji'dian'li 光激电离
-gai'jin'de'jian'lue'wei'fen'chong'die'fa 改进的间略微分重叠法
+gai'jin'de'jian'lve'wei'fen'chong'die'fa 改进的间略微分重叠法
 gao'ju'wu 高聚物
 guang'jiang'jie'ju'he'wu 光降解聚合物
 gou'jian'ruan'jian'gong'cheng 构件软件工程
@@ -93591,7 +93591,7 @@ jin'ri'cheng 金日成
 ji'neng'shu 技能书
 jin'nian 近年
 ju'li 举例
-jian'lue 简略
+jian'lve 简略
 jin'er'ge 今儿个
 jian'li 建立
 jia'le'bi 加勒比
@@ -93658,7 +93658,7 @@ jing'li'guo 经历过
 ji'lu'ben 记录本
 jing'er'yuan'zhi 敬而远之
 jian'ren'bu'ba 坚忍不拔
-jia'li'lue 加利略
+jia'li'lve 加利略
 ji'lou 几楼
 jing'lao'yuan 敬老院
 jiang'ni 将你
@@ -93910,7 +93910,7 @@ jin'lie 禁猎
 jiao'ling 教龄
 ju'lian 聚敛
 ji'ren'li'xia 寄人篱下
-jie'lue 劫掠
+jie'lve 劫掠
 jia'ran 戛然
 jiao'nen 娇嫩
 jie'ling 节令
@@ -93981,7 +93981,7 @@ jiao'li 姣丽
 juan'lou 镌镂
 ju'na 拘拿
 jin'rang 尽让
-jie'lue 节略
+jie'lve 节略
 jiao'nao 搅闹
 jiao'rao 娇娆
 jiao'leng'shui 浇冷水
@@ -94226,7 +94226,7 @@ ji'lei 挤泪
 ji'luo 击锣
 ji'lei 击垒
 jue'li 绝粒
-jing'lue 经略
+jing'lve 经略
 jing'lun 经纶
 jin'lei 劲雷
 jiao'liu'xin'de 交流心得
@@ -94238,7 +94238,7 @@ ju'lie'yun'dong 剧烈运动
 ji'lv 计虑
 jiao'lian 脚链
 ji'li 祭礼
-ji'lue 计略
+ji'lve 计略
 jing'lun 腈纶
 ji'lv'zuo'feng 纪律作风
 jin'lan'zhi'hao 金兰之好
@@ -94773,7 +94773,7 @@ jin'luo 筋络
 jin'lv 禁律
 jing'e 惊谔
 jing'liu 精馏
-jun'lue 军略
+jun'lve 军略
 jiu'niu'er'hu 九牛二虎
 jiu'ru 九如
 jiu'nian'ji 九年级
@@ -94987,7 +94987,7 @@ jiang'lai'you 将来有
 jiang'lai'shi 将来是
 jiang'lai'hui 将来会
 jiang'neng 将能
-jiang'lue 将略
+jiang'lve 将略
 juan'ru'xuan'wo 卷入漩涡
 juan'lai 卷来
 juan'lai'juan'qu 卷来卷去
@@ -95189,7 +95189,7 @@ jiang'lai 讲来
 jiang'lai'jiang'qu 讲来讲去
 ju'ran'bian'se 遽然变色
 jian'le 溅了
-jian'lue'fa 简略法
+jian'lve'fa 简略法
 jian'ao 简奥
 jian'li'biao 简历表
 jiu'li 旧例
@@ -99889,7 +99889,7 @@ jin'gui 金柜
 jian'guo'da'gang 建国大纲
 jian'guo'gong'zhuan 建国工专
 jian'guo'zhong'xue 建国中学
-jian'guo'fang'lue 建国方略
+jian'guo'fang'lve 建国方略
 jian'guo'bei'lu 建国北路
 jian'guo 柬国
 jia'ge 架个
@@ -100641,7 +100641,7 @@ jing'ji'wei'yuan'hui 经济委员会
 jing'ji'yi'ti'hua 经济一体化
 jing'ji'zeng'chang'lv 经济增长率
 jing'ji'fan'zui'an 经济犯罪案
-jing'ji'fa'zhan'zhan'lue 经济发展战略
+jing'ji'fa'zhan'zhan'lve 经济发展战略
 jing'ji'ti'zhi'gai'ge 经济体制改革
 jing'ji'fan'zui'fen'zi 经济犯罪分子
 jing'ji'fan'zui'huo'dong 经济犯罪活动
@@ -101384,7 +101384,7 @@ jing'ji'zhu'yi 经济主义
 jing'ji'fan 经济犯
 jing'ji'ji'shu'zhi'biao 经济技术指标
 jing'ji'xi 经济系
-jing'ji'qin'lue 经济侵略
+jing'ji'qin'lve 经济侵略
 jing'ji'jian'she'wei'yuan'hui 经济建设委员会
 jing'ji'huo'dong'fen'xi 经济活动分析
 jing'ji'fan'chou 经济范畴
@@ -101722,7 +101722,7 @@ jiang'kou'xian 江口县
 jiao'kou'xian 交口县
 ji'kou 藉口
 jie'kai 截开
-jin'kui'yao'lue 金匮要略
+jin'kui'yao'lve 金匮要略
 jin'kui 金匮
 jie'kang 拮抗
 jie'kang'ji 拮抗剂
@@ -103367,7 +103367,7 @@ jie'shang 街上
 jie'shao 介绍
 jie'shang 接上
 jin'shen 近身
-ji'shi'zhan'lue 即时战略
+ji'shi'zhan'lve 即时战略
 jie'shao'xin 介绍信
 ji'shu 记熟
 jia'su 加速
@@ -107791,7 +107791,7 @@ ju'yu 菊芋
 jin'yin'cai'fu 金银财富
 jiu'yu'chong'feng 旧雨重逢
 jian'yin 荐引
-jing'ying'ce'lue 经营策略
+jing'ying'ce'lve 经营策略
 ji'ya'chan'pin 积压产品
 ji'yin'chan'ye 基因产业
 jiu'yuan'chuan'zhi 救援船只
@@ -107836,7 +107836,7 @@ jiao'yuan 叫冤
 jiu'yuan'ke'zuo 九原可作
 ju'yi'lv'fang 据义履方
 jie'yi 孑遗
-jian'yin'lu'lue 奸淫掳掠
+jian'yin'lu'lve 奸淫掳掠
 jia'yi 加意
 jing'yun 精蕴
 jia'yao'mei'jiu 佳肴美酒
@@ -115117,7 +115117,7 @@ ke'yi'huo'de 可以获得
 ke'yi'qi'wang 可以期望
 ke'yi'bao'xian 可以保险
 ke'ye'hua 可液化
-ke'yi'hu'lue 可以忽略
+ke'yi'hu'lve 可以忽略
 ke'yi'sheng'qu 可以省去
 ke'yang'hua 可氧化
 ke'yi'gu'ji 可以估计
@@ -115843,7 +115843,7 @@ mei'li'de 美丽的
 mo'ren'shou'ye 默认首页
 ma'ren 骂人
 ma'an 马鞍
-mou'lue 谋略
+mou'lve 谋略
 ming'nian 明年
 mao'li 毛利
 meng'li'yi'ji 猛力一击
@@ -116567,7 +116567,7 @@ mi'er 米尔
 miao'ren 妙人
 miao'ren'miao'shi 妙人妙事
 miao'li 妙理
-miao'lue 妙略
+miao'lve 妙略
 miao'li 妙丽
 mei'neng 每能
 mei'li 每粒
@@ -123790,7 +123790,7 @@ pu'luo'ti'nuo 普罗提诺
 ping'le 评了
 ping'liang 评量
 pao'lei'yuan 跑垒员
-piao'lue 剽掠
+piao'lve 剽掠
 piao'le 漂了
 piao'lai 漂来
 piao'lai'piao'qu 漂来漂去
@@ -128120,14 +128120,14 @@ quan'li 权利
 qing'nin 请您
 qi'ren'zhi'fu 齐人之福
 qiu'ren 求人
-que'lue 缺略
+que'lve 缺略
 que'ren 缺人
 quan'ren'lei 全人类
 qing'nian'jiao'shi 青年教师
 qi'neng 岂能
 qing'er'yi'ju 轻而易举
 qiu'ren'bu'ru'qiu'ji 求人不如求己
-qin'lue 侵略
+qin'lve 侵略
 qian'ren'zai'xian 千人在线
 qiong'ren 穷人
 qi'ren'you'tian 杞人忧天
@@ -128160,7 +128160,7 @@ qian'nian'deng'yi'hui 千年等一回
 qiao'liang'gong'shi 桥梁工事
 qiang'lin'lian'qu 枪林恋曲
 qiang'lin'dan'yu 枪林弹雨
-qin'lue'zhe 侵略者
+qin'lve'zhe 侵略者
 qian'li 千里
 qiang'lie'kang'yi 强烈抗议
 qian'lai 前来
@@ -128296,7 +128296,7 @@ qin'rao 侵扰
 qin'ni 亲昵
 qian'li'ma 千里马
 qi'liang 气量
-qiang'lue 抢掠
+qiang'lve 抢掠
 qu'li'bi'hai 趋利避害
 qin'ren'xin'pi 沁人心脾
 qian'li'yan 千里眼
@@ -128400,9 +128400,9 @@ qin'li 亲历
 qiao'lian 侨联
 quan'lu 全路
 quan'ri 全日
-qin'lue'jun 侵略军
-qin'lue'kuo'zhang 侵略扩张
-qin'lue'zhan'zheng 侵略战争
+qin'lve'jun 侵略军
+qin'lve'kuo'zhang 侵略扩张
+qin'lve'zhan'zheng 侵略战争
 quan'neng'guan'jun 全能冠军
 quan'ran'bu'gu 全然不顾
 quan'ran'bu'tong 全然不同
@@ -128664,7 +128664,7 @@ qu'la 去蜡
 qu'li'zi'zuo'yong 去离子作用
 qiao'lian'ji 桥连基
 qi'rong'jiao 气溶胶
-quan'lue'wei'fen'chong'die'fa 全略微分重叠法
+quan'lve'wei'fen'chong'die'fa 全略微分重叠法
 qian'ru'shi'ji'suan'ji 嵌入式计算机
 quan'ri'zhi'tuo'er'suo 全日制托儿所
 qing'nian'zhong'xin 青年中心
@@ -128784,9 +128784,9 @@ qing'lou'yan'ji 青楼艳妓
 qing'lian'ju'shi 青莲居士
 qing'lu 青鲈
 qin'ru'ti 侵入体
-qin'lue'cheng'xing 侵略成性
-qin'lue'xing 侵略性
-qin'lue'guo 侵略国
+qin'lve'cheng'xing 侵略成性
+qin'lve'xing 侵略性
+qin'lve'guo 侵略国
 qin'rao'dao 侵扰到
 qiao'li'duan'fa 俏丽短发
 qian'ren'zhong'shu 前人种树
@@ -128946,7 +128946,7 @@ quan'li'jin 权利金
 quan'li'neng'li 权利能力
 quan'neng'qu'fen 权能区分
 quan'neng'hua'fen 权能划分
-quan'lue 权略
+quan'lve 权略
 qian'ren 纤人
 qi'ran 颀然
 quan'lei 醛类
@@ -132819,7 +132819,7 @@ qiao'qi 翘企
 qiao'qi 翘起
 qu'qian 趋前
 qun'qing'zhe'chou 群轻折抽
-quan'qiu'zhan'lue 全球战略
+quan'qiu'zhan'lve 全球战略
 qian'qiao'zhi'wang 迁乔之望
 quan'qing'zhong'wai 权倾中外
 qiao'qian'zhi'xi 乔迁之喜
@@ -136451,7 +136451,7 @@ si'lu'ye'hui'kuang'guang 思路也会狂光
 shu'ru'fa'you 输入法又
 shang'liang 商量
 si'ren 私人
-sheng'lue 省略
+sheng'lve 省略
 sheng'li'que'xian 生理缺陷
 shao'nv 少女
 shou'lei 受累
@@ -136641,7 +136641,7 @@ shou'lu'yu 收录于
 shi'li 市里
 sun'nan 孙楠
 suan'lai 算来
-suo'lue'tu 缩略图
+suo'lve'tu 缩略图
 sheng'li'xu'yao 生理需要
 sheng'li 生理
 shou'lian 收敛
@@ -136652,7 +136652,7 @@ sha'nv 傻女
 shun'liu 顺流
 sa'lei 洒泪
 su'ren 俗人
-sheng'lue'hao 省略号
+sheng'lve'hao 省略号
 sao'rao 骚扰
 sha'li'sha'qi 傻里傻气
 san'liu 三流
@@ -136934,7 +136934,7 @@ san'lao'si'yan 三老四严
 shou'liang 受凉
 shi'li 失礼
 shi'li'pai 实力派
-shi'lue 史略
+shi'lve 史略
 shan'nan'xin'nv 善男信女
 shi'lang 侍郎
 shou'na 收纳
@@ -137013,7 +137013,7 @@ sheng'nv 甥女
 sheng'rong'si'ai 生荣死哀
 shao'nai'nai 少奶奶
 shan'lei 善类
-shan'lue 删略
+shan'lve 删略
 se'ruo 色弱
 shen'na 哂纳
 shuang'ran'ruo'shi 爽然若失
@@ -137172,8 +137172,8 @@ shi'rong'jie 使溶解
 shi'ren'pi'lao 使人疲劳
 shi'rou'dong'wu 食肉动物
 si'an'suan 丝氨酸
-suo'lue 缩略
-suo'lue'ci 缩略词
+suo'lve 缩略
+suo'lve'ci 缩略词
 shu'lu 熟路
 shi'nei'dian'hua 市内电话
 shu'lian'gong'ren 熟练工人
@@ -137518,7 +137518,7 @@ shi'er'jing'bie 十二经别
 shi'er'jing'jin 十二经筋
 shi'ai 示爱
 sheng'lei 声泪
-shi'lue 事略
+shi'lve 事略
 shang'lian 上廉
 shen'e 深恶
 shen'ai 肾癌
@@ -137677,7 +137677,7 @@ sa'luo 撒落
 she'lun 摄论
 shan'lin 杉林
 suo'luo 桫椤
-shu'lue 述略
+shu'lve 述略
 shi'ren 适任
 sheng'li 牲礼
 shui'li 税吏
@@ -137881,7 +137881,7 @@ shao'er'bai'ke 少儿百科
 sha'na'zhi'jian 刹那之间
 si'li'ba'jia'wan'shi 斯里巴加湾市
 sa'er 萨尔
-sao'lue 扫掠
+sao'lve 扫掠
 sha'li 砂跞
 shan'long 山垄
 shao'e 少额
@@ -137961,7 +137961,7 @@ shang'rou 上肉
 shang'lai'dao 上来到
 shang'an'shi 上岸时
 shang'liu'ren'shi 上流人士
-shang'lue 上略
+shang'lve 上略
 shang'nong 上农
 shang'lou'qu 上楼去
 shang'lou'lai 上楼来
@@ -138160,8 +138160,8 @@ sheng'le 省了
 sheng'lai 省来
 sheng'lai'sheng'qu 省来省去
 sheng'liao 省料
-sheng'lue'bu'ti 省略不提
-sheng'lue'dao 省略到
+sheng'lve'bu'ti 省略不提
+sheng'lve'dao 省略到
 sha'lun'ji 砂轮机
 sha'lv'qi 砂滤器
 sha'nang 砂囊
@@ -138230,7 +138230,7 @@ sha'ren'bu'jian 杀人不见
 sha'ren'bu'zha 杀人不眨
 sha'ren'zhe'si 杀人者死
 sha'ren'chang'ming 杀人偿命
-sha'lue 杀掠
+sha'lve 杀掠
 sha'lu 杀陆
 sha'lu'zhan'chang 杀戮战场
 shu'nv'zhuang 淑女装
@@ -138450,14 +138450,14 @@ shui'ni'ban 水泥板
 si'liu'ti 四六体
 shi'liang'ji 矢量积
 shi'liu'shi 石榴石
-sheng'lue'ju 省略句
+sheng'lve'ju 省略句
 suo'luo'shu 娑罗树
 shou'li'che 兽力车
 suo'luo'shu 梭罗树
 su'liao'zhi 塑料纸
 su'liao'sheng 塑料绳
 su'liao'guan 塑料管
-suo'lue'yu 缩略语
+suo'lve'yu 缩略语
 shen'e'tong'jue 深恶痛绝
 shi'er'shu'xiang 十二属相
 sheng'ru'yin'ling 声如银铃
@@ -139308,7 +139308,7 @@ shi'bie'li 识别力
 shi'bie'zi 识别字
 shi'bie'qu 识别区
 shi'bie'zheng 识别证
-su'bi'lue'hu 苏必略湖
+su'bi'lve'hu 苏必略湖
 su'bu'qing 苏步青
 sha'bi 煞笔
 shang'bei 上辈
@@ -143153,7 +143153,7 @@ song'gei'ni 送给你
 shou'gong 手工
 shuai'ge'ge 帅哥哥
 san'guo 三国
-san'guo'zhan'lue 三国战略
+san'guo'zhan'lve 三国战略
 shi'gao 石膏
 sheng'gao 生稿
 shi'guo'jing'qian 时过境迁
@@ -145271,7 +145271,7 @@ shou'jiang'dian'li 受降典礼
 shou'jiang'yi'shi 受降仪式
 shou'jin'zhe'mo 受尽折磨
 shou'jin'ya'po 受尽压迫
-suo'jian'lue'tong 所见略同
+suo'jian'lve'tong 所见略同
 song'jiang'sheng 松江省
 song'jiao'you 松焦油
 song'jun 松菌
@@ -155222,7 +155222,7 @@ tian'li 天理
 tong'ri'er'yu 同日而语
 te'li 特例
 tuo'ling 驼铃
-tao'lue 韬略
+tao'lve 韬略
 tou'ling 头领
 tao'ren 桃仁
 tong'liu'he'wu 同流合污
@@ -160523,7 +160523,7 @@ tu'qiong'bi'shou'jian 图穷匕首见
 tong'qin'dai 通勤带
 tan'que 碳炔
 tuo'qing'ji 脱氰基
-ti'qu'ce'lue 提取策略
+ti'qu'ce'lve 提取策略
 tong'qi'kong 通气孔
 ting'qiao 亭桥
 tu'qiu'yi'zhi 土球移植
@@ -165333,7 +165333,7 @@ wu'ran 兀然
 wu'ning 无宁
 wei'li 伟力
 wan'liang 完粮
-wu'lue 武略
+wu'lve 武略
 wan'lian 晚恋
 wei'liao 喂料
 wei'rui 葳蕤
@@ -165856,7 +165856,7 @@ wu'chao'suo'zhi 物超所值
 wu'cong'tan'qi 无从谈起
 wan'cheng'tou'zi 完成投资
 wen'chen'wu'jiang 文臣武将
-wen'cai'wu'lue 文才武略
+wen'cai'wu'lve 文才武略
 wu'chai 吾侪
 wu'chi'xia'liu 无耻下流
 wai'chang 外场
@@ -167986,7 +167986,7 @@ wai'jiao'shi'wu 外交事务
 wei'jing'shi'ye 未竟事业
 wei'ji 畏忌
 wei'jian 未见
-wen'jing'wu'lue 文经武略
+wen'jing'wu'lve 文经武略
 wen'jiang'xue'hai 文江学海
 wo'jiao'xu'ming 蜗角虚名
 wen'jian'xi'tong 文件系统
@@ -170178,7 +170178,7 @@ wu'tou 乌头
 wei'tuo 伪托
 wu'tai'sheng'feng 舞态生风
 wu'tu'shu'cai'zai'pei 无土蔬菜栽培
-wen'tao'wu'lue 文韬武略
+wen'tao'wu'lve 文韬武略
 wai'tai 外胎
 wei'tian'zhi'ming 畏天知命
 wo'ting'zhu'ren 窝停主人
@@ -171062,7 +171062,7 @@ wei'xing'zuo'biao 位形坐标
 wai'xiao'xuan'hun'he'wu 外消旋混合物
 wai'xing'jia'cheng 外型加成
 wu'xiang'wang 无向网
-wei'xiu'ce'lue 维修策略
+wei'xiu'ce'lve 维修策略
 wei'xie'jian'kong 威胁监控
 wen'xian'zi'liao'yue'lan'shi 文献资料阅览室
 wei'xing'tong'xin'di'mian'zhan 卫星通信地面站
@@ -171443,7 +171443,7 @@ wu'yi'wei'bao 无以为报
 wu'yi'wei'sheng 无以为生
 wen'yi'zhi'shi 闻一知十
 wang'yu 妄语
-wang'yi'lue 王贻略
+wang'yi'lve 王贻略
 wei'you'shou'zhong'bi'ru'qiang 唯有手中笔如枪
 wei'yi'xiao'de'ren'qiao'cui 为伊消得人憔悴
 wei'you'yuan'tou'huo'shui'lai 为有源头活水来
@@ -172444,7 +172444,7 @@ wei'zui'yu'ren 委罪于人
 wang'zuo'bian 往左边
 wang'zhe 往哲
 wu'zong 武宗
-wu'zhuang'qin'lue 武装侵略
+wu'zhuang'qin'lve 武装侵略
 wu'zhi'shang 物质上
 wu'zhi'bu'mie'ding'lv 物质不灭定律
 wu'zhi'sheng'chan'bu'men 物质生产部门
@@ -172934,7 +172934,7 @@ xiao'rang'zhi'bie 霄壤之别
 xi'nu 息怒
 xiu'nan 羞赧
 xiang'long 箱笼
-xiang'lue 详略
+xiang'lve 详略
 xin'ru'huo'liao 心如火燎
 xun'liang 驯良
 xun'li 循例
@@ -173421,7 +173421,7 @@ xun'ran 薰染
 xiang'nong 巷弄
 xian'ni 陷溺
 xi'lun 戏论
-xiong'lue 雄略
+xiong'lve 雄略
 xia'la 夏腊
 xia'li 夏利
 xian'li 县立
@@ -173625,7 +173625,7 @@ xia'rou 下肉
 xia'lai'dao 下来到
 xia'liu'ren'shi 下流人士
 xia'liu'she'hui 下流社会
-xia'lue 下略
+xia'lve 下略
 xia'li 下痢
 xia'lou'qu 下楼去
 xia'lou'lai 下楼来
@@ -173717,7 +173717,7 @@ xing'nian 行年
 xing'li'che 行李车
 xing'li'fang 行李房
 xing'li'dai 行李袋
-xing'lue 行略
+xing'lve 行略
 xi'an'ren 西安人
 xi'li 西里
 xi'li'xi'ya 西里西亚
@@ -174739,7 +174739,7 @@ xi'chu 吸储
 xia'cheng 下乘
 xiang'chun 香醇
 xi'chen 洗尘
-xiong'cai'da'lue 雄才大略
+xiong'cai'da'lve 雄才大略
 xuan'chui 悬垂
 xiang'chi 相持
 xian'ci 献词
@@ -181720,7 +181720,7 @@ xian'ting 闲庭
 xuan'ting 悬停
 xi'ti'ji 习题集
 xue'tong'gong'ren 血统工人
-xiong'tu'da'lue 雄图大略
+xiong'tu'da'lve 雄图大略
 xin'tuo'tou'zi'gong'si 信托投资公司
 xuan'tong 玄痛
 xu'tian'chuan 徐天川
@@ -185771,7 +185771,7 @@ yong'ren'zhi'dao 用人之道
 yi'ran'jue'ran 毅然决然
 yu'liang 余量
 yu'ren'wei'shan 与人为善
-yao'lue 要略
+yao'lve 要略
 yin'ling 引领
 yi'ran 怡然
 yi'ran'wu 易燃物
@@ -185812,7 +185812,7 @@ you'ran 有染
 ya'ran'shi'xiao 哑然失笑
 yao'ru'huang'he 杳如黄鹤
 ya'ran 哑然
-yue'lue 约略
+yue'lve 约略
 yu'ren 玉人
 yong'lan 慵懒
 yu'nian 欲念
@@ -186996,8 +186996,8 @@ yang'lan 洋兰
 yang'nan'nan 洋囡囡
 yi'li 疫疠
 yue'ren 约人
-yue'lue'shi 约略是
-yue'lue'wei 约略为
+yue'lve'shi 约略是
+yue'lve'wei 约略为
 ye'lu'che'leng 耶路撤冷
 ying'ren 英人
 ying'ri 英日
@@ -187141,8 +187141,8 @@ yu'lao'ye 渔捞业
 yi'ren'bu'yong 疑人不用
 yu'ri 与日
 yuan'an 远岸
-yuan'lue 远略
-yuan'lue'hong'gui 远略宏规
+yuan'lve 远略
+yuan'lve'hong'gui 远略宏规
 yin'li 银粒
 yin'li'zi 银离子
 yi'rong'jian'cha 仪容检查
@@ -190868,7 +190868,7 @@ yan'hai'di'dai 沿海地带
 yan'hai'gang'kou 沿海港口
 yan'hai'jing'ji 沿海经济
 yan'hai'kai'fang'cheng'shi 沿海开放城市
-yan'hai'fa'zhan'zhan'lue 沿海发展战略
+yan'hai'fa'zhan'zhan'lve 沿海发展战略
 you'fang 油房
 ye'hua'qi 液化器
 you'hei 蚴黑
@@ -193143,7 +193143,7 @@ yang'jue 痒觉
 yi'jue'xiang 遗觉象
 ying'ji'xing'sheng'huo'shi'jian 应激性生活事件
 ying'ji'zhuang'tai 应激状态
-ying'ji'ying'fu'ce'lue 应激应付策略
+ying'ji'ying'fu'ce'lve 应激应付策略
 ying'ji'fan'ying'kong'zhi 应激反应控制
 yi'ji'yu'fang 一级预防
 yi'jing'di'tu 意境地图
@@ -193165,7 +193165,7 @@ yin'jiao'zhen'lie'feng'zhuang 引脚阵列封装
 ying'jian'jian'yan 硬件检验
 ying'ji'zhuan'chu 应急转储
 ying'jian'she'ji'yu'yan 硬件设计语言
-yu'ji'ce'lue'lu'you'xuan'ze 域际策略路由选择
+yu'ji'ce'lve'lu'you'xuan'ze 域际策略路由选择
 ying'jian'an'quan 硬件安全
 yan'jing'chang 眼镜厂
 yan'jing'dian 眼镜店
@@ -198501,7 +198501,7 @@ you'xian 有限
 you'xian'quan 优先权
 yan'xiu 研修
 yin'xu 音序
-ying'xiong'suo'jian'lue'tong 英雄所见略同
+ying'xiong'suo'jian'lve'tong 英雄所见略同
 yi'xiang'shi 一向是
 you'xing'qu 有兴趣
 yi'xing 异形
@@ -202777,7 +202777,7 @@ zhi'liang 质量
 zai'lai'yi'ci 再来一次
 zhi'liao 治疗
 zhi'an'da'dui 治安大队
-zhan'lue 战略
+zhan'lve 战略
 zui'nan 最难
 zi'run 滋润
 zhong'lei 种类
@@ -202822,7 +202822,7 @@ zao'ni 枣泥
 zhen'ren 真人
 zhou'na 周娜
 zheng'li'biao 整理表
-zhi'lue 智略
+zhi'lve 智略
 zhi'nan'zhen 指南针
 zuo'li'bu'an 坐立不安
 zuo'ren'yao'hou'dao 做人要厚道
@@ -202871,7 +202871,7 @@ zhong'ren'jie'zhi 众人皆知
 zhi'li 治理
 zhang'ai'jia 张艾嘉
 zhao'lai 召来
-zhan'lue'zhuan'yi 战略转移
+zhan'lve'zhuan'yi 战略转移
 zhou'run'fa 周润发
 zhui'nv'zai 追女仔
 zhuang'nan 壮男
@@ -202934,7 +202934,7 @@ zi'li 籽粒
 zhen'ni 甄妮
 zi'ren'wei 自认为
 zhi'neng'suan'fa 智能算法
-zhan'lue'ban 战略版
+zhan'lve'ban 战略版
 zheng'lun 政论
 zi'ran'jie 自然界
 zhi'nan'shu 指南书
@@ -203249,7 +203249,7 @@ zeng'li 赠礼
 zhi'na 滞纳
 zhong'ru'shi 钟乳石
 zhi'lu 支路
-zhuan'lue 传略
+zhuan'lve 传略
 zhao'ran'ruo'jie 昭然若揭
 zhi'ren 指认
 zou'lou 走漏
@@ -203480,7 +203480,7 @@ zhang'li 瘴疠
 zhi'lun'bu'fan 只轮不返
 zong'lan 总览
 zhuo'luo'bu'ji 卓荦不羁
-zhan'lue'bu'shu 战略部署
+zhan'lve'bu'shu 战略部署
 zao'li 皂隶
 zhen'lou'bao'wu 珍楼宝屋
 zhuo'lie'biao'yan 拙劣表演
@@ -203504,7 +203504,7 @@ zhi'liang'duo'wen 直谅多闻
 ze'lin'er'ju 择邻而居
 zu'lei 族类
 zou'lou'feng'sheng 走漏风声
-zhan'lue'fang'zhen 战略方针
+zhan'lve'fang'zhen 战略方针
 zhu'lan 竹栏
 zhou'lang'gu'qu 周郎顾曲
 zhu'lian 竹帘
@@ -203516,7 +203516,7 @@ zha'lan 炸烂
 zhu'long 烛龙
 zai'li'huo'zao 灾梨祸枣
 zhuo'li 卓立
-zhan'lue'jue'ce 战略决策
+zhan'lve'jue'ce 战略决策
 zhi'liang'ji'shu'jian'du'ju 质量技术监督局
 zhuo'li'ji'qun 卓立鸡群
 zhu'lian'jiu'zu 诛连九族
@@ -203563,11 +203563,11 @@ zhu'lan 珠兰
 zhu'lian 珠帘
 zhu'liang'xi'cheng 铢两悉称
 zheng'li'xing'zhuang 整理行装
-zhan'lue'yan'guang 战略眼光
+zhan'lve'yan'guang 战略眼光
 zui'li'ya'jian 嘴利牙尖
 zu'long'yi'ju 祖龙一炬
 zi'lv'yi'shi 自律意识
-zhan'lue'yi'yi 战略意义
+zhan'lve'yi'yi 战略意义
 zan'lao'yong'yi 暂劳永逸
 zang'lian 脏脸
 zhuo'luo'ying'zi 卓荦英姿
@@ -203576,7 +203576,7 @@ zhi'ling 智龄
 zhu'lan 煮烂
 zhu'li'zhuang'jia 主力庄家
 zhuan'lan'zuo'jia 专栏作家
-zhan'lue'zhan'shu 战略战术
+zhan'lve'zhan'shu 战略战术
 zhi'lan'zhi'shi 芝兰之室
 zhan'ni 沾泥
 zhi'ni 滞泥
@@ -203667,19 +203667,19 @@ zai'li'xin'gong 再立新功
 zai'li'yong 再利用
 zhan'ling'jun 占领军
 zhan'ling'qu 占领区
-zhan'lue'xing 战略性
-zhan'lue'mu'biao 战略目标
-zhan'lue'wu'qi 战略武器
-zhan'lue'di'wei 战略地位
-zhan'lue'fang'yu 战略防御
-zhan'lue'wu'zi 战略物资
-zhan'lue'yao'di 战略要地
+zhan'lve'xing 战略性
+zhan'lve'mu'biao 战略目标
+zhan'lve'wu'qi 战略武器
+zhan'lve'di'wei 战略地位
+zhan'lve'fang'yu 战略防御
+zhan'lve'wu'zi 战略物资
+zhan'lve'yao'di 战略要地
 zhan'ren'kou'zong'shu 占人口总数
 zhuo'an 桌案
 zi'luo'lan'hua 紫罗兰花
 zhan'ling'zhe 占领者
-zhan'lue'kong'jun 战略空军
-zhan'lue'jia 战略家
+zhan'lve'kong'jun 战略空军
+zhan'lve'jia 战略家
 zi'luo'lan'se 紫罗兰色
 zhi'li'huan'jing 治理环境
 zuo'er'ge 昨儿个
@@ -203905,7 +203905,7 @@ zhi'ai 至爱
 zhi'li 致理
 zhi'ri 至日
 zhi'ren 至人
-zheng'lue 政略
+zheng'lve 政略
 zheng'ren 正人
 zheng'nian 正念
 zhu'er 珠儿
@@ -204001,7 +204001,7 @@ zhi'neng'ke'xue 智能科学
 zi'liang 字量
 zhen'nei'ya'suo 帧内压缩
 zhuan'lun'mi'ma 转轮密码
-zhan'lue'qing'bao 战略情报
+zhan'lve'qing'bao 战略情报
 zhang'ai'sai'pao'dao 障碍赛跑道
 zhi'neng'ban'gong'lou 智能办公楼
 zheng'ren'shi 证人室
@@ -204553,8 +204553,8 @@ zao'lei'ji 遭雷击
 zheng'lan 郑澜
 zao'rang 噪嚷
 zhan'le 战了
-zhan'lue'hong'zha 战略轰炸
-zhan'lue'hong'zha'ji 战略轰炸机
+zhan'lve'hong'zha 战略轰炸
+zhan'lve'hong'zha'ji 战略轰炸机
 zhan'luan'zhong 战乱中
 ze'ren'er'shi 择人而事
 ze'ri'zi 择日子
