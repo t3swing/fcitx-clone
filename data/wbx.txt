@@ -28337,6 +28337,7 @@ ixnf 埿
 ixnn 测绘局
 ixpf 小组赛
 ixqq 滞纳金
+ixqt 小母狗
 ixr 濼
 ixri 沸泉
 ixrs 濼
@@ -31735,6 +31736,7 @@ kfft 喷雾
 kffu 踏雪无痕
 kfg 吐
 kfga 嘲弄
+kfgs 叶琳
 kfgx 鄙夷
 kfh 叶
 kfhw 嗔
@@ -32423,7 +32425,7 @@ khs 跴
 khsa 中枢
 khse 蹦极
 khsf 中标
-khsf 路标
+khsf 路标叶琳kfgs
 khsg 跴
 khsg 蹅
 khsg 中西
@@ -41524,6 +41526,7 @@ nwyq 以人为镜
 nwys 以人为本
 nwyy 以人废言
 nx 尼
+nxaj 尼莫
 nxcw 以飨观众
 nxdx 尼龙
 nxeb 羽绒服
@@ -56146,6 +56149,7 @@ sbee 李鹏
 sbf 李
 sbg 杍
 sbg 栮
+sbgg 李琴
 sbgi 樄
 sbh 邒
 sbif 橘子汁
@@ -72328,6 +72332,7 @@ wihc 俏皮
 wiig 偿清
 wiir 似水流年
 wiit 借酒浇愁
+wiiy 余润洲
 wijd 分清是非
 wijg 含水量
 wim 倘
@@ -73751,6 +73756,7 @@ wtjn 余暇
 wtjp 余晖
 wtjr 傷
 wtjv 凭照
+wtiy 余泳
 wtk 佫
 wtka 作呕
 wtkf 余味
