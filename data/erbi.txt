@@ -1,4 +1,4 @@
-键码=abcdefghijklmnopqrstuvwxyz;,./
+键码=abcdefghijklmnopqrstuvwxyz;,./'
 码长=4
 规避字符=;iuv
 [组词规则]
@@ -6,10 +6,6 @@ e2=p11+p12+p21+p22
 e3=p11+p12+p21+p31
 a4=p11+p21+p31+n11
 [数据]
-, ，
-. 。
-/ 、
-; ；
 a 安
 a' 北京
 a,ri 嫒
