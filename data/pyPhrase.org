@@ -1,3 +1,4 @@
+li‘liang 力量
 neng'li 能力
 na'ni 那你
 nei'rong 内容
@@ -112049,7 +112050,6 @@ ka'fei'ju 咖啡具
 ka'fei'guan 咖啡馆
 ka'he 卡盒
 ka'hao 卡号
-ka'fei'jie'ai'shi'jie'jing'ji 咖啡节哀世界经济
 kan'fa'de 看法的
 kong'hou 空候
 ke'huo 可获
@@ -112059,8 +112059,6 @@ kuai'fan'yi 快翻译
 kuai'huo'de 快活的
 kuan'hou'de 宽厚的
 kong'han'zheng 恐韩症
-kong'fei 孔斐
-kuang'hong'yan 匡红艳
 kang'hua 康华
 kuang'fu 匡复
 kong'fang 恐防
@@ -151321,7 +151319,7 @@ shu'xue 鼠穴
 shi'xia'qu 市辖区
 shi'xiao'pin 试销品
 shuo'xin'li'hua 说心里话
-she'xian'jing 设陷井
+she'xian'jing 设陷阱
 shu'xi'lu'tu 熟悉路途
 shui'xi'bu 水洗布
 sun'xi'fu 孙媳妇
@@ -177884,7 +177882,7 @@ xin'jia'po 新加坡
 xin'jiang 新疆
 xie'jun'hao 谢君豪
 xiao'jie 小姐
-xian'jing 陷井
+xian'jing 陷阱
 xiang'ju'yi'ke 相聚一刻
 xin'ji'shu 新技术
 xiu'jue 嗅觉
