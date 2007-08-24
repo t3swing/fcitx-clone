@@ -16915,7 +16915,6 @@ gdzj 固定资金
 gdzk 逛
 gdzw 过冬作物
 ge 各
-ge 廿nian
 ge, 哥
 ge. 隔
 ge/ 鸽
@@ -63850,7 +63849,6 @@ ugmo 绳墨
 ugmu 声母
 ugmu. 圣母
 ugmy 声明
-ugmy 生命um/$_声明um;
 ugmy/ 盛名
 ugmy; 圣明
 ugmz 生煤
@@ -64496,8 +64494,6 @@ uhzl 生活资料
 uhzl. 生活资料
 uhzo 上座
 ui 使
-ui 赦she
-ui 廿nian
 ui, 世
 ui. 试
 ui/ 食
