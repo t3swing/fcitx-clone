@@ -2491,8 +2491,6 @@ bjzv. 巴解组织
 bjzv; 并肩作战
 bjzy 不见踪影
 bk 报
-bk 勹bao
-bk 豸zhi
 bk, 抱
 bk. 宝
 bk/ 包
@@ -6876,7 +6874,6 @@ crzc 蹿
 crzi 镩子
 crzi. 汆子
 cs 丛
-cs 勹bao
 cs, 聪
 cs/ 匆
 csb 匆
@@ -10530,7 +10527,6 @@ dlzt, 等离子态
 dlzu 傣族
 dlzv 独立自主
 dm 电
-dm 勹bao
 dm, 掂
 dm. 店
 dm/ 佃
@@ -15356,7 +15352,6 @@ ftyb 非同一般
 ftyu/ 风调雨顺
 ftz. 繁体字
 fu 付
-fu 勹bao
 fu, 夫
 fu. 富
 fu/ 负
@@ -16512,7 +16507,6 @@ gawg 高岸为谷
 gaz. 孤哀子
 gazi 嘎子
 gb 够
-gb 勹bao
 gb, 构
 gb. 沟
 gb/ 狗
@@ -23760,7 +23754,6 @@ hrzg 逭
 hrzi 环子
 hrzv; 还嘴
 hs 红
-hs 勹bao
 hs, 轰
 hs. 洪
 hs; 哄
@@ -24605,7 +24598,6 @@ hvjw/ 汇价
 hvjy 回敬
 hvjy; 绘景
 hvk 喙
-hvk 彖tuan
 hvkb 回扣
 hvke 会客
 hvkh 咴
@@ -27535,7 +27527,6 @@ ijzt 躔
 ijzu 缠足
 ijzv 馋嘴
 ik 朝
-ik 巛chuan
 ik, 超
 ik. 潮
 ik/ 钞
@@ -28227,7 +28218,6 @@ irlt 传略
 irly 传令
 irly; 船龄
 irm 椽
-irm 彖tuan
 irm, 长绒棉
 irm/ 出人命
 irma 川马
@@ -33454,7 +33444,6 @@ jtzm 兼听则明
 jtzq 蹶
 jtzv 撅嘴
 ju 据
-ju 勹bao
 ju, 聚
 ju. 局
 ju/ 句
@@ -39001,8 +38990,6 @@ lhz. 猎户座
 lhzi 浪子
 lhzi. 廊子
 li 离
-li 彖tuan
-li 肀nie
 li, 历
 li. 粒
 li/ 例
@@ -50303,7 +50290,6 @@ ptz 批条子
 ptz. 炮筒子
 ptz; 葡萄紫
 pu 普
-pu 勹bao
 pu, 扑
 pu. 谱
 pu/ 铺
@@ -65602,7 +65588,6 @@ ujzv/ 实际增长
 ujzv; 山嘴
 ujzx 数据总线
 uk 少
-uk 勹bao
 uk, 捎
 uk. 烧
 uk/ 稍
@@ -70878,7 +70863,6 @@ vruu; 专署
 vrux 馔
 vrv 专注
 vrv 篆
-vrv 彖tuan
 vrv. 专注
 vrvb 转轴
 vrve 转折
@@ -74027,7 +74011,6 @@ wtwx 文恬武嬉
 wtxj. 瓦特小时计
 wtyu 舞台艺术
 wu 五
-wu 勹bao
 wu, 无
 wu. 误
 wu/ 物
@@ -77984,8 +77967,6 @@ xnzi. 新姿
 xnzo 新作
 xnzv 心醉
 xp 讯
-xp 勹bao
-xp 巛chuan
 xp, 醺
 xp. 迅
 xp/ 旬
@@ -78625,7 +78606,6 @@ xrzi. 楦子
 xrzk 喧噪
 xrzw 选
 xs 兄
-xs 勹bao
 xs, 雄
 xs. 熊
 xs/ 凶
@@ -84414,7 +84394,6 @@ yok 唷
 yoko 唷
 yoku 哟
 yp 运
-yp 耒lei勹bao厶（三角）
 yp, 云
 yp. 允
 yp/ 匀
@@ -84913,7 +84892,6 @@ yrru 言人人殊
 yrru 引人入胜
 yrru, 言人人殊
 yrs 缘
-yrs 彖tuan
 yrsb 渊薮
 yrse 原色
 yrsi 冤死
@@ -85538,7 +85516,6 @@ ytzd 越
 ytzd 跃
 ytzi 月子
 yu 与
-yu 肀nie
 yu, 玉
 yu. 预
 yu/ 鱼
@@ -88357,7 +88334,6 @@ zkzm 躁
 zkzo 造作
 zkzv 遭罪
 zl 再
-zl 巛chuan
 zl, 载
 zl. 灾
 zl/ 仔
