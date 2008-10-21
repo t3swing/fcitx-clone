@@ -7028,7 +7028,6 @@ cndv 马厩
 cnee 熊心豹胆
 cnef 马脚
 cnfg 巴士
-cnfg 士
 cnfh 予以考虑
 cnfn 马场
 cnfo 马赫
