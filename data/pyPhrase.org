@@ -3062,7 +3062,7 @@ liu'bei 刘备
 luo'bo'kuai'le'bu'xi'ni 萝卜快了不洗泥
 er'bian'feng 耳边风
 ling'bu'xu'xing 令不虚行
-ling'bu'qing 拎不清
+lin'bu'qing 拎不清
 lan'ban'qiu 篮板球
 lv'bo'qi 滤波器
 leng'bing'qi 冷兵器
@@ -3192,7 +3192,7 @@ lun'bian 论辩
 lian'bo 联播
 leng'ban'deng 冷板凳
 lv'ban 旅伴
-ling'bao 拎包
+lin'bao 拎包
 ri'ban 日班
 nu'bi 奴婢
 lang'bei'bu'kan 狼狈不堪
@@ -8110,7 +8110,7 @@ an'feng 暗讽
 e'fu 恶妇
 lei'fu 肋腹
 lian'huan 链环
-ling'huan 拎环
+lin'huan 拎环
 liu'hua 留话
 luo'fu 萝匐
 ni'fang 你方
@@ -19410,7 +19410,7 @@ la'xian'kai'guan 拉线开关
 nian'xian 拈线
 nian'xu 拈须
 ao'xing 拗性
-ling'xia'lai 拎下来
+lin'xia'lai 拎下来
 lin'xiang 林相
 lin'xiang'qian 林祥谦
 lin'xue 林学
