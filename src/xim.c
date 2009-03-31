@@ -203,6 +203,7 @@ Bool MySetICValuesHandler (IMChangeICStruct * call_data)
 
 Bool MySetFocusHandler (IMChangeFocusStruct * call_data)
 {
+    IMSyncXlibStruct syncData;
     CurrentIC = (IC *) FindIC (call_data->icid);
     connect_id = call_data->connect_id;
     icid = call_data->icid;
@@ -263,6 +264,12 @@ Bool MySetFocusHandler (IMChangeFocusStruct * call_data)
     bStartRecordType = False;
     iHZInputed = 0;
 
+    syncData.major_code = XIM_SYNC;
+    syncData.minor_code = 0;
+    syncData.connect_id = call_data->connect_id;
+    syncData.icid = icid;
+    IMSyncXlib(ims, (XPointer)&syncData);
+
     if ( !bTrackCursor || !ConnectIDGetTrackCursor (call_data->connect_id) ) {
 	position * pos = ConnectIDGetPos(connect_id);
 	if (bCenterInputWindow) {
@@ -297,6 +304,7 @@ Bool MyCloseHandler (IMOpenStruct * call_data)
     DestroyConnectID (call_data->connect_id);
     connect_id = 0;
     icid = 0;
+    bSetFocus = False;
     
     return True;
 }
