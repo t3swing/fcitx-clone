@@ -64925,6 +64925,7 @@ fpvv 戴安娜
 fpw 塎
 fpwa 埪
 fpwd 堗
+fpwf 过会
 fpwg 埃塞俄比亚
 fpwi 索偿
 fpwk 塎
@@ -160034,6 +160035,7 @@ ngif 司法
 ngig 怌
 ngij 恒温
 ngim 刁滑
+ngip 懒觉
 ngip 心理学
 ngis 恒河
 ngiv 屋梁
