@@ -59,7 +59,7 @@ void KIMEnable(Bool toEnable);
 void KIMShowAux(Bool toShow);
 void KIMShowPreedit(Bool toShow);
 void KIMShowLookupTable(Bool toShow);
-void KIMUpdateLookupTable(char *labels[], int nLabel, char *texts[], int nText /* char *attrs[], int int0, int int1, int int2, Bool b0*/);
+void KIMUpdateLookupTable(char *labels[], int nLabel, char *texts[], int nText, Bool has_prev, Bool has_next);
 void KIMUpdatePreeditCaret(int position);
 void KIMUpdatePreeditText(char *text);
 void KIMUpdateAux(char *text);

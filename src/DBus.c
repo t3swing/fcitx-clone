@@ -19,7 +19,13 @@ extern INT8 iIMCount;
 extern INT8 iIMIndex;
 extern CARD16 connect_id;
 extern Bool bIsInLegend;
+extern Bool bShowPrev;
+extern Bool bShowNext;
 extern int iLegendCandWordCount;
+extern int iCurrentCandPage;
+extern int iCurrentLegendCandPage;
+extern int iCandPageCount;
+extern int iLegendCandPageCount;
 
 void fixProperty(Property *prop);
 
@@ -491,7 +497,7 @@ void KIMShowLookupTable(Bool toShow)
 
 }
 
-void KIMUpdateLookupTable(char *labels[], int nLabel, char *texts[], int nText /* char *attrs[], int int0, int int1, int int2, Bool b0*/)
+void KIMUpdateLookupTable(char *labels[], int nLabel, char *texts[], int nText, Bool has_prev, Bool has_next)
 {
 
     dbus_uint32_t serial = 0; // unique number to associate replies with requests
@@ -539,11 +545,8 @@ void KIMUpdateLookupTable(char *labels[], int nLabel, char *texts[], int nText /
     dbus_message_iter_close_container(&args,&subAttrs);
 
     int int0 = 0;
-    Bool b0 = True;
-    dbus_message_iter_append_basic(&args, DBUS_TYPE_INT32, &int0);
-    dbus_message_iter_append_basic(&args, DBUS_TYPE_INT32, &int0);
-    dbus_message_iter_append_basic(&args, DBUS_TYPE_INT32, &int0);
-    dbus_message_iter_append_basic(&args, DBUS_TYPE_BOOLEAN, &b0);
+    dbus_message_iter_append_basic(&args, DBUS_TYPE_BOOLEAN, &has_prev);
+    dbus_message_iter_append_basic(&args, DBUS_TYPE_BOOLEAN, &has_next);
 
     // send the message and flush the connection
     if (!dbus_connection_send(conn, msg, &serial)) { 
@@ -749,6 +752,19 @@ void updateMessages()
         KIMShowAux(False);
     }
 
+    bShowPrev = bShowNext = False;
+    if (bIsInLegend) {
+        if (iCurrentLegendCandPage > 0)
+            bShowPrev = True;
+        if (iCurrentLegendCandPage < iLegendCandPageCount)
+            bShowNext = True;
+    } else {
+        if (iCurrentCandPage > 0)
+            bShowPrev = True;
+        if (iCurrentCandPage < iCandPageCount)
+            bShowNext = True;
+    }
+
     n = uMessageDown;
     int nLabels = 0;
     int nTexts = 0;
@@ -771,7 +787,7 @@ void updateMessages()
         }
         text[nTexts++] = strdup(cmb);
         fprintf(stderr,"Labels %d, Texts %d\n",nLabels,nTexts);
-        KIMUpdateLookupTable(label,nLabels,text,nTexts);
+        KIMUpdateLookupTable(label,nLabels,text,nTexts,bShowPrev,bShowNext);
         KIMShowLookupTable(True);
     } else {
         KIMShowLookupTable(False);
