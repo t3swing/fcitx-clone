@@ -177945,7 +177945,8 @@ qiab 金沙萨
 qiah 尔雅
 @qiahao 恰好
 @qiahaoshi 恰好是
-@qiaheshiyi 恰合币�@qiahoulong 掐喉咙
+@qiaheshiyi 恰合时宜
+@qiahoulong 掐喉咙
 @qiahua 掐花
 @qiaigaolian 乞哀告怜
 @qiaizhe 乞爱者
@@ -198925,7 +198926,8 @@ ryqh 攘外
 ryqi 撤销
 ryqk 撤免
 ryqn 年夜饭
-ryqs 白衣湎�ryqv 抗争
+ryqs 白衣卿相
+ryqv 抗争
 ryqy 掋
 ryra 抗拒
 ryrc 挤挨
@@ -297207,7 +297209,8 @@ yyyy 文言
 @zhaonvxu 招女婿
 @zhaonvxu 找女婿
 @zhaoou 兆欧
-@zhaoouji 兆芳�@zhaopai 招牌
+@zhaoouji 兆欧计
+@zhaopai 招牌
 @zhaopai 照排
 @zhaopai 照派
 @zhaopaifan 招牌饭
