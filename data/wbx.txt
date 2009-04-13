@@ -203,7 +203,7 @@ aaty 切切私语
 aau 芅
 aaud 工头
 aauf 工装
-aauj ^工单
+aauj 工单
 aauj 工间
 aauk 工部
 aaum 工商
@@ -9187,7 +9187,7 @@ cyy 馼
 cyyi 驻京
 cyyw 圣诞夜
 d 在
-d ^石
+d 石
 d 大
 d 而
 da 左
@@ -9317,8 +9317,6 @@ dat 硗
 dat 磽
 data 砌筑
 datd 大功告成
-date ^$Y年$M月$D日
-date $y年$m月$d日
 date 春花秋月
 datf 左迁
 datg 有期徒刑
@@ -9345,8 +9343,6 @@ dawx 丰功伟绩
 dawx 硴
 dawy 硔
 daxc 成功经验
-day ^$D日
-day ^$d日
 day 硭
 dayn 硭
 days 厮磨
@@ -9392,7 +9388,7 @@ dbpw 太阳穴
 dbpy 太阳神
 dbqu 太阳镜
 dbrd 胡子拉碴
-dbre ^三聚氰胺
+dbre 三聚氰胺
 dbru 耷拉
 dbst 有隙可乘
 dbsy 原子核
@@ -22164,7 +22160,7 @@ gdqv 天煞
 gdrc 一大把
 gdre 天授
 gdrg 天皇
-gdrh ^正龙拍虎
+gdrh 正龙拍虎
 gdrh 天年
 gdrh 天牛
 gdri 青春年少
@@ -28297,8 +28293,6 @@ hopy 瞇
 hoq 瞵
 hoqh 瞵
 hotd 彪炳千古
-hour ^$H时
-hour ^$h时
 hovg 䁖
 hoxn 战火纷飞
 hoxt 眯缝
@@ -36711,7 +36705,6 @@ jojo 易燃易爆
 jojw 颗粒归仓
 jojx 时断时续
 jojy 显影
-joke ^嘦巭好，兲嫑跑*_*!
 jokh 显贵
 jomq 显见
 jonn 电业局
@@ -45003,7 +44996,7 @@ mfgw 周瑜
 mfh 巅
 mfh 屽
 mfh 巔
-mfha ^周老虎
+mfha 周老虎
 mfhj 赌桌
 mfhm 巅
 mfhm 巔
@@ -46824,7 +46817,6 @@ musg 崷
 musk 嵜
 musk 﨑
 musn 同病相怜
-mute ^$x[静音开关]mute
 mute 嵃
 mutg 嵼
 mutj 赚得
@@ -69572,7 +69564,6 @@ shgh 桛
 shgk 相逼
 shgn 相与
 shgo 想来
-shgt ^极点五笔
 shgx 相互
 shgx 朴素
 shh 欋
@@ -73163,9 +73154,6 @@ tesk 舟楫
 tesk 舸
 tesq 船桅
 tesr 透析
-test ^中国
-test 人民
-test 20
 test 舟桥
 tesu 舷梯
 tesv 盘根
@@ -74787,8 +74775,6 @@ tikq 血泪史
 tilk 稍加
 tilw 科学界
 tim 徜
-time ^$h时$mi分
-time ^$H时$MI分
 timi 和光同尘
 timk 徜
 timm 簿册
@@ -86548,8 +86534,6 @@ wedg 化肥厂
 wedh 仍在
 wee 倗
 weeg 倗
-week ^$W
-week ^$w
 wefd 仍需
 wefi 仍未
 weft 优胜者
@@ -95222,8 +95206,6 @@ ye 衣
 yead 试用期
 yeaf 衣鞋
 yeap 哀荣
-year ^$Y年
-year ^$y年
 yeav 哀切
 yec 塱
 yecb 哀矜
