@@ -48575,7 +48575,7 @@ drkf 原味
 drkg 破折号
 drkg ｛
 drkg ｝
-drkg ──
+drkg ——
 drkh 原路
 drkj 原唱
 drld 原因
