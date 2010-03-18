@@ -80,7 +80,6 @@ extern uint     iInputWindowWidth;
 extern Bool     bTrackCursor;
 extern Bool     bCenterInputWindow;
 extern int      iCodeInputCount;
-extern iconv_t  convUTF8;
 extern uint     uMessageDown;
 extern uint     uMessageUp;
 extern Bool     bVK;

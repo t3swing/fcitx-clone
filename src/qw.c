@@ -21,6 +21,7 @@
  * 区位的算法来自于rfinput-2.0
  */
 #include <string.h>
+#include <iconv.h>
 
 #include "qw.h"
 #include "InputWindow.h"
@@ -36,6 +37,9 @@ extern uint     uMessageUp;
 extern MESSAGE  messageDown[];
 extern uint     uMessageDown;
 extern Bool	bPointAfterNumber;
+    
+char     strQWHZ[3];
+char     strQWHZUTF8[UTF8_MAX_LENGTH + 1];
 
 INPUT_RETURN_VALUE DoQWInput(int iKey)
 {
@@ -160,22 +164,35 @@ INPUT_RETURN_VALUE QWGetCandWords (SEARCH_MODE mode)
 
 char           *GetQuWei (int iQu, int iWei)
 {
-    static char     strHZ[3];
+
+	char *inbuf, *outbuf;
+
+	size_t insize = 2, avail = UTF8_MAX_LENGTH + 1;
+
+	iconv_t convGBK = iconv_open("utf-8", "gb18030");
 
     if (iQu >= 95) {		/* Process extend Qu 95 and 96 */
-	strHZ[0] = iQu - 95 + 0xA8;
-	strHZ[1] = iWei + 0x40;
+	strQWHZ[0] = iQu - 95 + 0xA8;
+	strQWHZ[1] = iWei + 0x40;
 
 	/* skip 0xa87f and 0xa97f */
-	if ((unsigned char) strHZ[1] >= 0x7f)
-	    strHZ[1]++;
+	if ((unsigned char) strQWHZ[1] >= 0x7f)
+	    strQWHZ[1]++;
     }
     else {
-	strHZ[0] = iQu + 0xa0;
-	strHZ[1] = iWei + 0xa0;
+	strQWHZ[0] = iQu + 0xa0;
+	strQWHZ[1] = iWei + 0xa0;
     }
 
-    strHZ[2] = '\0';
+    strQWHZ[2] = '\0';
 
-    return strHZ;
+	inbuf = strQWHZ;
+
+	outbuf = strQWHZUTF8;
+
+	iconv(convGBK, &inbuf, &insize, &outbuf, &avail);
+
+	iconv_close(convGBK);
+
+    return strQWHZUTF8;
 }

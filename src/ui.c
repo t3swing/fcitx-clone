@@ -73,8 +73,6 @@ Bool            bUseBold = True;
 char            strUserLocale[50] = "zh_CN.gbk";
 #endif
 
-iconv_t         convUTF8;
-
 GC              dimGC = (GC) NULL;
 GC              lightGC = (GC) NULL;
 
@@ -129,8 +127,6 @@ Bool InitX (void)
 
     SetMyXErrorHandler ();
     iScreen = DefaultScreen (dpy);
-
-    convUTF8 = iconv_open ("UTF-8", "GB18030");
 
     return True;
 }

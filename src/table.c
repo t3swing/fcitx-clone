@@ -141,6 +141,57 @@ extern PYCandWord PYCandWords[];
 extern char     strFindString[];
 extern ParsePYStruct findMap;
 
+#define STR_TBLCONF_MB 0
+#define STR_TBLCONF_NAME 1
+#define STR_TBLCONF_PATH 2
+#define STR_TBLCONF_ADJUSTORDER 3
+#define STR_TBLCONF_USEPY 4
+#define STR_TBLCONF_PYCODE 5
+#define STR_TBLCONF_AUTOSEND 6
+#define STR_TBLCONF_NONEAUTOSEND 7
+#define STR_TBLCONF_ENDCODE 8
+#define STR_TBLCONF_USEMATCHINGKEY 9
+#define STR_TBLCONF_MATCHINGKEY 10
+#define STR_TBLCONF_EXACTMATCH 11
+#define STR_TBLCONF_MAXPHRASE 12
+#define STR_TBLCONF_AUTOPHRASE 13
+#define STR_TBLCONF_AUTOPHRASELENGTH 14
+#define STR_TBLCONF_AUTOPHRASEPHRASE 15
+#define STR_TBLCONF_SAVEAUTOPHRASE 16
+#define STR_TBLCONF_PROMPTTABLECODE 17
+#define STR_TBLCONF_SYMBOL 18
+#define STR_TBLCONF_SYMBOLFILE 19
+#define STR_TBLCONF_CHOOSE 20
+
+#define CONST_STR_TBLCONF_SIZE 21
+
+char* strConstTblConf[] = {
+	"[码表]",
+	"名称=",
+	"码表=",
+	"调频=",
+	"拼音=",
+	"拼音键=",
+	"自动上屏=",
+	"空码自动上屏=",
+	"中止键=",
+	"模糊=",
+	"模糊键=",
+	"精确匹配=",
+	"最长词组字数=",
+	"自动词组=",
+	"自动词组长度=",
+	"词组参与自动造词=",
+	"保存自动词组=",
+	"提示编码=",
+	"符号=",
+	"符号文件=",
+	"候选词选择键="
+};
+
+#define cstr(b) (strConstTblConf[STR_TBLCONF_##b])
+#define cstrlen(b) (strlen(cstr(b)))
+
 /*
  * 读取码表输入法的名称和文件路径
  */
@@ -188,7 +239,7 @@ void LoadTableInfo (void)
 	if (pstr[0] == '#')
 	    continue;
 
-	if (strstr (pstr, "[码表]"))
+	if (strstr (pstr, cstr(MB)))
 	    iTableCount++;
     }
 
@@ -238,7 +289,7 @@ void LoadTableInfo (void)
 	    if (pstr[0] == '#')
 		continue;
 
-	    if (!strcmp (pstr, "[码表]")) {
+	    if (!strcmp (pstr, cstr(MB) )) {
 		if (iTableIMIndex != -1) {
 		    if (table[iTableIMIndex].strName[0] == '\0' || table[iTableIMIndex].strPath[0] == '\0') {
 			iTableCount = 0;
@@ -249,91 +300,91 @@ void LoadTableInfo (void)
 		}
 		iTableIMIndex++;
 	    }
-	    else if (MyStrcmp (pstr, "名称=")) {
-		pstr += 5;
+	    else if (MyStrcmp (pstr, cstr(NAME))) {
+		pstr += cstrlen(NAME);
 		strcpy (table[iTableIMIndex].strName, pstr);
 	    }
-	    else if (MyStrcmp (pstr, "码表=")) {
-		pstr += 5;
+	    else if (MyStrcmp (pstr, cstr(PATH))) {
+		pstr += cstrlen(PATH);
 		strcpy (table[iTableIMIndex].strPath, pstr);
 	    }
-	    else if (MyStrcmp (pstr, "调频=")) {
-		pstr += 5;
+	    else if (MyStrcmp (pstr, cstr(ADJUSTORDER))) {
+		pstr += cstrlen(ADJUSTORDER);
 		table[iTableIMIndex].tableOrder = (ADJUSTORDER) atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "拼音=")) {
-		pstr += 5;
+	    else if (MyStrcmp (pstr, cstr(USEPY))) {
+		pstr += cstrlen(USEPY);
 		table[iTableIMIndex].bUsePY = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "拼音键=")) {
-		pstr += 7;
+	    else if (MyStrcmp (pstr, cstr(PYCODE))) {
+		pstr += cstrlen(PYCODE);
 		while (*pstr == ' ')
 		    pstr++;
 		table[iTableIMIndex].cPinyin = *pstr;
 	    }
-	    else if (MyStrcmp (pstr, "自动上屏=")) {
-		pstr += 9;
+	    else if (MyStrcmp (pstr, cstr(AUTOSEND))) {
+		pstr += cstrlen(AUTOSEND);
 		table[iTableIMIndex].iTableAutoSendToClient = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "空码自动上屏=")) {
-		pstr += 13;
+	    else if (MyStrcmp (pstr, cstr(NONEAUTOSEND))) {
+		pstr += cstrlen(NONEAUTOSEND);
 		table[iTableIMIndex].iTableAutoSendToClientWhenNone = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "中止键=")) {
-		pstr += 7;
+	    else if (MyStrcmp (pstr, cstr(ENDCODE))) {
+		pstr += cstrlen(ENDCODE);
 		while (*pstr == ' ' || *pstr == '\t')
 		    pstr++;
 		table[iTableIMIndex].strEndCode = (char *) malloc (sizeof (char) * (strlen (pstr) + 1));
 		strcpy (table[iTableIMIndex].strEndCode, pstr);
 	    }
-	    else if (MyStrcmp (pstr, "模糊=")) {
-		pstr += 5;
+	    else if (MyStrcmp (pstr, cstr(USEMATCHINGKEY))) {
+		pstr += cstrlen(USEMATCHINGKEY);
 		table[iTableIMIndex].bUseMatchingKey = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "模糊键=")) {
-		pstr += 7;
+	    else if (MyStrcmp (pstr, cstr(MATCHINGKEY))) {
+		pstr += cstrlen(MATCHINGKEY);
 		while (*pstr == ' ')
 		    pstr++;
 		table[iTableIMIndex].cMatchingKey = *pstr;
 	    }
-	    else if (MyStrcmp (pstr, "精确匹配=")) {
-		pstr += 9;
+	    else if (MyStrcmp (pstr, cstr(EXACTMATCH) )) {
+		pstr += cstrlen(EXACTMATCH);
 		table[iTableIMIndex].bTableExactMatch = atoi (pstr);
 	    }
-/*	    else if (MyStrcmp (pstr, "最长词组字数=")) {
-		pstr += 13;
+/*	    else if (MyStrcmp (pstr, cstr(MAXPHRASE))) {
+		pstr += cstrlen(MAXPHRASE);
 		table[iTableIMIndex].iMaxPhraseAllowed = atoi (pstr);
 	    }*/
-	    else if (MyStrcmp (pstr, "自动词组=")) {
-		pstr += 9;
+	    else if (MyStrcmp (pstr, cstr(AUTOPHRASE))) {
+		pstr += cstrlen(AUTOPHRASE);
 		table[iTableIMIndex].bAutoPhrase = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "自动词组长度=")) {
-		pstr += 13;
+	    else if (MyStrcmp (pstr, cstr(AUTOPHRASELENGTH))) {
+		pstr += cstrlen(AUTOPHRASELENGTH);
 		table[iTableIMIndex].iAutoPhrase = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "词组参与自动造词=")) {
-		pstr += 17;
+	    else if (MyStrcmp (pstr, cstr(AUTOPHRASEPHRASE))) {
+		pstr += cstrlen(AUTOPHRASEPHRASE);
 		table[iTableIMIndex].bAutoPhrasePhrase = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "保存自动词组=")) {
-		pstr += 13;
+	    else if (MyStrcmp (pstr, cstr(SAVEAUTOPHRASE))) {
+		pstr += cstrlen(SAVEAUTOPHRASE);
 		table[iTableIMIndex].iSaveAutoPhraseAfter = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "提示编码=")) {
-		pstr += 9;
+	    else if (MyStrcmp (pstr, cstr(PROMPTTABLECODE))) {
+		pstr += cstrlen(PROMPTTABLECODE);
 		table[iTableIMIndex].bPromptTableCode = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "符号=")) {
-		pstr += 5;
+	    else if (MyStrcmp (pstr, cstr(SYMBOL))) {
+		pstr += cstrlen(SYMBOL);
 		strcpy (table[iTableIMIndex].strSymbol, pstr);
 	    }
-	    else if (MyStrcmp (pstr, "符号文件=")) {
-		pstr += 9;
+	    else if (MyStrcmp (pstr, cstr(SYMBOLFILE))) {
+		pstr += cstrlen(SYMBOLFILE);
 		strcpy (table[iTableIMIndex].strSymbolFile, pstr);
 	    }
-	    else if(MyStrcmp (pstr, "候选词选择键=")){
-                pstr += 13;
+	    else if(MyStrcmp (pstr, cstr(CHOOSE))){
+                pstr += cstrlen(CHOOSE);
                 strncpy (table[iTableIMIndex].strChoose, pstr, 10);		
             }
 	}

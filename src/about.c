@@ -63,9 +63,6 @@ char            strTitle[100];
 
 int             iBackPixel;
 
-extern iconv_t  convUTF8;
-extern Bool     bIsUtf8;
-
 Bool CreateAboutWindow (void)
 {
     strcpy (strTitle, AboutTitle);
@@ -102,8 +99,6 @@ Bool CreateAboutWindow (void)
 void InitWindowProperty (void)
 {
     XTextProperty   tp;
-    char            strOutput[100];
-    char           *ps;
 
     Atom            about_wm_window_type = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE", False);
     Atom            type_toolbar = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_TOOLBAR", False);
@@ -116,21 +111,14 @@ void InitWindowProperty (void)
     about_kill_atom = XInternAtom (dpy, "WM_DELETE_WINDOW", False);
     XSetWMProtocols (dpy, aboutWindow, &about_kill_atom, 1);
 
-	size_t          l1, l2;
 	char           *p;
 
 	p = AboutCaption;
-	ps = strOutput;
-	l1 = strlen (AboutCaption);
-	l2 = 99;
-	l1 = iconv (convUTF8, (ICONV_CONST char **) (&p), &l1, &ps, &l2);
-	*ps = '\0';
-	ps = strOutput;
 
-    tp.value = (void *) ps;
+    tp.value = (void *) p;
     tp.encoding = XA_STRING;
     tp.format = 16;
-    tp.nitems = strlen (ps);
+    tp.nitems = strlen (p);
     XSetWMName (dpy, aboutWindow, &tp);
 }
 
