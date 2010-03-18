@@ -235,6 +235,15 @@ extern tray_win_t tray;
 extern Bool	tray_mapped;
 #endif
 
+char *sCornerTrans[] = {
+	"　", "！", "＂", "＃", "￥", "％", "＆", "＇", "（", "）", "＊", "＋", "，", "－", "．", "／", 
+	"０", "１", "２", "３", "４", "５", "６", "７", "８", "９", "：", "；", "＜", "＝", "＞", "？",
+	"＠", "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ", "Ｌ", "Ｍ", "Ｎ", "Ｏ",
+	"Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ", "Ｗ", "Ｘ", "Ｙ", "Ｚ", "［", "＼", "］", "＾", "＿",
+	"｀", "ａ", "ｂ", "ｃ", "ｄ", "ｅ", "ｆ", "ｇ", "ｈ", "ｉ", "ｊ", "ｋ", "ｌ", "ｍ", "ｎ", "ｏ",
+	"ｐ", "ｑ", "ｒ", "ｓ", "ｔ", "ｕ", "ｖ", "ｗ", "ｘ", "ｙ", "ｚ", "｛", "｜", "｝", "￣",
+};
+
 void ResetInput (void)
 {
     iCandPageCount = 0;
@@ -563,10 +572,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 				//有人报 空格 的全角不对，正确的是0xa1 0xa1
 				//但查资料却说全角符号总是以0xa3开始。
 				//由于0xa3 0xa0可能会显示乱码，因此采用0xa1 0xa1的方式
-				if (iKey == ' ')
-				    sprintf (strStringGet, "%c%c", 0xa1, 0xa1);
-				else
-				    sprintf (strStringGet, "%c%c", 0xa3, 0xa0 + iKey - 32);
+				sprintf (strStringGet, "%s", sCornerTrans[iKey - 32]);
 				retVal = IRV_GET_CANDWORDS;
 			    }
 			    else {
@@ -1291,7 +1297,6 @@ void SwitchIM (INT8 index)
 
 #ifdef _ENABLE_DBUS
     if (bUseDBus) {
-	char* need_free = NULL;
 	
 	if ((index == (INT8)-2) || (index == (INT8)-2)) {
 	    strcpy(logo_prop.label, "Fcitx");
@@ -1301,7 +1306,7 @@ void SwitchIM (INT8 index)
 	    int iIndex = ConnectIDGetState(connect_id);
 	    
 	    if (iIndex == IS_CHN) {
-		strcpy(logo_prop.label, (need_free = g2u(im[iIMIndex].strName)));
+		strcpy(logo_prop.label, im[iIMIndex].strName);
 		iState = IS_CHN;
 	    }
 	}
@@ -1309,9 +1314,7 @@ void SwitchIM (INT8 index)
 	updateProperty(&logo_prop);
 	updateProperty(&state_prop);
 	updateMessages();
-	if (need_free)
-	    free(need_free);
-    }
+	}
 #endif
 }
 

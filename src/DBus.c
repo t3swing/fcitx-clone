@@ -819,22 +819,19 @@ void updateMessages()
     char *text[33];
     char cmb[100] = "";
     int i;
-    char* utfmsg = NULL;
 
     if (n) {
         for (i=0;i<n;i++) {
-            debug_dbus("Type: %d Text: %s\n",messageDown[i].type,(utfmsg=convertMessage(messageDown[i].strMsg)));
-            free(utfmsg);
+            debug_dbus("Type: %d Text: %s\n",messageDown[i].type,messageDown[i].strMsg);
 
             if (messageDown[i].type == MSG_INDEX) {
                 if (nLabels) {
                     text[nTexts++] = strdup(cmb);
                 }
-                label[nLabels++] = convertMessage(messageDown[i].strMsg);
+                label[nLabels++] = strdup(messageDown[i].strMsg);
                 strcpy(cmb,"");
             } else {
-                strcat(cmb,(utfmsg=convertMessage(messageDown[i].strMsg)));
-                free(utfmsg);
+                strcat(cmb,(messageDown[i].strMsg));
             }
         }
         text[nTexts++] = strdup(cmb);
@@ -884,8 +881,7 @@ void updateMessages()
     if (n) {
         // FIXME: buffer overflow
         for (i=0;i<n;i++) {
-            strcat(aux,(utfmsg=convertMessage(messageUp[i].strMsg)));
-            free(utfmsg);
+            strcat(aux,messageUp[i].strMsg);
             debug_dbus("updateMesssages Up:%s\n", aux);
         }
         if (bShowCursor)
@@ -903,25 +899,6 @@ void updateMessages()
         KIMShowPreedit(False);
         KIMShowAux(False);
     }
-}
-
-char* convertMessage(char* in)
-{
-    char* strTemp = NULL;
-    char* result = NULL;
-    if (in) {
-        if (bUseGBKT) {
-            strTemp = ConvertGBKSimple2Tradition(in);
-        }
-        else
-            strTemp = in;
-        result = g2u(strTemp);
-        if (bUseGBKT && strTemp)
-            free(strTemp);
-        return result;
-    }
-    else
-        return NULL;
 }
 
 void showMessageDown(MESSAGE *msgs, int n)
@@ -1074,7 +1051,7 @@ void triggerProperty(char *propKey)
     bzero(menu,32);
     if (strcmp(propKey,logo_prop.key) == 0) {
         for (i = 0; i < iIMCount; i++) {
-            name = g2u(im[i].strName);
+            name = im[i].strName;
             //menu[i] = (char *)malloc(100*sizeof(char));
             Property prop;
             prop.key = (char *)malloc(100*sizeof(char));
@@ -1085,7 +1062,6 @@ void triggerProperty(char *propKey)
             //            strcat(prop.tip,"输入法");
             fixProperty(&prop);
             menu[i] = property2string(&prop);
-            free(name);
             free(prop.key);
         }
         KIMExecMenu(menu,iIMCount);
@@ -1151,54 +1127,6 @@ char* property2string(Property *prop)
     return result;
 }
 
-char* g2u(char *instr)
-{
-    iconv_t cd;
-    char *inbuf;
-    char *outbuf;
-    char *outptr;
-    unsigned int insize=strlen(instr);
-    unsigned int outputbufsize=MESSAGE_MAX_LENGTH;
-    unsigned int avail=outputbufsize;
-    unsigned int nconv;
-    inbuf=instr;
-    outbuf=(char *)malloc(outputbufsize * sizeof(char));
-    outptr=outbuf;    //使用outptr作为空闲空间指针以避免outbuf被改变
-    memset(outbuf,'\0',outputbufsize);
-    cd=iconv_open("utf-8","gb18030");    //将字符串编码由gtk转换为utf-8
-    if(cd==(iconv_t)-1)
-    {
-        return "";
-    }
-    nconv=iconv(cd,&inbuf,&insize,&outptr,&avail);
-    iconv_close(cd);
-    return outbuf;
-}
-
-char* u2g(char *instr)
-{
-    iconv_t cd;
-    char *inbuf;
-    char *outbuf;
-    char *outptr;
-    unsigned int insize=strlen(instr);
-    unsigned int outputbufsize=MESSAGE_MAX_LENGTH;
-    unsigned int avail=outputbufsize;
-    unsigned int nconv;
-    inbuf=instr;
-    outbuf=(char *)malloc(outputbufsize * sizeof(char));
-    outptr=outbuf;    //使用outptr作为空闲空间指针以避免outbuf被改变
-    memset(outbuf,'\0',outputbufsize);
-    cd=iconv_open("gb18030","utf-8");    //将字符串编码由utf-8转换为gbk
-    if(cd==(iconv_t)-1)
-    {
-        return "";
-    }
-    nconv=iconv(cd,&inbuf,&insize,&outptr,&avail);
-    return outbuf;
-
-}
-
 void fixProperty(Property *prop)
 {
     if (strcmp(prop->label,"Fcitx") == 0) {
@@ -1208,11 +1136,9 @@ void fixProperty(Property *prop)
         prop->icon = PKGDATADIR "/xpm/" "PinYin.png";
     }
     if (strcmp(prop->label,"智能双拼") == 0) {
-        //        prop->label = "双拼";
         prop->icon = "";
     }
     if (strcmp(prop->label,"区位") == 0) {
-        //        prop->label = "区位";
         prop->icon = "";
     }
     if (strcmp(prop->label,"五笔字型") == 0) {
@@ -1231,7 +1157,6 @@ void fixProperty(Property *prop)
         prop->icon = "";
     }
     if (strcmp(prop->label,"冰蟾全息") == 0) {
-        //        prop->label = "冰";
         prop->icon = "";
     }
     if (strcmp(prop->label,"自然码") == 0) {
@@ -1239,13 +1164,11 @@ void fixProperty(Property *prop)
     }
     if (strcmp(prop->label,"电报码") == 0) {
         prop->icon = "";
-        //        prop->label = "电";
     }
 }
 
 void updatePropertyByConnectID(CARD16 connect_id) {
 	int iIndex = ConnectIDGetState(connect_id);
-    char *need_free = NULL;
 	switch (iIndex) {
 	case IS_CLOSED:
         iState = IS_ENG;
@@ -1255,19 +1178,17 @@ void updatePropertyByConnectID(CARD16 connect_id) {
 		break;
 	case IS_CHN:
         iState = IS_CHN;
-		strcpy(logo_prop.label, (need_free = g2u(im[iIMIndex].strName)));
+		strcpy(logo_prop.label, im[iIMIndex].strName);
 		updateProperty(&logo_prop);
 		updateProperty(&state_prop);
 		break;
 	case IS_ENG:
         iState = IS_ENG;
-		strcpy(logo_prop.label, (need_free = g2u(im[iIMIndex].strName)));
+		strcpy(logo_prop.label, im[iIMIndex].strName);
 		updateProperty(&logo_prop);
 		updateProperty(&state_prop);
 		break;
 	}
-    if (need_free)
-        free(need_free);
 }
 
 int calKIMCursorPos()
