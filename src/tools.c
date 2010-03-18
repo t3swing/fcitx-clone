@@ -35,6 +35,7 @@
 #include <limits.h>
 #include <string.h>
 #include <ctype.h>
+#include <pthread.h>
 
 #include "ui.h"
 #include "version.h"
@@ -44,6 +45,7 @@
 #include "py.h"
 #include "sp.h"
 #include "ime.h"
+#include "uthash.h"
 
 extern Display *dpy;
 extern int      iScreen;
@@ -181,6 +183,8 @@ extern HOTKEYS	hkResetRecording[];
 extern Bool	bRecording;
 extern char     strRecordingPath[];
 #endif
+
+pthread_rwlock_t plock;
 
 #define FCITX_CONFIG_DIR "/fcitx-utf8/"
 
@@ -1831,8 +1835,16 @@ Bool CheckHZCharset (char *strHZ)
     return True;
 }
 
-static char    *gGBKS2TTable = NULL;
-static int      gGBKS2TTableSize = -1;
+
+typedef struct simple2trad_t
+{
+	int wc;
+	char str[UTF8_MAX_LENGTH + 1];
+	INT8 len;
+	UT_hash_handle hh;
+} simple2trad_t;
+
+simple2trad_t* s2t_table = NULL;
 
 /**
  * 该函数装载data/gbks2t.tab的简体转繁体的码表，
@@ -1843,18 +1855,19 @@ static int      gGBKS2TTableSize = -1;
  */
 char           *ConvertGBKSimple2Tradition (char *strHZ)
 {
-	return strdup(strHZ);
-#if 0
     FILE           *fp;
     char           *ret;
     char            strPath[PATH_MAX];
-    int             i, len;
-    unsigned int    idx;
+    int             i, len, ret_len;
+	char            buf[2 * UTF8_MAX_LENGTH + 2];
+	char           *ps;
 
     if (strHZ == NULL)
 	return NULL;
 
-    if (!gGBKS2TTable) {
+	if (pthread_rwlock_wrlock(&plock) != 0)
+		return NULL;
+    if (!s2t_table) {
 	len = 0;
 
 	strcpy (strPath, PKGDATADIR "/data/");
@@ -1874,44 +1887,58 @@ char           *ConvertGBKSimple2Tradition (char *strHZ)
 	    strcpy (ret, strHZ);
 	    return ret;
 	}
+	for (;;)
+	{
+        simple2trad_t *s2t;
+		char *ps;
+		int wc;
+		if(!fgets(buf, sizeof(buf) - 1, fp))
+			break;
 
-	fseek (fp, 0, SEEK_END);
-	fgetpos (fp, (fpos_t *) & len);
-	if (len > 0) {
-	    gGBKS2TTable = (char *) malloc (sizeof (char) * len);
-	    gGBKS2TTableSize = len;
-	    fseek (fp, 0, SEEK_SET);
-	    fread (gGBKS2TTable, sizeof (char), len, fp);
+		ps = utf8_get_char(buf, &wc);
+		s2t = (simple2trad_t*) malloc(sizeof(simple2trad_t));
+		s2t->wc = wc;
+		s2t->len = utf8_char_len(ps);
+		strncpy(s2t->str, ps, s2t->len);
+		s2t->str[s2t->len] = '\0';
+
+		HASH_ADD_INT(s2t_table, wc, s2t);
 	}
-	fclose (fp);
+
     }
+	pthread_rwlock_unlock(&plock);
 
     i = 0;
-    len = strlen (strHZ);
-    ret = (char *) malloc (sizeof (char) * (len + 1));
+    len = utf8_strlen (strHZ);
+	ret_len = 0;
+    ret = (char *) malloc (sizeof (char) * (UTF8_MAX_LENGTH * len + 1));
+	ps = strHZ;
+	ret[0] = '\0';
     for (; i < len; ++i) {
-	if (i < (len - 1))
-	    if ((unsigned char) strHZ[i] >= (unsigned char) 0x81
-		&& (unsigned char) strHZ[i] <= (unsigned char) 0xfe &&
-		(((unsigned char) strHZ[i + 1] >= (unsigned char) 0x40 && (unsigned char) strHZ[i + 1] <= (unsigned char) 0x7e) || ((unsigned char) strHZ[i + 1] > (unsigned char) 0x7f && (unsigned char) strHZ[i + 1] <= (unsigned char) 0xfe))) {
-		idx = (((unsigned char) strHZ[i] - (unsigned char) 0x81)
-		       * (unsigned char) 0xbe + ((unsigned char) strHZ[i + 1] - (unsigned char) 0x40)
-		       - ((unsigned char) strHZ[i + 1] / (unsigned char) 0x80)) * 2;
-		if (idx >= 0 && idx < gGBKS2TTableSize - 1) {
-		    if ((unsigned char) gGBKS2TTable[idx + 1] != (unsigned char) 0x7f) {
-			ret[i] = gGBKS2TTable[idx];
-			ret[i + 1] = gGBKS2TTable[idx + 1];
-			i += 1;
-			continue;
-		    }
+		int wc;
+		simple2trad_t *s2t = NULL;
+		int chr_len = utf8_char_len(ps);
+		char *nps;
+		nps = utf8_get_char(ps , &wc);
+		HASH_FIND_INT(s2t_table, &wc, s2t);
+
+		if (s2t)
+		{
+			strcat(ret, s2t->str);
+			ret_len += s2t->len;
 		}
-	    }
-	ret[i] = strHZ[i];
+		else
+		{
+			strncat(ret, ps, chr_len);
+			ret_len += chr_len;
+		}
+
+		ps = nps;
+
     }
-    ret[len] = '\0';
+    ret[ret_len] = '\0';
 
     return ret;
-#endif
 }
 
 int CalHZIndex (char *strHZ)

@@ -2555,15 +2555,21 @@ void SavePYUserPhrase (void)
 	for (j = 0; j < PYFAList[i].iBase; j++) {
 	    iTemp = PYFAList[i].pyBase[j].iUserPhrase;
 	    if (iTemp) {
+		INT8 clen;
 		fwrite (&i, sizeof (int), 1, fp);
-		fwrite (PYFAList[i].pyBase[j].strHZ, sizeof (char) * 2, 1, fp);
+		clen = strlen(PYFAList[i].pyBase[j].strHZ);
+		fwrite (PYFAList[i].pyBase[j].strHZ, sizeof (char) * clen, 1, fp);
 		fwrite (&iTemp, sizeof (int), 1, fp);
 		phrase = PYFAList[i].pyBase[j].userPhrase->next;
 		for (k = 0; k < PYFAList[i].pyBase[j].iUserPhrase; k++) {
 		    iTemp = strlen (phrase->strMap);
 		    fwrite (&iTemp, sizeof (int), 1, fp);
 		    fwrite (phrase->strMap, sizeof (char) * iTemp, 1, fp);
+
+			iTemp = strlen(phrase->strPhrase);
+			fwrite( &iTemp, sizeof (int), 1, fp);
 		    fwrite (phrase->strPhrase, sizeof (char) * iTemp, 1, fp);
+
 		    iTemp = phrase->iIndex;
 		    fwrite (&iTemp, sizeof (int), 1, fp);
 		    iTemp = phrase->iHit;
@@ -2620,13 +2626,20 @@ void SavePYFreq (void)
 	    fwrite (&j, sizeof (int), 1, fp);
 	    hz = pPyFreq->HZList->next;
 	    for (k = 0; k < pPyFreq->iCount; k++) {
-		fwrite (hz->strHZ, sizeof (char) * 2, 1, fp);
+
+		INT8 slen = strlen(hz->strHZ);
+		fwrite (&slen, sizeof (INT8), 1, fp);
+		fwrite (hz->strHZ, sizeof (char) * slen, 1, fp);
+
 		j = hz->iPYFA;
 		fwrite (&j, sizeof (int), 1, fp);
+
 		j = hz->iHit;
 		fwrite (&j, sizeof (int), 1, fp);
+
 		j = hz->iIndex;
 		fwrite (&j, sizeof (int), 1, fp);
+
 		hz = hz->next;
 	    }
 	}
@@ -2849,7 +2862,7 @@ INPUT_RETURN_VALUE PYGetLegendCandWords (SEARCH_MODE mode)
 	for (i = 0; i < iPYFACount; i++) {
 	    if (!strncmp (strPYLegendMap, PYFAList[i].strMap, 2)) {
 		for (j = 0; j < PYFAList[i].iBase; j++) {
-		    if (!strncmp (strPYLegendSource, PYFAList[i].pyBase[j].strHZ, 2)) {
+		    if (!utf8_strncmp (strPYLegendSource, PYFAList[i].pyBase[j].strHZ, 1)) {
 			pyBaseForLengend = &(PYFAList[i].pyBase[j]);
 			goto _HIT;
 		    }
@@ -2880,14 +2893,17 @@ INPUT_RETURN_VALUE PYGetLegendCandWords (SEARCH_MODE mode)
     }
 
     for (i = 0; i < pyBaseForLengend->iPhrase; i++) {
-	if (strlen (strPYLegendSource) == 2) {
-	    if (strlen (pyBaseForLengend->phrase[i].strPhrase) == 2 && ((mode != SM_PREV && !pyBaseForLengend->phrase[i].flag) || (mode == SM_PREV && pyBaseForLengend->phrase[i].flag))) {
+	if (utf8_strlen (strPYLegendSource) == 1) {
+	    if (utf8_strlen (pyBaseForLengend->phrase[i].strPhrase) == 1 && ((mode != SM_PREV && !pyBaseForLengend->phrase[i].flag) || (mode == SM_PREV && pyBaseForLengend->phrase[i].flag))) {
 		if (!PYAddLengendCandWord (&pyBaseForLengend->phrase[i], mode))
 		    break;
 	    }
 	}
 	else if (strlen (pyBaseForLengend->phrase[i].strPhrase) == strlen (strPYLegendSource)) {
-	    if (!strncmp (strPYLegendSource + 2, pyBaseForLengend->phrase[i].strPhrase, strlen (strPYLegendSource + 2)) && ((mode != SM_PREV && !pyBaseForLengend->phrase[i].flag) || (mode == SM_PREV && pyBaseForLengend->phrase[i].flag))) {
+	    if (!strncmp (strPYLegendSource + utf8_char_len(strPYLegendSource),
+					  pyBaseForLengend->phrase[i].strPhrase,
+					  strlen (strPYLegendSource + utf8_char_len(strPYLegendSource)))
+				&& ((mode != SM_PREV && !pyBaseForLengend->phrase[i].flag) || (mode == SM_PREV && pyBaseForLengend->phrase[i].flag))) {
 		if (!PYAddLengendCandWord (&pyBaseForLengend->phrase[i], mode))
 		    break;
 	    }
@@ -2896,14 +2912,17 @@ INPUT_RETURN_VALUE PYGetLegendCandWords (SEARCH_MODE mode)
 
     phrase = pyBaseForLengend->userPhrase->next;
     for (i = 0; i < pyBaseForLengend->iUserPhrase; i++) {
-	if (strlen (strPYLegendSource) == 2) {
-	    if (strlen (phrase->strPhrase) == 2 && ((mode != SM_PREV && !phrase->flag) || (mode == SM_PREV && phrase->flag))) {
+	if (utf8_strlen (strPYLegendSource) == 1) {
+	    if (utf8_strlen (phrase->strPhrase) == 1 && ((mode != SM_PREV && !phrase->flag) || (mode == SM_PREV && phrase->flag))) {
 		if (!PYAddLengendCandWord (phrase, mode))
 		    break;
 	    }
 	}
 	else if (strlen (phrase->strPhrase) == strlen (strPYLegendSource)) {
-	    if (!strncmp (strPYLegendSource + 2, phrase->strPhrase, strlen (strPYLegendSource + 2)) && ((mode != SM_PREV && !phrase->flag) || (mode == SM_PREV && phrase->flag))) {
+	    if (!strncmp (strPYLegendSource + utf8_char_len(strPYLegendSource),
+					  phrase->strPhrase,
+					  strlen (strPYLegendSource + utf8_char_len(strPYLegendSource)))
+				&& ((mode != SM_PREV && !phrase->flag) || (mode == SM_PREV && phrase->flag))) {
 		if (!PYAddLengendCandWord (phrase, mode))
 		    break;
 	    }
@@ -2915,14 +2934,17 @@ INPUT_RETURN_VALUE PYGetLegendCandWords (SEARCH_MODE mode)
     PYSetLegendCandWordsFlag (True);
     if (!bDisablePagingInLegend && mode != SM_PREV && iCurrentLegendCandPage == iLegendCandPageCount) {
 	for (i = 0; i < pyBaseForLengend->iPhrase; i++) {
-	    if (strlen (strPYLegendSource) == 2) {
-		if (strlen (pyBaseForLengend->phrase[i].strPhrase) == 2 && !pyBaseForLengend->phrase[i].flag) {
+	    if (utf8_strlen (strPYLegendSource) == 1) {
+		if (utf8_strlen (pyBaseForLengend->phrase[i].strPhrase) == 1 && !pyBaseForLengend->phrase[i].flag) {
 		    iLegendCandPageCount++;
 		    goto _NEWPAGE;
 		}
 	    }
 	    else if (strlen (pyBaseForLengend->phrase[i].strPhrase) == strlen (strPYLegendSource)) {
-		if (!strncmp (strPYLegendSource + 2, pyBaseForLengend->phrase[i].strPhrase, strlen (strPYLegendSource + 2)) && (!pyBaseForLengend->phrase[i].flag)) {
+		if (!strncmp (strPYLegendSource + utf8_char_len(strPYLegendSource),
+					  pyBaseForLengend->phrase[i].strPhrase,
+					  strlen (strPYLegendSource + utf8_char_len(strPYLegendSource)))
+				&& (!pyBaseForLengend->phrase[i].flag)) {
 		    iLegendCandPageCount++;
 		    goto _NEWPAGE;
 		}
@@ -2931,14 +2953,17 @@ INPUT_RETURN_VALUE PYGetLegendCandWords (SEARCH_MODE mode)
 
 	phrase = pyBaseForLengend->userPhrase->next;
 	for (i = 0; i < pyBaseForLengend->iUserPhrase; i++) {
-	    if (strlen (strPYLegendSource) == 2) {
-		if (strlen (phrase->strPhrase) == 2 && (!phrase->flag)) {
+	    if (utf8_strlen (strPYLegendSource) == 1) {
+		if (utf8_strlen (phrase->strPhrase) == 1 && (!phrase->flag)) {
 		    iLegendCandPageCount++;
 		    goto _NEWPAGE;
 		}
 	    }
 	    else if (strlen (pyBaseForLengend->phrase[i].strPhrase) == strlen (strPYLegendSource)) {
-		if (!strncmp (strPYLegendSource + 2, phrase->strPhrase, strlen (strPYLegendSource + 2)) && (!phrase->flag)) {
+		if (!strncmp (strPYLegendSource + utf8_char_len(strPYLegendSource), 
+					  phrase->strPhrase,
+					  strlen (strPYLegendSource + utf8_char_len(strPYLegendSource)))
+				&& (!phrase->flag)) {
 		    iLegendCandPageCount++;
 		    goto _NEWPAGE;
 		}
@@ -3027,7 +3052,7 @@ Bool PYAddLengendCandWord (PyPhrase * phrase, SEARCH_MODE mode)
     }
 
     PYLegendCandWords[i].phrase = phrase;
-    PYLegendCandWords[i].iLength = strlen (strPYLegendSource) - 2;
+    PYLegendCandWords[i].iLength = strlen (strPYLegendSource) - utf8_char_len(strPYLegendSource);
     if (iLegendCandWordCount != iMaxCandWord)
 	iLegendCandWordCount++;
     return True;

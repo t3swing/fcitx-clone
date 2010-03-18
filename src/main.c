@@ -82,6 +82,8 @@ extern void* remoteThread(void*);
 extern tray_win_t tray;
 #endif
 
+extern pthread_rwlock_t plock;
+
 int main (int argc, char *argv[])
 {
     XEvent          event;
@@ -211,6 +213,12 @@ int main (int argc, char *argv[])
 #ifdef _ENABLE_DBUS
     dbus_threads_init_default();
 #endif
+	
+	if (pthread_rwlock_init(&plock,NULL) != 0) {
+      fprintf(stderr,"lock init failed\n");
+      exit(-1);
+    }
+
     pthread_create(&pid, NULL, remoteThread, NULL);
 
 #ifdef _ENABLE_DBUS

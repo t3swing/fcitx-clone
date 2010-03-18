@@ -42,7 +42,7 @@ int LoadPuncDict (void)
 {
     FILE           *fpDict;				// 词典文件指针
     int             iRecordNo;
-    char            strText[11];
+    char            strText[4 + MAX_PUNC_LENGTH * UTF8_MAX_LENGTH];
     char            strPath[PATH_MAX];	// 词典文件的全名（包含绝对路径）
     char           *pstr;				// 临时指针
     int             i;
@@ -82,7 +82,7 @@ int LoadPuncDict (void)
 
     // 下面这个循环，就是一行一行的读入词典文件的数据。并将其放入到chnPunc里面去。
     for (;;) {
-	if (!fgets (strText, 10, fpDict))
+	if (!fgets (strText, (MAX_PUNC_LENGTH * UTF8_MAX_LENGTH + 3), fpDict))
 	    break;
 	i = strlen (strText) - 1;
 
@@ -108,7 +108,7 @@ int LoadPuncDict (void)
 	    // 依次将该ASCII码所对应的符号放入到结构中
 	    while (*pstr) {
 		i = 0;
-		// 因为中文符号都是双字节的，所以，要一直往后读，知道空格或者字符串的末尾
+		// 因为中文符号都是多字节（这里读取并不像其他地方是固定两个，所以没有问题）的，所以，要一直往后读，知道空格或者字符串的末尾
 		while (*pstr != ' ' && *pstr) {
 		    chnPunc[iRecordNo].strChnPunc[chnPunc[iRecordNo].iCount][i] = *pstr;
 		    i++;
