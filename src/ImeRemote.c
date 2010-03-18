@@ -103,8 +103,8 @@ static void send_ime_state(int fd)
 extern void DisplayMainWindow (void);
 static void main_loop (int socket_fd)
 {
-	int O;  // µÍ16Î», 0 = get, 1 = set;
-			// ¸ß16Î», Ö»ÓÃÓÚ set, 0 ¹Ø±ÕÊäÈë·¨, 1 ´ò¿ªÊäÈë·¨.
+	int O;  // ä½16ä½, 0 = get, 1 = set;
+			// é«˜16ä½, åªç”¨äº set, 0 å…³é—­è¾“å…¥æ³•, 1 æ‰“å¼€è¾“å…¥æ³•.
 	for (;;) {
 		int client_fd = ud_accept(socket_fd);
 		read(client_fd, &O, sizeof(int));

@@ -15,7 +15,7 @@
  */
 
 /*
- * ½«Æ´Òô¼Ó¼ÓµÄÓÃ»§´Ê¿â×ª»»ÎªĞ¡Æó¶ìÊäÈë·¨µÄ´Ê¿â
+ * å°†æ‹¼éŸ³åŠ åŠ çš„ç”¨æˆ·è¯åº“è½¬æ¢ä¸ºå°ä¼é¹…è¾“å…¥æ³•çš„è¯åº“
  */
 
 #include <stdio.h>
@@ -33,15 +33,15 @@ Bool            bFullPY = False;
 
 typedef struct {
     char            strPY[7];
-    char            strHZ[3];
+    char            strHZ[UTF8_MAX_LENGTH + 1];
 } PYBASE;
 
 PYBASE          pyBase[30000];
 uint            iPYCount = 0;
 
 /**
- * ¸Ãº¯Êı·ÃÎÊÖ¸¶¨µÄÓÃ»§ÅäÖÃÎÄ¼ş
- * ´Ë´¦²»×öÈÎºÎÊÂ£¬Ö»ÊÇÎªÁËÆ­¹ı±àÒëÆ÷
+ * è¯¥å‡½æ•°è®¿é—®æŒ‡å®šçš„ç”¨æˆ·é…ç½®æ–‡ä»¶
+ * æ­¤å¤„ä¸åšä»»ä½•äº‹ï¼Œåªæ˜¯ä¸ºäº†éª—è¿‡ç¼–è¯‘å™¨
  */
 FILE *UserConfigFile (char *strFileName, char *strMode, char **strFullPath)
 {
@@ -126,7 +126,7 @@ int main (int argc, char *argv[])
 	strPYs[0] = '\0';
 	strHZs[0] = '\0';
 	while (*pstr) {
-	    if (!isprint (*pstr)) {	//ÊÇºº×Ö
+	    if (!isprint (*pstr)) {	//æ˜¯æ±‰å­—
 		pHZ = strHZ;
 		strHZ[0] = *pstr++;
 		strHZ[1] = *pstr++;
@@ -143,7 +143,7 @@ int main (int argc, char *argv[])
 		    int             y;
 
 		    y = GetPYByHZ (strHZ, strPYTemp);
-		    if (y != 1) {	//³ö´íÁË
+		    if (y != 1) {	//å‡ºé”™äº†
 			fprintf (stderr, "%d - Can not process: %s (%s %d)\n", s, str, strHZ, y);
 			t++;
 			goto _next;

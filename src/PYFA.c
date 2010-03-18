@@ -21,7 +21,7 @@
 
 #include <stdio.h>
 
-MHPY            MHPY_C[] = {	//韵母
+MHPY            MHPY_C[] = {	//闊垫瘝
     //{"an","ang"},
     {"CD", 0}
     ,
@@ -44,7 +44,7 @@ MHPY            MHPY_C[] = {	//韵母
     {"\0", 0}
 };
 
-MHPY            MHPY_S[] = {	//声母
+MHPY            MHPY_S[] = {	//澹版瘝
     //{"c","ch"},
     {"bc", 0}
     ,
@@ -67,7 +67,7 @@ MHPY            MHPY_S[] = {	//声母
     {"\0", 0}
 };
 
-//其中增加了那些不是标准的拼音，但模糊输入中需要使用的拼音组合
+//鍏朵腑澧炲姞浜嗛偅浜涗笉鏄爣鍑嗙殑鎷奸煶锛屼絾妯＄硦杈撳叆涓渶瑕佷娇鐢ㄧ殑鎷奸煶缁勫悎
 PYTABLE         PYTable[] = {
     {"zuo", NULL}
     ,

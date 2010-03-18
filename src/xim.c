@@ -58,8 +58,8 @@ int		iClientCursorY = INPUTWND_STARTY;
 #ifdef _ENABLE_RECORDING
 FILE		*fpRecord = NULL;
 Bool		bRecording = True;
-Bool		bWrittenRecord = False;			//ÊÇ·ñĞ´Èë¹ı¼ÇÂ¼
-char 		strRecordingPath[PATH_MAX]="";		//¿Õ×Ö´®±íÊ¾Ê¹ÓÃÄ¬ÈÏµÄÂ·¾¶~/.fcitx/record.dat
+Bool		bWrittenRecord = False;			//æ˜¯å¦å†™å…¥è¿‡è®°å½•
+char 		strRecordingPath[PATH_MAX]="";		//ç©ºå­—ä¸²è¡¨ç¤ºä½¿ç”¨é»˜è®¤çš„è·¯å¾„~/.fcitx/record.dat
 #endif
 
 extern IM      *im;
@@ -79,7 +79,6 @@ extern uint     iInputWindowHeight;
 extern uint     iInputWindowWidth;
 extern Bool     bTrackCursor;
 extern Bool     bCenterInputWindow;
-extern Bool     bIsUtf8;
 extern int      iCodeInputCount;
 extern iconv_t  convUTF8;
 extern uint     uMessageDown;
@@ -88,7 +87,7 @@ extern Bool     bVK;
 extern Bool     bCorner;
 extern HIDE_MAINWINDOW hideMainWindow;
 
-//¼ÆËã´ò×ÖËÙ¶È
+//è®¡ç®—æ‰“å­—é€Ÿåº¦
 extern Bool     bStartRecordType;
 extern uint     iHZInputed;
 
@@ -508,7 +507,7 @@ Bool OpenRecording(Bool bMode)
 	    UserConfigFile("record.dat", NULL, &pbuf);
 	    strcpy(strRecordingPath, pbuf);
 	}
-	else if (strRecordingPath[0]!='/') {	//Ó¦¸ÃÊÇ¸ö¾ø¶ÔÂ·¾¶
+	else if (strRecordingPath[0]!='/') {	//åº”è¯¥æ˜¯ä¸ªç»å¯¹è·¯å¾„
 #ifdef _DEBUG
 	    fprintf (stderr, "Recording file must be an absolute path.\n");
 #endif
@@ -539,7 +538,6 @@ void SendHZtoClient (IMForwardEventStruct * call_data, char *strHZ)
 {
     XTextProperty   tp;
     IMCommitStruct  cms;
-    char            strOutput[300];
     char           *ps;
     char           *pS2T = (char *) NULL;
 
@@ -574,17 +572,6 @@ void SendHZtoClient (IMForwardEventStruct * call_data, char *strHZ)
     if (bUseGBKT)
 	pS2T = strHZ = ConvertGBKSimple2Tradition (strHZ);
 
-    if (bIsUtf8) {
-	size_t          l1, l2;
-
-	ps = strOutput;
-	l1 = strlen (strHZ);
-	l2 = 299;
-	l1 = iconv (convUTF8, (ICONV_CONST char **) (&strHZ), &l1, &ps, &l2);
-	*ps = '\0';
-	ps = strOutput;
-    }
-    else
 	ps = strHZ;
 
     XmbTextListToTextProperty (dpy, (char **) &ps, 1, XCompoundTextStyle, &tp);

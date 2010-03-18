@@ -21,7 +21,7 @@
 #include "KeyList.h"
 #include "xim.h"
 
-//¼üÅÌÉ¨ÃèÂëÁÐ±í£¬Ö»ÓÃÓÚ¿ìËÙÇÐ»»¼ü
+//é”®ç›˜æ‰«æç åˆ—è¡¨ï¼Œåªç”¨äºŽå¿«é€Ÿåˆ‡æ¢é”®
 /* KEYCODE_LIST    keyCodeList[] = {
     {"LCTRL", L_CTRL}
     ,
@@ -102,11 +102,11 @@ KEY_LIST        keyList[] = {
 
 int GetKey (unsigned char iKeyCode, int iKeyState, int iCount)
 {
-    if (!iCount) {		//ÊÇSHIFT¡¢CTRL¡¢ALT»òËüÃÇµÄ×éºÏ£¬»òÆäËüÖîÈçHOME¡¢ENDÖ®ÀàµÄ¼ü
+    if (!iCount) {		//æ˜¯SHIFTã€CTRLã€ALTæˆ–å®ƒä»¬çš„ç»„åˆï¼Œæˆ–å…¶å®ƒè¯¸å¦‚HOMEã€ENDä¹‹ç±»çš„é”®
 	if (iKeyState == KEY_NONE) {
-	    if (iKeyCode >= 80 && iKeyCode <= 99)	//ÉÏ¡¢ÏÂ¡¢×ó¡¢ÓÒ¡¢HOME¡¢END¡¢PGUP¡¢PGDN¡¢INSERTµÈ
+	    if (iKeyCode >= 80 && iKeyCode <= 99)	//ä¸Šã€ä¸‹ã€å·¦ã€å³ã€HOMEã€ENDã€PGUPã€PGDNã€INSERTç­‰
 		return 8000 + iKeyCode;
-	    if (iKeyCode >= 225 && iKeyCode <= 233)	//µ¥°´SHIFT¡¢CTRL¡¢ALT
+	    if (iKeyCode >= 225 && iKeyCode <= 233)	//å•æŒ‰SHIFTã€CTRLã€ALT
 		return 9000 + iKeyCode;
 	}
 	else if (iKeyState == KEY_CTRL_COMP) {
@@ -204,19 +204,19 @@ int GetKey (unsigned char iKeyCode, int iKeyState, int iCount)
     }
     else {
 	if (iKeyState == KEY_NONE) {
-	    //Ð¡¼üÅÌµÄÊý×ÖÒ²Òª´¦Àí³ÉÓë´ó¼üÅÌÉÏÒ»Ñù      
+	    //å°é”®ç›˜çš„æ•°å­—ä¹Ÿè¦å¤„ç†æˆä¸Žå¤§é”®ç›˜ä¸Šä¸€æ ·      
 	    if (iKeyCode >= 176 && iKeyCode <= 185)
 		iKeyCode -= 128;
 	}
 	else {
-	    //ÓÉÓÚ´óÐ¡Ð´×ÖÄ¸ÓÐÇø±ð£¬´Ë´¦Ó¦¸Ã½«Æä´¦ÀíÎªµÈÍ¬;
+	    //ç”±äºŽå¤§å°å†™å­—æ¯æœ‰åŒºåˆ«ï¼Œæ­¤å¤„åº”è¯¥å°†å…¶å¤„ç†ä¸ºç­‰åŒ;
 	    if (iKeyState < KEY_SCROLLLOCK && (iKeyCode >= 97 && iKeyCode <= 122))
 		iKeyCode -= 32;
 
 	    if (iKeyState == KEY_CTRL_COMP)
 		return iKeyCode + 1000;
 	    if (iKeyState == KEY_SHIFT_COMP) {
-		//Ö»´¦Àí¿Õ¸ñ
+		//åªå¤„ç†ç©ºæ ¼
 		if (iKeyCode == 32)
 		    return iKeyCode + 2000;
 	    }
@@ -239,9 +239,9 @@ int GetKey (unsigned char iKeyCode, int iKeyState, int iCount)
 }
 
 /*
- * ¸ù¾Ý×Ö´®À´ÅÐ¶Ï¼ü
- * Ö÷ÒªÓÃÓÚ´ÓÉèÖÃÎÄ¼þÖÐ¶ÁÈ¡ÈÈ¼üÉè¶¨
- * ·µ»Ø-1±íÊ¾ÓÃ»§ÉèÖÃµÄÈÈ¼ü²»Ö§³Ö£¬Ò»°ãÊÇÒòÎªÆ´Ð´´íÎó»ò¸ÃÈÈ¼ü²»ÔÚÁÐ±íÖÐ
+ * æ ¹æ®å­—ä¸²æ¥åˆ¤æ–­é”®
+ * ä¸»è¦ç”¨äºŽä»Žè®¾ç½®æ–‡ä»¶ä¸­è¯»å–çƒ­é”®è®¾å®š
+ * è¿”å›ž-1è¡¨ç¤ºç”¨æˆ·è®¾ç½®çš„çƒ­é”®ä¸æ”¯æŒï¼Œä¸€èˆ¬æ˜¯å› ä¸ºæ‹¼å†™é”™è¯¯æˆ–è¯¥çƒ­é”®ä¸åœ¨åˆ—è¡¨ä¸­
  */
 int ParseKey (char *strKey)
 {

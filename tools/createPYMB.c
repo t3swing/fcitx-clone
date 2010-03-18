@@ -25,6 +25,7 @@
 #include "pyParser.h"
 #include "pyMapTable.h"
 #include "PYFA.h"
+#include "utf8.h"
 
 extern PYTABLE  PYTable[];
 
@@ -34,7 +35,7 @@ Bool            bFullPY = False;
 
 typedef struct _PY {
     char            strPY[3];
-    char            strHZ[3];
+    char            strHZ[UTF8_MAX_LENGTH+1];
     struct _PY     *next, *prev;
 } _PyStruct;
 
@@ -46,7 +47,7 @@ typedef struct _PyPhrase {
 } _PyPhrase;
 
 typedef struct _PyBase {
-    char            strHZ[3];
+    char            strHZ[UTF8_MAX_LENGTH + 1];
     struct _PyPhrase *phrase;
     int             iPhraseCount;
     unsigned int    iIndex;
@@ -91,8 +92,10 @@ Bool LoadPY (void)
 	fread (&(PYFAList[i].iHZCount), sizeof (int), 1, fp);
 	PYFAList[i].pyBase = (_PyBase *) malloc (sizeof (_PyBase) * PYFAList[i].iHZCount);
 	for (j = 0; j < PYFAList[i].iHZCount; j++) {
-	    fread (PYFAList[i].pyBase[j].strHZ, sizeof (char) * 2, 1, fp);
-	    PYFAList[i].pyBase[j].strHZ[2] = '\0';
+		INT8 len;
+	    fread (&len, sizeof (INT8) , 1, fp);
+	    fread (PYFAList[i].pyBase[j].strHZ, sizeof (char) * len, 1, fp);
+	    PYFAList[i].pyBase[j].strHZ[len] = '\0';
 	    PYFAList[i].pyBase[j].phrase = (_PyPhrase *) malloc (sizeof (_PyPhrase));
 	    PYFAList[i].pyBase[j].phrase->next = NULL;
 	    PYFAList[i].pyBase[j].iPhraseCount = 0;
@@ -125,7 +128,9 @@ Bool LoadPY (void)
 	fwrite (PYFAList[i].strMap, sizeof (char) * 2, 1, fp);
 	fwrite (&(PYFAList[i].iHZCount), sizeof (int), 1, fp);
 	for (j = 0; j < PYFAList[i].iHZCount; j++) {
-	    fwrite (PYFAList[i].pyBase[j].strHZ, sizeof (char) * 2, 1, fp);
+        INT8 len = strlen(PYFAList[i].pyBase[j].strHZ);
+        fwrite (&len, sizeof(INT8), 1, fp1);
+	    fwrite (PYFAList[i].pyBase[j].strHZ, sizeof (char) * len, 1, fp);
 	    fwrite (&(PYFAList[i].pyBase[j].iIndex), sizeof (int), 1, fp);
 	}
     }
@@ -161,8 +166,8 @@ void CreatePYPhrase (void)
 	ParsePY (strPY, &strTemp, PY_PARSE_INPUT_SYSTEM);
 	s2++;
 	kkk = 0;
-	//printf("%s  %s  %s   %d\n",strPY,strPhrase,strTemp.strMap,strTemp.iHZCount);
-	if (strTemp.iHZCount != strlen (strPhrase) / 2 || (strTemp.iMode & PARSE_ABBR)) {
+	// printf("%s  %s  %d\n",strPY,strPhrase,strTemp.iHZCount);
+	if (strTemp.iHZCount != utf8_strlen (strPhrase) || (strTemp.iMode & PARSE_ABBR)) {
 	    //if ( strlen(strPhrase)==4 )
 	    fprintf (f, "%s %s\n", strPY, strPhrase);	//"%s %s %s\n", strPY, strPhrase, strTemp.strPYParsed);
 	    continue;
@@ -175,12 +180,12 @@ void CreatePYPhrase (void)
 	for (iIndex = 0; iIndex < iPYFACount; iIndex++) {
 	    if (!strncmp (PYFAList[iIndex].strMap, strMap, 2)) {
 		for (i = 0; i < PYFAList[iIndex].iHZCount; i++) {
-		    if (!strncmp (PYFAList[iIndex].pyBase[i].strHZ, strPhrase, 2)) {
+		    if (!utf8_strncmp (PYFAList[iIndex].pyBase[i].strHZ, strPhrase, 1)) {
 			t = PYFAList[iIndex].pyBase[i].phrase;
 			for (j = 0; j < PYFAList[iIndex].pyBase[i].iPhraseCount; j++) {
 			    tt = t;
 			    t = t->next;
-			    if (!strcmp (t->strMap, strMap + 2) && !strcmp (t->strPhrase, strPhrase + 2)) {
+			    if (!strcmp (t->strMap, strMap + 2) && !strcmp (t->strPhrase, strPhrase + utf8_char_len(strPhrase))) {
 				printf ("\n\t%d: %s %s ----->deleted.\n", s2, strPY, strPhrase);
 				goto _next;
 			    }
@@ -191,10 +196,10 @@ void CreatePYPhrase (void)
 			}
 
 			phrase = (_PyPhrase *) malloc (sizeof (_PyPhrase));
-			phrase->strPhrase = (char *) malloc (sizeof (char) * (strlen (strPhrase) - 1));
-			phrase->strMap = (char *) malloc (sizeof (char) * (strTemp.iHZCount * 2 - 1));
+			phrase->strPhrase = (char *) malloc (sizeof (char) * (strlen (strPhrase) - utf8_char_len(strPhrase) + 1));
+			phrase->strMap = (char *) malloc (sizeof (char) * ((strTemp.iHZCount - 1) * 2 + 1));
 			phrase->uIndex = uIndex++;
-			strcpy (phrase->strPhrase, strPhrase + 2);
+			strcpy (phrase->strPhrase, strPhrase + utf8_char_len(strPhrase));
 			strcpy (phrase->strMap, strMap + 2);
 
 			tt = t->next;
@@ -219,15 +224,19 @@ void CreatePYPhrase (void)
 	for (j = 0; j < PYFAList[i].iHZCount; j++) {
 	    iIndex = PYFAList[i].pyBase[j].iPhraseCount;
 	    if (iIndex) {
+        INT8 clen = strlen(PYFAList[i].pyBase[j].strHZ);
 		fwrite (&i, sizeof (int), 1, fp2);
-		fwrite (PYFAList[i].pyBase[j].strHZ, sizeof (char) * 2, 1, fp2);
+        fwrite (&clen, sizeof(INT8), 1, fp2);
+		fwrite (PYFAList[i].pyBase[j].strHZ, sizeof (char) * clen, 1, fp2);
 		
 		fwrite (&iIndex, sizeof (int), 1, fp2);
 		t = PYFAList[i].pyBase[j].phrase->next;
 		for (k = 0; k < PYFAList[i].pyBase[j].iPhraseCount; k++) {
+            int slen = strlen(t->strPhrase);
 		    iIndex = strlen (t->strMap);
 		    fwrite (&iIndex, sizeof (int), 1, fp2);
 		    fwrite (t->strMap, sizeof (char), iIndex, fp2);
+            fwrite (&slen, sizeof(int), 1, fp2);
 		    fwrite (t->strPhrase, sizeof (char), strlen (t->strPhrase), fp2);
 		    uTemp = uIndex - 1 - t->uIndex;
 		    fwrite (&uTemp, sizeof (unsigned int), 1, fp2);
@@ -245,7 +254,7 @@ void CreatePYPhrase (void)
 void CreatePYBase (void)
 {
     _PyStruct      *head, *pyList, *temp, *t;
-    char            strPY[7], strHZ[3], strMap[3];
+    char            strPY[7], strHZ[UTF8_MAX_LENGTH + 1], strMap[3];
     int             iIndex, iCount, i;
     int             iBaseCount;
     int             s = 0;
@@ -316,7 +325,9 @@ void CreatePYBase (void)
 	    fwrite (strPY, sizeof (char) * 2, 1, fp1);
 	    fwrite (&iCount, sizeof (int), 1, fp1);
 	    for (i = 0; i < iCount; i++) {
-		fwrite (t->strHZ, sizeof (char) * 2, 1, fp1);
+        INT8 len = strlen(t->strHZ);
+        fwrite (&len, sizeof(INT8), 1, fp1);
+        fwrite (t->strHZ, sizeof (char) * len , 1, fp1);
 
 		t = t->next;
 	    }
@@ -330,7 +341,9 @@ void CreatePYBase (void)
     fwrite (strPY, sizeof (char) * 2, 1, fp1);
     fwrite (&iCount, sizeof (int), 1, fp1);
     for (i = 0; i < iCount; i++) {
-	fwrite (t->strHZ, sizeof (char) * 2, 1, fp1);
+    INT8 len = strlen(t->strHZ);
+    fwrite (&len, sizeof(INT8), 1, fp1);
+    fwrite (t->strHZ, sizeof (char) * len , 1, fp1);
 	t = t->next;
     }
     s += iCount;
@@ -353,3 +366,5 @@ int main (int argc, char *argv[])
 
     return 0;
 }
+
+// vim: expandtab ts=4 sw=4 

@@ -1,7 +1,7 @@
 /***************************************************************************
- *   Ğ¡Æó¶ìÖĞÎÄÊäÈë·¨(Free Chinese Input Toys for X, FCITX)                   *
- *   ÓÉYuking(yuking_net@sohu.com)±àĞ´                                           *
- *   Ğ­Òé: GPL                                                              *
+ *   å°ä¼é¹…ä¸­æ–‡è¾“å…¥æ³•(Free Chinese Input Toys for X, FCITX)                   *
+ *   ç”±Yuking(yuking_net@sohu.com)ç¼–å†™                                           *
+ *   åè®®: GPL                                                              *
  *   FCITX( A Chinese XIM Input Method) by Yuking (yuking_net@sohu.com)    *
  *                                                                         *
  *   Copyright (C) 2002~2005 by Yuking                                     *
@@ -27,7 +27,7 @@
  * @author Yuking yuking_net@sohu.com
  * @date   2008-1-16
  *
- * @brief  ³ÌĞòÖ÷Èë¿Ú
+ * @brief  ç¨‹åºä¸»å…¥å£
  *
  *
  */
@@ -72,7 +72,6 @@ extern Display *dpy;
 extern Window   inputWindow;
 extern Window   ximWindow;
 
-extern Bool     bIsUtf8;
 extern Bool	bUseDBus;
 
 extern HIDE_MAINWINDOW hideMainWindow;
@@ -86,21 +85,21 @@ extern tray_win_t tray;
 int main (int argc, char *argv[])
 {
     XEvent          event;
-    int             c; 	//ÓÃÓÚ±£´æÓÃ»§ÊäÈëµÄ²ÎÊı
+    int             c; 	//ç”¨äºä¿å­˜ç”¨æˆ·è¾“å…¥çš„å‚æ•°
     Bool            bBackground = True;
     char	    *imname=(char *)NULL;
     pthread_t	    pid;
 
-    SetMyExceptionHandler();		//´¦ÀíÊÂ¼ş
+    SetMyExceptionHandler();		//å¤„ç†äº‹ä»¶
 
-    /* ÏÈ³õÊ¼»¯ X ÔÙ¼ÓÔØÅäÖÃÎÄ¼ş£¬ÒòÎªÉèÖÃ¿ì½İ¼ü´Ó keysym ×ª»»µ½
-     * keycode µÄÊ±ºòĞèÒª Display
+    /* å…ˆåˆå§‹åŒ– X å†åŠ è½½é…ç½®æ–‡ä»¶ï¼Œå› ä¸ºè®¾ç½®å¿«æ·é”®ä» keysym è½¬æ¢åˆ°
+     * keycode çš„æ—¶å€™éœ€è¦ Display
      */
     if (!InitX ())
 	exit (1);
 
-    /*¼ÓÔØÓÃ»§ÅäÖÃÎÄ¼ş£¬Èç¹û¸ÃÎÄ¼ş²»´æÔÚ¾Í´Ó°²×°Ä¿Â¼ÖĞ¿½±´
-     * ¡°/data/config¡±µ½¡°~/.fcitx/config¡±
+    /*åŠ è½½ç”¨æˆ·é…ç½®æ–‡ä»¶ï¼Œå¦‚æœè¯¥æ–‡ä»¶ä¸å­˜åœ¨å°±ä»å®‰è£…ç›®å½•ä¸­æ‹·è´
+     * â€œ/data/configâ€åˆ°â€œ~/.fcitx/configâ€
      */
     LoadConfig (True);
 
@@ -118,88 +117,87 @@ int main (int argc, char *argv[])
 	    case 'n':
 	    	imname=optarg;
 		break;
-            case 'v':	//Êä³ö°æ±¾ºÅ
+            case 'v':	//è¾“å‡ºç‰ˆæœ¬å·
                 Version();
                 return 0;
-            case 'h':	//h»òÕßÆäËûÈÎºÎ²»ºÏ·¨µÄ²ÎÊı¾ù£¬Êä³ö²ÎÊı°ïÖúĞÅÏ¢
+            case 'h':	//hæˆ–è€…å…¶ä»–ä»»ä½•ä¸åˆæ³•çš„å‚æ•°å‡ï¼Œè¾“å‡ºå‚æ•°å¸®åŠ©ä¿¡æ¯
             case '?':
                 Usage();
                 return 0;
         }
     }
 
-    /*ÏÂÃæÁ½ĞĞ´úÂëÓÃÓÚ¼ì²éµ±Ç°ÏµÍ³Ê¹ÓÃµÄÊÇ·ñÊÇUTF×Ö·û¼¯¡£Ïàµ±ÓÚÔÚ×Ö·ûÖÕ¶ËÖ´ĞĞ
-     * ¡°locale charmap¡±
+    /*ä¸‹é¢ä¸¤è¡Œä»£ç ç”¨äºæ£€æŸ¥å½“å‰ç³»ç»Ÿä½¿ç”¨çš„æ˜¯å¦æ˜¯UTFå­—ç¬¦é›†ã€‚ç›¸å½“äºåœ¨å­—ç¬¦ç»ˆç«¯æ‰§è¡Œ
+     * â€œlocale charmapâ€
      */
     setlocale (LC_CTYPE, "");
-    bIsUtf8 = (strcmp (nl_langinfo (CODESET), "UTF-8") == 0);
 
 #ifdef _ENABLE_DBUS
     if (bUseDBus && !InitDBus ())
 	exit (5);
 #endif
 
-    /*´´½¨×ÖÌå¡£Êµ¼ÊÉÏ£¬¾ÍÊÇ¸ù¾İÓÃ»§µÄÉèÖÃ£¬Ê¹ÓÃxft¶ÁÈ¡×ÖÌåµÄÏà¹ØĞÅÏ¢¡£
-     * xftÊÇx11Ìá¹©µÄ´¦Àí×ÖÌåµÄÏà¹Øº¯Êı¼¯
+    /*åˆ›å»ºå­—ä½“ã€‚å®é™…ä¸Šï¼Œå°±æ˜¯æ ¹æ®ç”¨æˆ·çš„è®¾ç½®ï¼Œä½¿ç”¨xftè¯»å–å­—ä½“çš„ç›¸å…³ä¿¡æ¯ã€‚
+     * xftæ˜¯x11æä¾›çš„å¤„ç†å­—ä½“çš„ç›¸å…³å‡½æ•°é›†
      */
     CreateFont ();
-    //¸ù¾İ×ÖÌå¼ÆËãÊäÈë´°¿ÚµÄ¸ß¶È
+    //æ ¹æ®å­—ä½“è®¡ç®—è¾“å…¥çª—å£çš„é«˜åº¦
     CalculateInputWindowHeight ();
-    /*¼ÓÔØÅäÖÃÎÄ¼ş£¬Õâ¸öÅäÖÃÎÄ¼ş²»ÊÇÓÃ»§ÅäÖÃµÄ£¬¶øÊÇÓÃÓÚ¼ÇÂ¼fctixµÄÔËĞĞ×´Ì¬µÄ£¬
-     * ±ÈÈçÊÇÈ«½Ç»¹ÊÇ°ë½ÇµÈµÈ¡£
+    /*åŠ è½½é…ç½®æ–‡ä»¶ï¼Œè¿™ä¸ªé…ç½®æ–‡ä»¶ä¸æ˜¯ç”¨æˆ·é…ç½®çš„ï¼Œè€Œæ˜¯ç”¨äºè®°å½•fctixçš„è¿è¡ŒçŠ¶æ€çš„ï¼Œ
+     * æ¯”å¦‚æ˜¯å…¨è§’è¿˜æ˜¯åŠè§’ç­‰ç­‰ã€‚
      */
     LoadProfile ();
 
-    //¼ÓÔØ×ÖµäÎÄ¼ş
+    //åŠ è½½å­—å…¸æ–‡ä»¶
     LoadPuncDict ();
-    //¼ÓÔØ³ÉÓï
+    //åŠ è½½æˆè¯­
     LoadQuickPhrase ();
-    /*´ÓÓÃ»§ÅäÖÃÄ¿Â¼ÖĞ¶ÁÈ¡AutoEng.dat £¨Èç¹û²»´æÔÚ£¬
-     * Ôò´Ó /usr/local/share/fcitx/data/AutoEng.dat£©
-     * ¶ÁÈ¡ĞèÒª×Ô¶¯×ª»»µ½Ó¢ÎÄÊäÈë×´Ì¬µÄÇé¿öµÄÊı¾İ
+    /*ä»ç”¨æˆ·é…ç½®ç›®å½•ä¸­è¯»å–AutoEng.dat ï¼ˆå¦‚æœä¸å­˜åœ¨ï¼Œ
+     * åˆ™ä» /usr/local/share/fcitx/data/AutoEng.datï¼‰
+     * è¯»å–éœ€è¦è‡ªåŠ¨è½¬æ¢åˆ°è‹±æ–‡è¾“å…¥çŠ¶æ€çš„æƒ…å†µçš„æ•°æ®
      */
     LoadAutoEng ();
 
-    //ÒÔÏÂÊÇ½çÃæµÄ´¦Àí
+    //ä»¥ä¸‹æ˜¯ç•Œé¢çš„å¤„ç†
 
     if (!bUseDBus)
-	CreateMainWindow ();	//´´½¨Ö÷´°¿Ú£¬¼´ÊäÈë·¨×´Ì¬´°¿Ú
+	CreateMainWindow ();	//åˆ›å»ºä¸»çª—å£ï¼Œå³è¾“å…¥æ³•çŠ¶æ€çª—å£
 #ifdef _ENABLE_DBUS
     else
 	registerProperties();
 #endif
 
-    CreateInputWindow ();	//´´½¨ÊäÈë´°¿Ú
-    CreateVKWindow ();		//´´½¨ĞéÄâ¼üÅÌ´°¿Ú
+    CreateInputWindow ();	//åˆ›å»ºè¾“å…¥çª—å£
+    CreateVKWindow ();		//åˆ›å»ºè™šæ‹Ÿé”®ç›˜çª—å£
 
     if (!bUseDBus)
-	CreateAboutWindow ();	//´´½¨¹ØÓÚ´°¿Ú
+	CreateAboutWindow ();	//åˆ›å»ºå…³äºçª—å£
 
-    //´¦ÀíÑÕÉ«£¬¼´ºòÑ¡´Ê´°¿ÚµÄÑÕÉ«£¬Ò²¾ÍÊÇÎÒÃÇÔÚÅäÖÃÎÄ¼şÖĞ¶¨ÒåµÄÄÇĞ©ÑÕÉ«ĞÅÏ¢
+    //å¤„ç†é¢œè‰²ï¼Œå³å€™é€‰è¯çª—å£çš„é¢œè‰²ï¼Œä¹Ÿå°±æ˜¯æˆ‘ä»¬åœ¨é…ç½®æ–‡ä»¶ä¸­å®šä¹‰çš„é‚£äº›é¢œè‰²ä¿¡æ¯
     InitGC (inputWindow);
 
-    //½«±¾³ÌĞò¼ÓÈëµ½ÊäÈë·¨×é£¬¸æËßÏµÍ³£¬Ê¹ÓÃÎÒÊäÈë×Ö·û
+    //å°†æœ¬ç¨‹åºåŠ å…¥åˆ°è¾“å…¥æ³•ç»„ï¼Œå‘Šè¯‰ç³»ç»Ÿï¼Œä½¿ç”¨æˆ‘è¾“å…¥å­—ç¬¦
     SetIM ();
 
     if (!bUseDBus) {
-	//´¦ÀíÖ÷´°¿ÚµÄÏÔÊ¾
+	//å¤„ç†ä¸»çª—å£çš„æ˜¾ç¤º
 	if (hideMainWindow != HM_HIDE) {
 	    DisplayMainWindow ();
 	    DrawMainWindow ();
 	}
     }
 
-    //³õÊ¼»¯ÊäÈë·¨
+    //åˆå§‹åŒ–è¾“å…¥æ³•
     if (!InitXIM (imname))
 	exit (4);
 
-    //ÒÔºóÌ¨·½Ê½ÔËĞĞ
+    //ä»¥åå°æ–¹å¼è¿è¡Œ
     if (bBackground) {
 	pid_t           id;
 
 	id = fork ();
 	if (id == -1) {
-	    printf ("Can't run as a daemon£¡\n");
+	    printf ("Can't run as a daemonï¼\n");
 	    exit (1);
 	}
 	else if (id > 0)
@@ -223,17 +221,17 @@ int main (int argc, char *argv[])
 #ifdef _ENABLE_TRAY
     tray.window = (Window) NULL;
     if (!bUseDBus) {
-	CreateTrayWindow ();		//´´½¨ÏµÍ³ÍĞÅÌ´°¿Ú
-    	DrawTrayWindow (INACTIVE_ICON);	//ÏÔÊ¾ÍĞÅÌÍ¼±ê
+	CreateTrayWindow ();		//åˆ›å»ºç³»ç»Ÿæ‰˜ç›˜çª—å£
+    	DrawTrayWindow (INACTIVE_ICON);	//æ˜¾ç¤ºæ‰˜ç›˜å›¾æ ‡
     }
 #endif
 
-    //Ö÷Ñ­»·£¬¼´XWindowµÄÏûÏ¢Ñ­»·
+    //ä¸»å¾ªç¯ï¼Œå³XWindowçš„æ¶ˆæ¯å¾ªç¯
     for (;;) {
-	XNextEvent (dpy, &event);			//µÈ´ıÒ»¸öÊÂ¼ş·¢Éú
+	XNextEvent (dpy, &event);			//ç­‰å¾…ä¸€ä¸ªäº‹ä»¶å‘ç”Ÿ
 	    
 	if (XFilterEvent (&event, None) == False)
-	    MyXEventHandler (&event);		//´¦ÀíXÊÂ¼ş
+	    MyXEventHandler (&event);		//å¤„ç†Xäº‹ä»¶
     }
 
     return 0;

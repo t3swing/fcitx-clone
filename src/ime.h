@@ -22,7 +22,7 @@
  * @author Yuking yuking_net@sohu.com
  * @date   2008-1-16
  *
- * @brief  按键和输入法通用功能处理
+ * @brief  鎸夐敭鍜岃緭鍏ユ硶閫氱敤鍔熻兘澶勭悊
  *
  *
  */
@@ -33,10 +33,11 @@
 #include <X11/keysym.h>
 #include "xim.h"
 #include "KeyList.h"
+#include "utf8.h"
 
 #define MAX_CAND_WORD	10
 #define MAX_USER_INPUT	300
-#define INPUT_METHODS	5	//标示输入法的类别数量
+#define INPUT_METHODS	5	//鏍囩ず杈撳叆娉曠殑绫诲埆鏁伴噺
 
 #define HOT_KEY_COUNT	2
 #define MAX_IM_NAME	15
@@ -92,7 +93,7 @@ typedef enum _SEMICOLON_TO_DO {
 } SEMICOLON_TO_DO;
 
 typedef struct _SINGLE_HZ {
-    char            strHZ[3];
+    char            strHZ[UTF8_MAX_LENGTH + 1];
 } SINGLE_HZ;
 
 typedef enum _KEY_RELEASED {

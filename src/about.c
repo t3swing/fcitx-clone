@@ -55,8 +55,8 @@ int             ABOUT_WINDOW_WIDTH;
 Atom            about_protocol_atom = 0;
 Atom            about_kill_atom = 0;
 
-char            AboutCaption[] = "关于 - FCITX";
-char            AboutTitle[] = "小企鹅中文输入法";
+char            AboutCaption[] = "鍏充簬 - FCITX";
+char            AboutTitle[] = "灏忎紒楣呬腑鏂囪緭鍏ユ硶";
 char            AboutEmail[] = "yuking_net@sohu.com";
 char            AboutCopyRight[] = "(c) 2005, Yuking";
 char            strTitle[100];
@@ -116,7 +116,6 @@ void InitWindowProperty (void)
     about_kill_atom = XInternAtom (dpy, "WM_DELETE_WINDOW", False);
     XSetWMProtocols (dpy, aboutWindow, &about_kill_atom, 1);
 
-    if (bIsUtf8) {
 	size_t          l1, l2;
 	char           *p;
 
@@ -127,9 +126,6 @@ void InitWindowProperty (void)
 	l1 = iconv (convUTF8, (ICONV_CONST char **) (&p), &l1, &ps, &l2);
 	*ps = '\0';
 	ps = strOutput;
-    }
-    else
-	ps = AboutCaption;
 
     tp.value = (void *) ps;
     tp.encoding = XA_STRING;

@@ -22,7 +22,7 @@
  * @author Yuking yuking_net@sohu.com
  * @date   2008-1-16
  *
- * @brief  ÅäÖÃÎÄ¼ş¶ÁĞ´
+ * @brief  é…ç½®æ–‡ä»¶è¯»å†™
  *
  *
  */
@@ -119,7 +119,7 @@ extern Bool     bPhraseTips;
 extern SEMICOLON_TO_DO semicolonToDo;
 extern Bool     bEngAfterCap;
 
-//ÏÔÊ¾´ò×ÖËÙ¶È
+//æ˜¾ç¤ºæ‰“å­—é€Ÿåº¦
 extern Bool     bShowUserSpeed;
 extern Bool     bShowVersion;
 extern Bool     bShowVK;
@@ -182,21 +182,23 @@ extern Bool	bRecording;
 extern char     strRecordingPath[];
 #endif
 
+#define FCITX_CONFIG_DIR "/fcitx-utf8/"
+
 Bool MyStrcmp (char *str1, char *str2)
 {
     return !strncmp (str1, str2, strlen (str2));
 }
 
-/* ÆäËûº¯ÊıĞèÒªÖªµÀ´«µİ¸ø LoadConfig µÄ²ÎÊı */
+/* å…¶ä»–å‡½æ•°éœ€è¦çŸ¥é“ä¼ é€’ç»™ LoadConfig çš„å‚æ•° */
 Bool    bIsReloadConfig = True;
-/* ÔÚÔØÈë profile ÎÄ¼ş¹ı³ÌÖĞ´«µİ×´Ì¬ĞÅÏ¢ */
+/* åœ¨è½½å…¥ profile æ–‡ä»¶è¿‡ç¨‹ä¸­ä¼ é€’çŠ¶æ€ä¿¡æ¯ */
 Bool    bNeedSaveConfig = True;
 
 /*
- * ÅäÖÃÏîÖµµÄÀàĞÍ£º
+ * é…ç½®é¡¹å€¼çš„ç±»å‹ï¼š
  *
- * ÕûÊı(integer)¡¢×Ö·û´®(string)¡¢ÑÕÉ«(color) ¶¼¿ÉÒÔÓÃÍ¨ÓÃ¶ÁĞ´º¯ÊıÀ´¶ÁĞ´¡£
- * µ«ÊÇÆäËû(other)ÀàĞÍ£¬ÔòĞèÒªÌá¹©×¨ÃÅµÄ¶ÁĞ´º¯Êı¡£
+ * æ•´æ•°(integer)ã€å­—ç¬¦ä¸²(string)ã€é¢œè‰²(color) éƒ½å¯ä»¥ç”¨é€šç”¨è¯»å†™å‡½æ•°æ¥è¯»å†™ã€‚
+ * ä½†æ˜¯å…¶ä»–(other)ç±»å‹ï¼Œåˆ™éœ€è¦æä¾›ä¸“é—¨çš„è¯»å†™å‡½æ•°ã€‚
  */
 
 #define CONFIG_INTEGER  1
@@ -209,13 +211,13 @@ Bool    bNeedSaveConfig = True;
 /*
  * int(*configure_readwrite)(Configure *c, void *str_file, int isread)
  *
- * ÓÃÀ´¶ÁÈ¡»òÕßĞ´Èë¶ÔÓ¦µÄÅäÖÃÏî
+ * ç”¨æ¥è¯»å–æˆ–è€…å†™å…¥å¯¹åº”çš„é…ç½®é¡¹
  *
- * c        -   ¶ÁÈ¡/Ğ´ÈëµÄÅäÖÃÏî
- * str_file - Èç¹ûÊÇ¶ÁÈ¡£¬ÔòÎª char *£»Èç¹ûÊÇĞ´Èë£¬ÔòÎª FILE *
- * isread   - Èç¹ûÊÇ¶ÁÈ¡£¬ÔòÎª True£¬·ñÔòÎª False
+ * c        -   è¯»å–/å†™å…¥çš„é…ç½®é¡¹
+ * str_file - å¦‚æœæ˜¯è¯»å–ï¼Œåˆ™ä¸º char *ï¼›å¦‚æœæ˜¯å†™å…¥ï¼Œåˆ™ä¸º FILE *
+ * isread   - å¦‚æœæ˜¯è¯»å–ï¼Œåˆ™ä¸º Trueï¼Œå¦åˆ™ä¸º False
  *
- * configure_readwrite ·µ»ØÁã±íÊ¾³É¹¦£¬ÆäËûÖµÎªÊ§°Ü¡£
+ * configure_readwrite è¿”å›é›¶è¡¨ç¤ºæˆåŠŸï¼Œå…¶ä»–å€¼ä¸ºå¤±è´¥ã€‚
  */
 
 typedef struct Configure Configure;
@@ -285,7 +287,7 @@ static int generic_config_color(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* FIXME: ÊµÏÖÍ¨ÓÃ¶ÁĞ´ÉèÖÃ switch key µÄÅäÖÃ */
+/* FIXME: å®ç°é€šç”¨è¯»å†™è®¾ç½® switch key çš„é…ç½® */
 #if 0
 static int generic_config_switchkey(Configure *c, void *a, int isread)
 {
@@ -293,7 +295,7 @@ static int generic_config_switchkey(Configure *c, void *a, int isread)
 }
 #endif
 
-/* FIXME: ÊµÏÖÍ¨ÓÃ¶ÁĞ´ÉèÖÃ hot key µÄÅäÖÃ */
+/* FIXME: å®ç°é€šç”¨è¯»å†™è®¾ç½® hot key çš„é…ç½® */
 #if 0
 static int generic_config_hotkey(Configure *c, void *a, int isread)
 {
@@ -301,7 +303,7 @@ static int generic_config_hotkey(Configure *c, void *a, int isread)
 }
 #endif
 
-/** ½« configures ÖĞµÄÅäÖÃĞÅÏ¢Ğ´Èë fp */
+/** å°† configures ä¸­çš„é…ç½®ä¿¡æ¯å†™å…¥ fp */
 static int write_configures(FILE *fp, Configure *configures)
 {
     Configure *tc;
@@ -331,7 +333,7 @@ static int write_configures(FILE *fp, Configure *configures)
     return 0;
 }
 
-/* ´Ó str ¶ÁÈ¡ÅäÖÃĞÅÏ¢ */
+/* ä» str è¯»å–é…ç½®ä¿¡æ¯ */
 static int read_configure(Configure *config, char *str)
 {
     if(config->config_rw)
@@ -355,7 +357,7 @@ static int read_configure(Configure *config, char *str)
     return 0;
 }
 
-/* Ö÷´°¿ÚÊäÈë·¨Ãû³ÆÉ« */
+/* ä¸»çª—å£è¾“å…¥æ³•åç§°è‰² */
 inline static int main_window_input_method_name_color(Configure *c, void *a, int isread)
 {
     int r[3], b[3], g[3], i;
@@ -388,7 +390,7 @@ inline static int main_window_input_method_name_color(Configure *c, void *a, int
     return 0;
 }
 
-/* ´ò¿ª/¹Ø±ÕÊäÈë·¨ */
+/* æ‰“å¼€/å…³é—­è¾“å…¥æ³• */
 inline static int trigger_input_method(Configure *c, void *a, int isread)
 {
     if(isread){
@@ -402,7 +404,7 @@ inline static int trigger_input_method(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* ÖĞÓ¢ÎÄ¿ìËÙÇĞ»»¼ü */
+/* ä¸­è‹±æ–‡å¿«é€Ÿåˆ‡æ¢é”® */
 inline static int fast_chinese_english_switch(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -425,7 +427,7 @@ inline static int fast_chinese_english_switch(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* ¹â±ê¸úËæ */
+/* å…‰æ ‡è·Ÿéš */
 inline static int cursor_follow(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -435,7 +437,7 @@ inline static int cursor_follow(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* Òş²ØÖ÷´°¿Ú */
+/* éšè—ä¸»çª—å£ */
 inline static int hide_main_window(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -445,7 +447,7 @@ inline static int hide_main_window(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* ÇĞ»»ĞéÄâ¼üÅÌ */
+/* åˆ‡æ¢è™šæ‹Ÿé”®ç›˜ */
 inline static int switch_vk(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -456,7 +458,7 @@ inline static int switch_vk(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* GBKÖ§³Ö */
+/* GBKæ”¯æŒ */
 inline static int gbk_support(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -467,7 +469,7 @@ inline static int gbk_support(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* GBK·±ÌåÇĞ»»¼ü */
+/* GBKç¹ä½“åˆ‡æ¢é”® */
 inline static int gbk_traditional_simplified_switch(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -478,7 +480,7 @@ inline static int gbk_traditional_simplified_switch(Configure *c, void *a, int i
     return 0;
 }
 
-/* ÁªÏë */
+/* è”æƒ³ */
 inline static int association(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -489,7 +491,7 @@ inline static int association(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* ·´²éÆ´Òô */
+/* åæŸ¥æ‹¼éŸ³ */
 inline static int lookup_pinyin(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -505,7 +507,7 @@ inline static int lookup_pinyin(Configure *c, void *a, int isread)
  * SBC case = Single Byte Character case
  */
 
-/* È«°ë½Ç */
+/* å…¨åŠè§’ */
 inline static int sbc_dbc_switch(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -516,7 +518,7 @@ inline static int sbc_dbc_switch(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* ÖĞÎÄ±êµã */
+/* ä¸­æ–‡æ ‡ç‚¹ */
 inline static int chinese_punctuation(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -527,7 +529,7 @@ inline static int chinese_punctuation(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* ÉÏÒ»Ò³ */
+/* ä¸Šä¸€é¡µ */
 inline static int prev_page(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -538,7 +540,7 @@ inline static int prev_page(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* ÏÂÒ»Ò³ */
+/* ä¸‹ä¸€é¡µ */
 inline static int next_page(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -549,19 +551,19 @@ inline static int next_page(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* µÚ¶şÈıºòÑ¡´ÊÑ¡Ôñ¼ü */
+/* ç¬¬äºŒä¸‰å€™é€‰è¯é€‰æ‹©é”® */
 inline static int second_third_candidate_word(Configure *c, void *a, int isread)
 {
     char *pstr = a;
 
     if(isread){
         if (!strcasecmp (pstr, "SHIFT")) {
-            i2ndSelectKey = 50;        //×óSHIFTµÄÉ¨ÃèÂë
-            i3rdSelectKey = 62;        //ÓÒSHIFTµÄÉ¨ÃèÂë
+            i2ndSelectKey = 50;        //å·¦SHIFTçš„æ‰«æç 
+            i3rdSelectKey = 62;        //å³SHIFTçš„æ‰«æç 
         }
         else if (!strcasecmp (pstr, "CTRL")) {
-            i2ndSelectKey = 37;        //×óCTRLµÄÉ¨ÃèÂë
-            i3rdSelectKey = 109;       //ÓÒCTRLµÄÉ¨ÃèÂë
+            i2ndSelectKey = 37;        //å·¦CTRLçš„æ‰«æç 
+            i3rdSelectKey = 109;       //å³CTRLçš„æ‰«æç 
         }
         else {
 	    if (pstr[0] && pstr[0]!='0')
@@ -586,7 +588,7 @@ inline static int second_third_candidate_word(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* ±£´æ´Ê¿â */
+/* ä¿å­˜è¯åº“ */
 inline static int save_all(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -598,7 +600,7 @@ inline static int save_all(Configure *c, void *a, int isread)
 }
 
 #ifdef _ENABLE_RECORDING
-/* ÉèÖÃ¼ÇÂ¼Ä£Ê½ */
+/* è®¾ç½®è®°å½•æ¨¡å¼ */
 inline static int set_recording(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -609,7 +611,7 @@ inline static int set_recording(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* ÖØÖÃ¼ÇÂ¼Ä£Ê½ */
+/* é‡ç½®è®°å½•æ¨¡å¼ */
 inline static int reset_recording(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -621,11 +623,11 @@ inline static int reset_recording(Configure *c, void *a, int isread)
 }
 #endif
 
-/* Ä¬ÈÏË«Æ´·½°¸ */
+/* é»˜è®¤åŒæ‹¼æ–¹æ¡ˆ */
 inline static int default_shuangpin_scheme(Configure *c, void *a, int isread)
 {
     if(isread){
-        strncpy(strDefaultSP, (char *)a, 100);  /* FIXME: ²»Ó¦ÔÚ´ËÓ²±àÂë×Ö·û´®³¤¶È£¬ÏÂÍ¬ */
+        strncpy(strDefaultSP, (char *)a, 100);  /* FIXME: ä¸åº”åœ¨æ­¤ç¡¬ç¼–ç å­—ç¬¦ä¸²é•¿åº¦ï¼Œä¸‹åŒ */
         iSPFrom = SP_FROM_SYSTEM_CONFIG;
     }
     else
@@ -634,7 +636,7 @@ inline static int default_shuangpin_scheme(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* Ôö¼ÓÆ´Òô³£ÓÃ×Ö */
+/* å¢åŠ æ‹¼éŸ³å¸¸ç”¨å­— */
 inline static int add_pinyin_frequently_used_word(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -645,7 +647,7 @@ inline static int add_pinyin_frequently_used_word(Configure *c, void *a, int isr
     return 0;
 }
 
-/* É¾³ıÆ´ÒôÓÃ»§´Ê×é */
+/* åˆ é™¤æ‹¼éŸ³ç”¨æˆ·è¯ç»„ */
 inline static int delete_pinyin_user_create_phrase(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -656,7 +658,7 @@ inline static int delete_pinyin_user_create_phrase(Configure *c, void *a, int is
     return 0;
 }
 
-/* É¾³ıÆ´Òô³£ÓÃ×Ö */
+/* åˆ é™¤æ‹¼éŸ³å¸¸ç”¨å­— */
 inline static int delete_pinyin_frequently_used_word(Configure *c, void *a, int isread)
 {
     if(isread)
@@ -667,7 +669,7 @@ inline static int delete_pinyin_frequently_used_word(Configure *c, void *a, int 
     return 0;
 }
 
-/* Æ´ÒôÒÔ´Ê¶¨×Ö¼ü */
+/* æ‹¼éŸ³ä»¥è¯å®šå­—é”® */
 inline static int pinyin_get_word_from_phrase(Configure *c, void *a, int isread)
 {
     char *pstr = a;
@@ -680,7 +682,7 @@ inline static int pinyin_get_word_from_phrase(Configure *c, void *a, int isread)
     return 0;
 }
 
-/* Ä£ºıanºÍang */
+/* æ¨¡ç³Šanå’Œang */
 inline static int blur_an_ang(Configure *c, void *a, int isread)
 {
     if(isread){
@@ -693,41 +695,41 @@ inline static int blur_an_ang(Configure *c, void *a, int isread)
 
 Configure program_config[] = {
     {
-        .name = "ÏÔÊ¾×ÖÌå(ÖĞ)",
+        .name = "æ˜¾ç¤ºå­—ä½“(ä¸­)",
         .value_type = CONFIG_STRING,
         .value.str_value.string = strFontName,
-        .value.str_value.string_length = 100,   /* FIXME: ²»Ó¦ÔÚ´ËÓ²±àÂë×Ö·û´®µÄ³¤¶È£¬ÏÂÍ¬ */
+        .value.str_value.string_length = 100,   /* FIXME: ä¸åº”åœ¨æ­¤ç¡¬ç¼–ç å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œä¸‹åŒ */
     },
     {
-        .name = "ÏÔÊ¾×ÖÌå(Ó¢)",
+        .name = "æ˜¾ç¤ºå­—ä½“(è‹±)",
         .value_type = CONFIG_STRING,
         .value.str_value.string = strFontEnName,
         .value.str_value.string_length = 100,
     },
     {
-        .name = "ÏÔÊ¾×ÖÌå´óĞ¡",
+        .name = "æ˜¾ç¤ºå­—ä½“å¤§å°",
         .value_type = CONFIG_INTEGER,
         .value.integer = &iFontSize,
     },
     {
-        .name = "Ö÷´°¿Ú×ÖÌå´óĞ¡",
+        .name = "ä¸»çª—å£å­—ä½“å¤§å°",
         .value_type = CONFIG_INTEGER,
         .value.integer = &iMainWindowFontSize,
     },
     {
-        .name = "×ÖÌåÇøÓò",
+        .name = "å­—ä½“åŒºåŸŸ",
         .value_type = CONFIG_STRING,
         .value.str_value.string = strUserLocale,
         .value.str_value.string_length = 50,
     },
     {
-        .name = "Ê¹ÓÃ´ÖÌå",
+        .name = "ä½¿ç”¨ç²—ä½“",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bUseBold,
     },
 #ifdef _ENABLE_RECORDING
     {
-        .name = "¼ÇÂ¼ÎÄ¼ş",
+        .name = "è®°å½•æ–‡ä»¶",
         .value_type = CONFIG_STRING,
         .value.str_value.string = strRecordingPath,
         .value.str_value.string_length = PATH_MAX,
@@ -735,14 +737,14 @@ Configure program_config[] = {
 #endif
 #ifdef _ENABLE_TRAY
     {
-        .name = "Ê¹ÓÃÍĞÅÌÍ¼±ê",
+        .name = "ä½¿ç”¨æ‰˜ç›˜å›¾æ ‡",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bUseTrayIcon,
     },
  #endif
  #ifdef _ENABLE_DBUS
 	{
-		.name = "Ê¹ÓÃDBus½Ó¿Ú",
+		.name = "ä½¿ç”¨DBusæ¥å£",
 		.value_type = CONFIG_INTEGER,
 		.value.integer = &bUseDBus,
 	},
@@ -752,35 +754,35 @@ Configure program_config[] = {
     },
 };
 
-/* piaoairy: gcc Ä¬ÈÏenum ÀàĞÍÊ¹ÓÃint */
+/* piaoairy: gcc é»˜è®¤enum ç±»å‹ä½¿ç”¨int */
 Configure output_config[] = {
     {
-        .name = "Êı×Öºó¸ú°ë½Ç·ûºÅ",
+        .name = "æ•°å­—åè·ŸåŠè§’ç¬¦å·",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bEngPuncAfterNumber,
     },
     {
-        .name = "Enter¼üĞĞÎª",
+        .name = "Enteré”®è¡Œä¸º",
         .value_type = CONFIG_INTEGER,
-        .value.integer = (int *)&enterToDo, /* FIXME: ÕâÖÖ×ª»»·½Ê½Ò²Ğí²¢²»ÊÇ¸öºÃÖ÷Òâ£¬ÏÂÍ¬ */
+        .value.integer = (int *)&enterToDo, /* FIXME: è¿™ç§è½¬æ¢æ–¹å¼ä¹Ÿè®¸å¹¶ä¸æ˜¯ä¸ªå¥½ä¸»æ„ï¼Œä¸‹åŒ */
     },
     {
-        .name = "·ÖºÅ¼üĞĞÎª",
+        .name = "åˆ†å·é”®è¡Œä¸º",
         .value_type = CONFIG_INTEGER,
         .value.integer = (int *)&semicolonToDo,
     },
     {
-        .name = "´óĞ´×ÖÄ¸ÊäÈëÓ¢ÎÄ",
+        .name = "å¤§å†™å­—æ¯è¾“å…¥è‹±æ–‡",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bEngAfterCap,
     },
     {
-        .name = "×ª»»Ó¢ÎÄÖĞµÄ±êµã",
+        .name = "è½¬æ¢è‹±æ–‡ä¸­çš„æ ‡ç‚¹",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bConvertPunc,
     },
     {
-        .name = "ÁªÏë·½Ê½½ûÖ¹·­Ò³",
+        .name = "è”æƒ³æ–¹å¼ç¦æ­¢ç¿»é¡µ",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bDisablePagingInLegend,
     },
@@ -791,155 +793,155 @@ Configure output_config[] = {
 
 Configure interface_config[] = {
     {
-        .name = "ºòÑ¡´Ê¸öÊı",
+        .name = "å€™é€‰è¯ä¸ªæ•°",
         .value_type = CONFIG_INTEGER,
         .value.integer = &iMaxCandWord,
     },
     {
-        .name = "Ö÷´°¿ÚÊ¹ÓÃ3D½çÃæ",
+        .name = "ä¸»çª—å£ä½¿ç”¨3Dç•Œé¢",
         .value_type = CONFIG_INTEGER,
         .value.integer = &_3DEffectMainWindow,
     },
     {
-        .name = "ÊäÈëÌõÊ¹ÓÃ3D½çÃæ",
+        .name = "è¾“å…¥æ¡ä½¿ç”¨3Dç•Œé¢",
         .value_type = CONFIG_INTEGER,
         .value.integer = (int *)&_3DEffectInputWindow,
     },
     {
-        .name = "Ö÷´°¿ÚÒş²ØÄ£Ê½",
+        .name = "ä¸»çª—å£éšè—æ¨¡å¼",
         .value_type = CONFIG_INTEGER,
         .value.integer = (int *)&hideMainWindow,
     },
     {
-        .name = "ÏÔÊ¾ĞéÄâ¼üÅÌ",
+        .name = "æ˜¾ç¤ºè™šæ‹Ÿé”®ç›˜",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bShowVK,
     },
     {
-        .name = "ÊäÈëÌõ¾ÓÖĞ",
+        .name = "è¾“å…¥æ¡å±…ä¸­",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bCenterInputWindow,
     },
     {
-        .name = "Ê×´ÎÏÔÊ¾ÊäÈëÌõ",
+        .name = "é¦–æ¬¡æ˜¾ç¤ºè¾“å…¥æ¡",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bShowInputWindowTriggering,
     },
     {
-        .name = "ÊäÈëÌõ¹Ì¶¨¿í¶È",
-        .comment = "ÊäÈëÌõ¹Ì¶¨¿í¶È(½öÊÊÓÃÓÚÂë±íÊäÈë·¨)£¬0±íÊ¾²»¹Ì¶¨¿í¶È",
+        .name = "è¾“å…¥æ¡å›ºå®šå®½åº¦",
+        .comment = "è¾“å…¥æ¡å›ºå®šå®½åº¦(ä»…é€‚ç”¨äºç è¡¨è¾“å…¥æ³•)ï¼Œ0è¡¨ç¤ºä¸å›ºå®šå®½åº¦",
         .value_type = CONFIG_INTEGER,
         .value.integer = &iFixedInputWindowWidth,
     },
     {
-        .name = "ÊäÈëÌõÆ«ÒÆÁ¿X",
+        .name = "è¾“å…¥æ¡åç§»é‡X",
         .value_type = CONFIG_INTEGER,
         .value.integer = &iOffsetX,
     },
     {
-        .name = "ÊäÈëÌõÆ«ÒÆÁ¿Y",
+        .name = "è¾“å…¥æ¡åç§»é‡Y",
         .value_type = CONFIG_INTEGER,
         .value.integer = &iOffsetY,
     },
     {
-        .name = "ĞòºÅºó¼Óµã",
+        .name = "åºå·ååŠ ç‚¹",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bPointAfterNumber,
     },
     {
-        .name = "ÏÔÊ¾´ò×ÖËÙ¶È",
+        .name = "æ˜¾ç¤ºæ‰“å­—é€Ÿåº¦",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bShowUserSpeed,
     },
     {
-        .name = "ÏÔÊ¾°æ±¾",
+        .name = "æ˜¾ç¤ºç‰ˆæœ¬",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bShowVersion,
     },
     {
-        .name = "¹â±êÉ«",
+        .name = "å…‰æ ‡è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(cursorColor.color),
     },
     {
-        .name = "Ö÷´°¿Ú±³¾°É«",
+        .name = "ä¸»çª—å£èƒŒæ™¯è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(mainWindowColor.backColor),
     },
     {
-        .name = "Ö÷´°¿ÚÏßÌõÉ«",
+        .name = "ä¸»çª—å£çº¿æ¡è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(mainWindowLineColor.color),
     },
     {
-        .name = "Ö÷´°¿ÚÊäÈë·¨Ãû³ÆÉ«",
+        .name = "ä¸»çª—å£è¾“å…¥æ³•åç§°è‰²",
         .value_type = CONFIG_OTHER,
         .config_rw = main_window_input_method_name_color,
     },
     {
-        .name = "ÊäÈë´°±³¾°É«",
+        .name = "è¾“å…¥çª—èƒŒæ™¯è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(inputWindowColor.backColor),
     },
     {
-        .name = "ÊäÈë´°ÌáÊ¾É«",
+        .name = "è¾“å…¥çª—æç¤ºè‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(messageColor[0].color),
     },
     {
-        .name = "ÊäÈë´°ÓÃ»§ÊäÈëÉ«",
+        .name = "è¾“å…¥çª—ç”¨æˆ·è¾“å…¥è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(messageColor[1].color),
     },
     {
-        .name = "ÊäÈë´°ĞòºÅÉ«",
+        .name = "è¾“å…¥çª—åºå·è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(messageColor[2].color),
     },
     {
-        .name = "ÊäÈë´°µÚÒ»¸öºòÑ¡×ÖÉ«",
+        .name = "è¾“å…¥çª—ç¬¬ä¸€ä¸ªå€™é€‰å­—è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(messageColor[3].color),
     },
     {
-        .name = "ÊäÈë´°ÓÃ»§´Ê×éÉ«",
-        .comment = "¸ÃÑÕÉ«ÖµÖ»ÓÃÓÚÆ´ÒôÖĞµÄÓÃ»§×ÔÔì´Ê",
+        .name = "è¾“å…¥çª—ç”¨æˆ·è¯ç»„è‰²",
+        .comment = "è¯¥é¢œè‰²å€¼åªç”¨äºæ‹¼éŸ³ä¸­çš„ç”¨æˆ·è‡ªé€ è¯",
         .value_type = CONFIG_COLOR,
         .value.color = &(messageColor[4].color),
     },
     {
-        .name = "ÊäÈë´°ÌáÊ¾±àÂëÉ«",
+        .name = "è¾“å…¥çª—æç¤ºç¼–ç è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(messageColor[5].color),
     },
     {
-        .name = "ÊäÈë´°ÆäËüÎÄ±¾É«",
-        .comment = "Îå±Ê¡¢Æ´ÒôµÄµ¥×Ö/ÏµÍ³´Ê×é¾ùÊ¹ÓÃ¸ÃÑÕÉ«",
+        .name = "è¾“å…¥çª—å…¶å®ƒæ–‡æœ¬è‰²",
+        .comment = "äº”ç¬”ã€æ‹¼éŸ³çš„å•å­—/ç³»ç»Ÿè¯ç»„å‡ä½¿ç”¨è¯¥é¢œè‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(messageColor[6].color),
     },
     {
-        .name = "ÊäÈë´°ÏßÌõÉ«",
+        .name = "è¾“å…¥çª—çº¿æ¡è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(inputWindowLineColor.color),
     },
     {
-        .name = "ÊäÈë´°¼ıÍ·É«",
+        .name = "è¾“å…¥çª—ç®­å¤´è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(colorArrow),
     },
     {
-        .name = "ĞéÄâ¼üÅÌ´°±³¾°É«",
+        .name = "è™šæ‹Ÿé”®ç›˜çª—èƒŒæ™¯è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(VKWindowColor.backColor),
     },
     {
-        .name = "ĞéÄâ¼üÅÌ´°×ÖÄ¸É«",
+        .name = "è™šæ‹Ÿé”®ç›˜çª—å­—æ¯è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(VKWindowAlphaColor.color),
     },
     {
-        .name = "ĞéÄâ¼üÅÌ´°·ûºÅÉ«",
+        .name = "è™šæ‹Ÿé”®ç›˜çª—ç¬¦å·è‰²",
         .value_type = CONFIG_COLOR,
         .value.color = &(VKWindowFontColor.color),
     },
@@ -950,99 +952,99 @@ Configure interface_config[] = {
 
 Configure hotkey_config[] = {
     {
-        .name = "´ò¿ª/¹Ø±ÕÊäÈë·¨",
+        .name = "æ‰“å¼€/å…³é—­è¾“å…¥æ³•",
         .value_type = CONFIG_OTHER,
         .config_rw = trigger_input_method,
     },
     {
-        .name = "ÖĞÓ¢ÎÄ¿ìËÙÇĞ»»¼ü",
-        .comment = "ÖĞÓ¢ÎÄ¿ìËÙÇĞ»»¼ü ¿ÉÒÔÉèÖÃÎªL_CTRL R_CTRL L_SHIFT R_SHIFT L_SUPER R_SUPER",
-        .value_type = CONFIG_OTHER, /* FIXME: Ó¦¸ÃÎª CONFIG_SWITCHKEY */
+        .name = "ä¸­è‹±æ–‡å¿«é€Ÿåˆ‡æ¢é”®",
+        .comment = "ä¸­è‹±æ–‡å¿«é€Ÿåˆ‡æ¢é”® å¯ä»¥è®¾ç½®ä¸ºL_CTRL R_CTRL L_SHIFT R_SHIFT L_SUPER R_SUPER",
+        .value_type = CONFIG_OTHER, /* FIXME: åº”è¯¥ä¸º CONFIG_SWITCHKEY */
         .config_rw = fast_chinese_english_switch,
     },
     {
-        .name = "Ë«»÷ÖĞÓ¢ÎÄÇĞ»»",
+        .name = "åŒå‡»ä¸­è‹±æ–‡åˆ‡æ¢",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bDoubleSwitchKey,
     },
     {
-        .name = "»÷¼üÊ±¼ä¼ä¸ô",
+        .name = "å‡»é”®æ—¶é—´é—´éš”",
         .value_type = CONFIG_INTEGER,
         .value.integer = (int *)&iTimeInterval,
     },
     {
-        .name = "¹â±ê¸úËæ",
+        .name = "å…‰æ ‡è·Ÿéš",
         .value_type = CONFIG_HOTKEY,
         .config_rw = cursor_follow,
     },
     {
-        .name = "Òş²ØÖ÷´°¿Ú",
+        .name = "éšè—ä¸»çª—å£",
         .value_type = CONFIG_HOTKEY,
         .config_rw = hide_main_window,
     },
     {
-        .name = "ÇĞ»»ĞéÄâ¼üÅÌ",
+        .name = "åˆ‡æ¢è™šæ‹Ÿé”®ç›˜",
         .value_type = CONFIG_HOTKEY,
         .config_rw = switch_vk,
     },
     {
-        .name = "GBKÖ§³Ö",
+        .name = "GBKæ”¯æŒ",
         .value_type = CONFIG_HOTKEY,
         .config_rw = gbk_support,
     },
     {
-        .name = "GBK·±ÌåÇĞ»»¼ü",
+        .name = "GBKç¹ä½“åˆ‡æ¢é”®",
         .value_type = CONFIG_HOTKEY,
         .config_rw = gbk_traditional_simplified_switch,
     },
     {
-        .name = "ÁªÏë",
+        .name = "è”æƒ³",
         .value_type = CONFIG_HOTKEY,
         .config_rw = association,
     },
     {
-        .name = "·´²éÆ´Òô",
+        .name = "åæŸ¥æ‹¼éŸ³",
         .value_type = CONFIG_HOTKEY,
         .config_rw = lookup_pinyin,
     },
     {
-        .name = "È«°ë½Ç",
+        .name = "å…¨åŠè§’",
         .value_type = CONFIG_HOTKEY,
         .config_rw = sbc_dbc_switch,
     },
     {
-        .name = "ÖĞÎÄ±êµã",
+        .name = "ä¸­æ–‡æ ‡ç‚¹",
         .value_type = CONFIG_HOTKEY,
         .config_rw = chinese_punctuation,
     },
     {
-        .name = "ÉÏÒ»Ò³",
+        .name = "ä¸Šä¸€é¡µ",
         .value_type = CONFIG_HOTKEY,
         .config_rw = prev_page,
     },
     {
-        .name = "ÏÂÒ»Ò³",
+        .name = "ä¸‹ä¸€é¡µ",
         .value_type = CONFIG_HOTKEY,
         .config_rw = next_page,
     },
     {
-        .name = "µÚ¶şÈıºòÑ¡´ÊÑ¡Ôñ¼ü",
+        .name = "ç¬¬äºŒä¸‰å€™é€‰è¯é€‰æ‹©é”®",
         .value_type = CONFIG_HOTKEY,
         .config_rw = second_third_candidate_word,
     },
     {
-        .name = "±£´æ´Ê¿â",
+        .name = "ä¿å­˜è¯åº“",
         .value_type = CONFIG_HOTKEY,
         .config_rw = save_all,
     },
 #ifdef _ENABLE_RECORDING
     {
-        .name = "¼ÇÂ¼Ä£Ê½",
+        .name = "è®°å½•æ¨¡å¼",
         .value_type = CONFIG_HOTKEY,
         .config_rw = set_recording,
     },
     {
-        .name = "ÖØÖÃ¼ÇÂ¼Ä£Ê½",
+        .name = "é‡ç½®è®°å½•æ¨¡å¼",
         .value_type = CONFIG_HOTKEY,
         .config_rw = reset_recording,
     },
@@ -1054,55 +1056,55 @@ Configure hotkey_config[] = {
 
 Configure input_method_config[] = {
     {
-        .name = "Ê¹ÓÃÆ´Òô",
+        .name = "ä½¿ç”¨æ‹¼éŸ³",
         .value_type = CONFIG_INTEGER,
         .value.integer = &inputMethods[IM_PY],
     },
     {
-        .name = "Æ´ÒôÃû³Æ",
+        .name = "æ‹¼éŸ³åç§°",
         .value_type = CONFIG_STRING,
         .value.str_value.string = strNameOfPinyin,
-        .value.str_value.string_length = 41,    /* FIXME: ²»Ó¦ÔÚ´ËÓ²±àÂë×Ö·û´®³¤¶È£¬ÏÂÍ¬ */
+        .value.str_value.string_length = 41,    /* FIXME: ä¸åº”åœ¨æ­¤ç¡¬ç¼–ç å­—ç¬¦ä¸²é•¿åº¦ï¼Œä¸‹åŒ */
     },
     {
-        .name = "Ê¹ÓÃË«Æ´",
+        .name = "ä½¿ç”¨åŒæ‹¼",
         .value_type = CONFIG_INTEGER,
         .value.integer = &inputMethods[IM_SP],
     },
     {
-        .name = "Ë«Æ´Ãû³Æ",
+        .name = "åŒæ‹¼åç§°",
         .value_type = CONFIG_STRING,
         .value.str_value.string = strNameOfShuangpin,
         .value.str_value.string_length = 41,
     },
     {
-        .name = "Ä¬ÈÏË«Æ´·½°¸",
+        .name = "é»˜è®¤åŒæ‹¼æ–¹æ¡ˆ",
         .value_type = CONFIG_OTHER,
         .config_rw = default_shuangpin_scheme,
     },
     {
-        .name = "Ê¹ÓÃÇøÎ»",
+        .name = "ä½¿ç”¨åŒºä½",
         .value_type = CONFIG_INTEGER,
         .value.integer = &inputMethods[IM_QW],
     },
     {
-        .name = "ÇøÎ»Ãû³Æ",
+        .name = "åŒºä½åç§°",
         .value_type = CONFIG_STRING,
         .value.str_value.string = strNameOfQuwei,
         .value.str_value.string_length = 41,
     },
     {
-        .name = "Ê¹ÓÃÂë±í",
+        .name = "ä½¿ç”¨ç è¡¨",
         .value_type = CONFIG_INTEGER,
         .value.integer = &inputMethods[IM_TABLE],
     },
     {
-        .name = "ÌáÊ¾´Ê¿âÖĞµÄ´Ê×é",
+        .name = "æç¤ºè¯åº“ä¸­çš„è¯ç»„",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bPhraseTips,
     },
     {
-        .name = "ÆäËûÊäÈë·¨",
+        .name = "å…¶ä»–è¾“å…¥æ³•",
         .value_type = CONFIG_STRING,
         .value.str_value.string = strExternIM,
         .value.str_value.string_length = PATH_MAX,
@@ -1114,109 +1116,109 @@ Configure input_method_config[] = {
 
 Configure pinyin_config[] = {
     {
-        .name = "Ê¹ÓÃÈ«Æ´",
+        .name = "ä½¿ç”¨å…¨æ‹¼",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bFullPY,
     },
     {
-        .name = "Æ´Òô×Ô¶¯×é´Ê",
+        .name = "æ‹¼éŸ³è‡ªåŠ¨ç»„è¯",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bPYCreateAuto,
     },
     {
-        .name = "±£´æ×Ô¶¯×é´Ê",
+        .name = "ä¿å­˜è‡ªåŠ¨ç»„è¯",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bPYSaveAutoAsPhrase,
     },
     {
-       .name = "Ôö¼ÓÆ´Òô³£ÓÃ×Ö",
+       .name = "å¢åŠ æ‹¼éŸ³å¸¸ç”¨å­—",
         .value_type = CONFIG_HOTKEY,
         .config_rw = add_pinyin_frequently_used_word,
     },
     {
-        .name = "É¾³ıÆ´Òô³£ÓÃ×Ö",
+        .name = "åˆ é™¤æ‹¼éŸ³å¸¸ç”¨å­—",
         .value_type = CONFIG_HOTKEY,
         .config_rw = delete_pinyin_frequently_used_word,
     },
     {
-        .name = "É¾³ıÆ´ÒôÓÃ»§´Ê×é",
+        .name = "åˆ é™¤æ‹¼éŸ³ç”¨æˆ·è¯ç»„",
         .value_type = CONFIG_HOTKEY,
         .config_rw = delete_pinyin_user_create_phrase,
     },
     {
-        .name = "Æ´ÒôÒÔ´Ê¶¨×Ö¼ü",
-        .comment = "Æ´ÒôÒÔ´Ê¶¨×Ö¼ü£¬µÈºÅºóÃæ½ô½Ó¼ü£¬²»ÒªÓĞ¿Õ¸ñ",
+        .name = "æ‹¼éŸ³ä»¥è¯å®šå­—é”®",
+        .comment = "æ‹¼éŸ³ä»¥è¯å®šå­—é”®ï¼Œç­‰å·åé¢ç´§æ¥é”®ï¼Œä¸è¦æœ‰ç©ºæ ¼",
         .value_type = CONFIG_OTHER,
         .config_rw = pinyin_get_word_from_phrase,
     },
     {
-        .name = "Æ´Òôµ¥×ÖÖØÂëµ÷Õû·½Ê½",
-        .comment = "ÖØÂëµ÷Õû·½Ê½ËµÃ÷£º0-->²»µ÷Õû  1-->¿ìËÙµ÷Õû  2-->°´ÆµÂÊµ÷Õû",
+        .name = "æ‹¼éŸ³å•å­—é‡ç è°ƒæ•´æ–¹å¼",
+        .comment = "é‡ç è°ƒæ•´æ–¹å¼è¯´æ˜ï¼š0-->ä¸è°ƒæ•´  1-->å¿«é€Ÿè°ƒæ•´  2-->æŒ‰é¢‘ç‡è°ƒæ•´",
         .value_type = CONFIG_INTEGER,
         .value.integer = (int *)&baseOrder,
     },
     {
-        .name = "Æ´Òô´Ê×éÖØÂëµ÷Õû·½Ê½",
+        .name = "æ‹¼éŸ³è¯ç»„é‡ç è°ƒæ•´æ–¹å¼",
         .value_type = CONFIG_INTEGER,
         .value.integer = (int *)&phraseOrder,
     },
     {
-        .name = "Æ´Òô³£ÓÃ´ÊÖØÂëµ÷Õû·½Ê½",
+        .name = "æ‹¼éŸ³å¸¸ç”¨è¯é‡ç è°ƒæ•´æ–¹å¼",
         .value_type = CONFIG_INTEGER,
         .value.integer = (int *)&freqOrder,
     },
     {
-        .name = "Ä£ºıanºÍang",
+        .name = "æ¨¡ç³Šanå’Œang",
         .value_type = CONFIG_OTHER,
         .config_rw = blur_an_ang,
     },
     {
-        .name = "Ä£ºıenºÍeng",
+        .name = "æ¨¡ç³Šenå’Œeng",
         .value_type = CONFIG_INTEGER,
         .value.integer = &(MHPY_C[1].bMode),
     },
     {
-        .name = "Ä£ºıianºÍiang",
+        .name = "æ¨¡ç³Šianå’Œiang",
         .value_type = CONFIG_INTEGER,
         .value.integer = &(MHPY_C[2].bMode),
     },
     {
-        .name = "Ä£ºıinºÍing",
+        .name = "æ¨¡ç³Šinå’Œing",
         .value_type = CONFIG_INTEGER,
         .value.integer = &(MHPY_C[3].bMode),
     },
     {
-        .name = "Ä£ºıouºÍu",
+        .name = "æ¨¡ç³Šouå’Œu",
         .value_type = CONFIG_INTEGER,
         .value.integer = &(MHPY_C[4].bMode),
     },
     {
-        .name = "Ä£ºıuanºÍuang",
+        .name = "æ¨¡ç³Šuanå’Œuang",
         .value_type = CONFIG_INTEGER,
         .value.integer = &(MHPY_C[5].bMode),
     },
     {
-        .name = "Ä£ºıcºÍch",
+        .name = "æ¨¡ç³Šcå’Œch",
         .value_type = CONFIG_INTEGER,
         .value.integer = &(MHPY_S[0].bMode),
     },
     {
-        .name = "Ä£ºıfºÍh",
+        .name = "æ¨¡ç³Šfå’Œh",
         .value_type = CONFIG_INTEGER,
         .value.integer = &(MHPY_S[1].bMode),
     },
     {
-        .name = "Ä£ºılºÍn",
+        .name = "æ¨¡ç³Šlå’Œn",
         .value_type = CONFIG_INTEGER,
         .value.integer = &(MHPY_S[2].bMode),
     },
     {
-        .name = "Ä£ºısºÍsh",
+        .name = "æ¨¡ç³Šså’Œsh",
         .value_type = CONFIG_INTEGER,
         .value.integer = &(MHPY_S[3].bMode),
     },
     {
-        .name = "Ä£ºızºÍzh",
+        .name = "æ¨¡ç³Šzå’Œzh",
         .value_type = CONFIG_INTEGER,
         .value.integer = &(MHPY_S[4].bMode),
     },
@@ -1227,28 +1229,28 @@ Configure pinyin_config[] = {
 
 Configure_group configure_groups[] = {
     {
-        .name = "³ÌĞò",
+        .name = "ç¨‹åº",
         .configure = program_config,
     },
     {
-        .name = "Êä³ö",
+        .name = "è¾“å‡º",
         .configure = output_config,
     },
     {
-        .name = "½çÃæ",
+        .name = "ç•Œé¢",
         .configure = interface_config,
     },
     {
-        .name = "ÈÈ¼ü",
-        .comment = "³ıÁË¡°ÖĞÓ¢ÎÄ¿ìËÙÇĞ»»¼ü¡±Íâ£¬ÆäËüµÄÈÈ¼ü¾ù¿ÉÉèÖÃÎªÁ½¸ö£¬ÖĞ¼äÓÃ¿Õ¸ñ·Ö¸ô",
+        .name = "çƒ­é”®",
+        .comment = "é™¤äº†â€œä¸­è‹±æ–‡å¿«é€Ÿåˆ‡æ¢é”®â€å¤–ï¼Œå…¶å®ƒçš„çƒ­é”®å‡å¯è®¾ç½®ä¸ºä¸¤ä¸ªï¼Œä¸­é—´ç”¨ç©ºæ ¼åˆ†éš”",
         .configure = hotkey_config,
     },
     {
-        .name = "ÊäÈë·¨",
+        .name = "è¾“å…¥æ³•",
         .configure = input_method_config,
     },
     {
-        .name = "Æ´Òô",
+        .name = "æ‹¼éŸ³",
         .configure = pinyin_config,
     },
     {
@@ -1257,15 +1259,15 @@ Configure_group configure_groups[] = {
 };
 
 /**
- * @brief ¶ÁÈ¡ÓÃ»§µÄÅäÖÃÎÄ¼ş
- * @param bMode ±êÊ¶ÅäÖÃÎÄ¼şÊÇÓÃ»§¼ÒÄ¿Â¼ÏÂµÄ£¬»¹ÊÇ´Ó°²×°Ä¿Â¼ÏÂ¿½±´¹ıÀ´µÄ
+ * @brief è¯»å–ç”¨æˆ·çš„é…ç½®æ–‡ä»¶
+ * @param bMode æ ‡è¯†é…ç½®æ–‡ä»¶æ˜¯ç”¨æˆ·å®¶ç›®å½•ä¸‹çš„ï¼Œè¿˜æ˜¯ä»å®‰è£…ç›®å½•ä¸‹æ‹·è´è¿‡æ¥çš„
  * @return void
  */
 void LoadConfig (Bool bMode)
 {
     FILE    *fp;
     char    buf[PATH_MAX], *pbuf, *pbuf1;
-    //ÓÃÓÚ±êÊ¾groupµÄindex£¬ÔÚÅäÖÃÎÄ¼şÀïÃæÅäÖÃÊÇ·Ö×éµÄ£¬ÀàËÆÓëiniÎÄ¼şµÄ·Ö×é
+    //ç”¨äºæ ‡ç¤ºgroupçš„indexï¼Œåœ¨é…ç½®æ–‡ä»¶é‡Œé¢é…ç½®æ˜¯åˆ†ç»„çš„ï¼Œç±»ä¼¼ä¸iniæ–‡ä»¶çš„åˆ†ç»„
     int     group_idx;
     int		i;
     Configure   *tmpconfig;
@@ -1273,7 +1275,7 @@ void LoadConfig (Bool bMode)
     for (i = 0;i < INPUT_METHODS; i++ )
         inputMethods[i] = 1;
 
-    //ÓÃÒÔ±êÊ¶ÊÇ·ñÊÇÖØĞÂ¶ÁÈ¡ÅäÖÃÎÄ¼ş
+    //ç”¨ä»¥æ ‡è¯†æ˜¯å¦æ˜¯é‡æ–°è¯»å–é…ç½®æ–‡ä»¶
     bIsReloadConfig = bMode;
 
     fp = UserConfigFile("config", "rt", NULL);
@@ -1296,11 +1298,11 @@ void LoadConfig (Bool bMode)
     if (fp) {
 	group_idx = -1;
 
-	/* FIXME: Ò²ĞíÓ¦¸ÃÓÃÁíÍâ¸üÇ¡µ±µÄ»º³åÇø³¤¶È */
-	while(fgets(buf, PATH_MAX, fp)){		//Ã¿´Î×î¶à¶ÁÈëPATH_MAX´óĞ¡µÄÊı¾İ
+	/* FIXME: ä¹Ÿè®¸åº”è¯¥ç”¨å¦å¤–æ›´æ°å½“çš„ç¼“å†²åŒºé•¿åº¦ */
+	while(fgets(buf, PATH_MAX, fp)){		//æ¯æ¬¡æœ€å¤šè¯»å…¥PATH_MAXå¤§å°çš„æ•°æ®
 	    i = strlen(buf);
 
-            /*fcitxµÄÅäÖÃÎÄ¼şÃ¿ĞĞ×î¶àÊÇPATH_MAX¸ö×Ö·û£¬Òò´ËÓĞÉÏÃæµÄFIXME*/
+            /*fcitxçš„é…ç½®æ–‡ä»¶æ¯è¡Œæœ€å¤šæ˜¯PATH_MAXä¸ªå­—ç¬¦ï¼Œå› æ­¤æœ‰ä¸Šé¢çš„FIXME*/
             if(buf[i-1] != '\n'){
 		fprintf(stderr, "error: configure file: line length\n");
 		exit(1);
@@ -1308,12 +1310,12 @@ void LoadConfig (Bool bMode)
 		buf[i-1] = '\0';
 
 	    pbuf = buf;
-	    while(*pbuf && isspace(*pbuf))	//½«pbufÖ¸ÏòµÚÒ»¸ö·Ç¿Õ×Ö·û
+	    while(*pbuf && isspace(*pbuf))	//å°†pbufæŒ‡å‘ç¬¬ä¸€ä¸ªéç©ºå­—ç¬¦
 		pbuf++;
-            if(!*pbuf || *pbuf == '#')		//Èç¹û¸ÄĞĞÊÇ¿ÕÊı¾İ»òÕßÊÇ×¢ÊÍ(ÒÔ#¿ªÍ·Îª×¢ÊÍ)
+            if(!*pbuf || *pbuf == '#')		//å¦‚æœæ”¹è¡Œæ˜¯ç©ºæ•°æ®æˆ–è€…æ˜¯æ³¨é‡Š(ä»¥#å¼€å¤´ä¸ºæ³¨é‡Š)
 		continue;
 
-            if(*pbuf == '['){ /* get a group name(×éÃûµÄ¸ñÊ½Îª"[×éÃû]")*/
+            if(*pbuf == '['){ /* get a group name(ç»„åçš„æ ¼å¼ä¸º"[ç»„å]")*/
 		pbuf++;
 		pbuf1 = strchr(pbuf, ']');
 		if(!pbuf1){
@@ -1321,7 +1323,7 @@ void LoadConfig (Bool bMode)
                     exit(1);
                 }
 
-                //¸ù¾İgroupµÄÃû×ÖÕÒµ½ÆäÔÚÈ«¾Ö±äÁ¿configure_groupsÖĞµÄindex
+                //æ ¹æ®groupçš„åå­—æ‰¾åˆ°å…¶åœ¨å…¨å±€å˜é‡configure_groupsä¸­çš„index
                 group_idx = -1;
                 for(i = 0; configure_groups[i].name; i++)
                     if(strncmp(configure_groups[i].name, pbuf, pbuf1-pbuf) == 0){
@@ -1330,32 +1332,32 @@ void LoadConfig (Bool bMode)
                     }
                 if(group_idx < 0){
                     fprintf(stderr, "error: invalid configure group name\n");
-                    exit(1); /* ÎÒÈÏÎªÕâ¶ùÃ»ÓĞ±ØÒªÍË³ö¡£´Ë´¦ÍêÈ«¿ÉÒÔºöÂÔÕâ¸ö´íÎó£¬
-                              * ²¢ÇÒÔÚºóÃæÒ²ºöÂÔÕâ¸ö×éµÄÅäÖÃ¼´¿É¡£
-                              * ÒòÎªÕâ¶ùÍË³öÖ»»á´øÀ´Ò»¸ö»µ´¦£¬ÄÇ¾ÍÊÇÀ©Õ¹ĞÔ¡£
-                              * ÒÔºóÔÙÌí¼ÓĞÂµÄ×éµÄÊ±ºò£¬ÀÏ°æ±¾µÄ³ÌĞò¾ÍÎŞ·¨Ê¹ÓÃ
-                              * ĞÂ°æ±¾µÄÅäÖÃÎÄ¼şÁË¡£»òÕß£¬Ìí¼ÓÁËÒ»¸ö¿ÉÑ¡À©Õ¹£¬
-                              * ¸ÃÀ©Õ¹ĞÂÌí¼ÓÒ»¸ö×éµÈµÈ¡£ËùÒÔ£¬´Ë´¦Ó¦¸Ã¸øÒ»¸ö¾¯¸æ£¬
-                              * ¶ø²»ÊÇÍË³ö¡£*/
+                    exit(1); /* æˆ‘è®¤ä¸ºè¿™å„¿æ²¡æœ‰å¿…è¦é€€å‡ºã€‚æ­¤å¤„å®Œå…¨å¯ä»¥å¿½ç•¥è¿™ä¸ªé”™è¯¯ï¼Œ
+                              * å¹¶ä¸”åœ¨åé¢ä¹Ÿå¿½ç•¥è¿™ä¸ªç»„çš„é…ç½®å³å¯ã€‚
+                              * å› ä¸ºè¿™å„¿é€€å‡ºåªä¼šå¸¦æ¥ä¸€ä¸ªåå¤„ï¼Œé‚£å°±æ˜¯æ‰©å±•æ€§ã€‚
+                              * ä»¥åå†æ·»åŠ æ–°çš„ç»„çš„æ—¶å€™ï¼Œè€ç‰ˆæœ¬çš„ç¨‹åºå°±æ— æ³•ä½¿ç”¨
+                              * æ–°ç‰ˆæœ¬çš„é…ç½®æ–‡ä»¶äº†ã€‚æˆ–è€…ï¼Œæ·»åŠ äº†ä¸€ä¸ªå¯é€‰æ‰©å±•ï¼Œ
+                              * è¯¥æ‰©å±•æ–°æ·»åŠ ä¸€ä¸ªç»„ç­‰ç­‰ã€‚æ‰€ä»¥ï¼Œæ­¤å¤„åº”è¯¥ç»™ä¸€ä¸ªè­¦å‘Šï¼Œ
+                              * è€Œä¸æ˜¯é€€å‡ºã€‚*/
 		}
 		continue;
 	    }
 
-            //pbuf1Ö¸ÏòµÚÒ»¸ö·Ç¿Õ×Ö·ûÓë=Ö®¼äµÄ×Ö·û
+            //pbuf1æŒ‡å‘ç¬¬ä¸€ä¸ªéç©ºå­—ç¬¦ä¸=ä¹‹é—´çš„å­—ç¬¦
             pbuf1 = strchr(pbuf, '=');
             if(!pbuf1){
                 fprintf(stderr, "error: configure file: configure entry name\n");
-                exit(1);	// ºÍÇ°ÃæÒ»Ñù£¬Õâ¶ùÒ²Ó¦¸ÃÊÇÒ»¸ö¾¯¸æ¶ø²»Ó¦¸ÃÊÇÌáÊ¾³ö´í²¢ÍË³ö¡£
+                exit(1);	// å’Œå‰é¢ä¸€æ ·ï¼Œè¿™å„¿ä¹Ÿåº”è¯¥æ˜¯ä¸€ä¸ªè­¦å‘Šè€Œä¸åº”è¯¥æ˜¯æç¤ºå‡ºé”™å¹¶é€€å‡ºã€‚
             }
 
             /*
-	     * Õâ¶ù±ÜÃâµÄÊÇÄÇÑùÒ»ÖÖÇé¿ö£¬¼´´ÓÎÄ¼şÍ·µ½µÚÒ»¸öÅäÖÃÏî(¼´ÀàËÆÓë¡°ÅäÖÃÃû=ÅäÖÃÖµ¡±
-             * µÄÒ»ĞĞ×Ö·û´®)²¢Ã»ÓĞÈÎºÎ·Ö×é¡£Ò²¾ÍÊÇ·ÀÖ¹³öÏÖÏÂÃæµÄ¡°ÅäÖÃ1¡±ºÍ¡°ÅäÖÃ2¡±
-             * #ÎÄ¼şÍ·
-             * ÅäÖÃ1=123 ÅäÖÃ2=123
-             * [×éÃû]
+	     * è¿™å„¿é¿å…çš„æ˜¯é‚£æ ·ä¸€ç§æƒ…å†µï¼Œå³ä»æ–‡ä»¶å¤´åˆ°ç¬¬ä¸€ä¸ªé…ç½®é¡¹(å³ç±»ä¼¼ä¸â€œé…ç½®å=é…ç½®å€¼â€
+             * çš„ä¸€è¡Œå­—ç¬¦ä¸²)å¹¶æ²¡æœ‰ä»»ä½•åˆ†ç»„ã€‚ä¹Ÿå°±æ˜¯é˜²æ­¢å‡ºç°ä¸‹é¢çš„â€œé…ç½®1â€å’Œâ€œé…ç½®2â€
+             * #æ–‡ä»¶å¤´
+             * é…ç½®1=123 é…ç½®2=123
+             * [ç»„å]
              * ...
-             * #ÎÄ¼şÎ²
+             * #æ–‡ä»¶å°¾
              */
 
 
@@ -1363,7 +1365,7 @@ void LoadConfig (Bool bMode)
                 fprintf(stderr, "error: configure file: no group name at beginning\n");
                 exit(1);
             }
-            //ÕÒµ½¸Ã×éÖĞµÄÅäÖÃÏî£¬²¢½«Æä±£´æµ½¶ÔÓ¦µÄÈ«¾Ö±äÁ¿ÀïÃæÈ¥
+            //æ‰¾åˆ°è¯¥ç»„ä¸­çš„é…ç½®é¡¹ï¼Œå¹¶å°†å…¶ä¿å­˜åˆ°å¯¹åº”çš„å…¨å±€å˜é‡é‡Œé¢å»
             for(tmpconfig = configure_groups[group_idx].configure;
                 tmpconfig->name; tmpconfig++)
             {
@@ -1376,7 +1378,7 @@ void LoadConfig (Bool bMode)
         fclose(fp);
     }
 
-    /* Èç¹ûÅäÖÃÎÄ¼şÖĞÃ»ÓĞÉèÖÃ´ò¿ª/¹Ø±ÕÊäÈë·¨µÄÈÈ¼ü£¬ÄÇÃ´ÉèÖÃCTRL-SPACEÎªÄ¬ÈÏÈÈ¼ü */
+    /* å¦‚æœé…ç½®æ–‡ä»¶ä¸­æ²¡æœ‰è®¾ç½®æ‰“å¼€/å…³é—­è¾“å…¥æ³•çš„çƒ­é”®ï¼Œé‚£ä¹ˆè®¾ç½®CTRL-SPACEä¸ºé»˜è®¤çƒ­é”® */
     if (!Trigger_Keys) {
 	iTriggerKeyCount = 0;
 	Trigger_Keys = (XIMTriggerKey *) malloc (sizeof (XIMTriggerKey) * (iTriggerKeyCount + 2));
@@ -1390,7 +1392,7 @@ void LoadConfig (Bool bMode)
 }
 
 /**
- * ±£´æÅäÖÃĞÅÏ¢
+ * ä¿å­˜é…ç½®ä¿¡æ¯
  */
 void SaveConfig (void)
 {
@@ -1401,19 +1403,19 @@ void SaveConfig (void)
     if (!fp)
         perror("fopen");
 
-    /* Êµ¼ÊÉÏ£¬Ğ´ÅäÖÃÎÄ¼şºÜ¼òµ¥£¬¾ÍÊÇ´ÓÈ«¾ÖÊı×éconfigure_groupsÀïÃæ·Ö±ğ°ÑÃ¿¸ö×éµÄÅäÖÃ
-     * Ğ´Èëµ½ÎÄ¼şÀïÃæÈ¥*/
+    /* å®é™…ä¸Šï¼Œå†™é…ç½®æ–‡ä»¶å¾ˆç®€å•ï¼Œå°±æ˜¯ä»å…¨å±€æ•°ç»„configure_groupsé‡Œé¢åˆ†åˆ«æŠŠæ¯ä¸ªç»„çš„é…ç½®
+     * å†™å…¥åˆ°æ–‡ä»¶é‡Œé¢å»*/
     for(tmpgroup = configure_groups; tmpgroup->name; tmpgroup++){
         if(tmpgroup->comment)
-            fprintf(fp, "# %s\n", tmpgroup->comment);	// Èç¹û´æÔÚ×¢ÊÍ£¬ÏÈĞ´Èë
-        fprintf(fp, "[%s]\n", tmpgroup->name);		// ½ÓÏÂÀ´Ğ´Èë×éµÄÃû×Ö
-        write_configures(fp, tmpgroup->configure);	// ×îºó½«¸Ã×éµÄÃ¿¸öÅäÖÃÏîĞ´Èëµ½ÎÄ¼şÖĞ
-        fprintf(fp, "\n");		// ÎªÔö¼Ó¿É¶ÁĞÔ²åÈëÒ»¸ö¿ÕĞĞ
+            fprintf(fp, "# %s\n", tmpgroup->comment);	// å¦‚æœå­˜åœ¨æ³¨é‡Šï¼Œå…ˆå†™å…¥
+        fprintf(fp, "[%s]\n", tmpgroup->name);		// æ¥ä¸‹æ¥å†™å…¥ç»„çš„åå­—
+        write_configures(fp, tmpgroup->configure);	// æœ€åå°†è¯¥ç»„çš„æ¯ä¸ªé…ç½®é¡¹å†™å…¥åˆ°æ–‡ä»¶ä¸­
+        fprintf(fp, "\n");		// ä¸ºå¢åŠ å¯è¯»æ€§æ’å…¥ä¸€ä¸ªç©ºè¡Œ
     }
     fclose(fp);
 }
 
-/** °æ±¾ */
+/** ç‰ˆæœ¬ */
 inline static int get_version(Configure *c, void *a, int isread)
 {
     if(isread){
@@ -1424,7 +1426,7 @@ inline static int get_version(Configure *c, void *a, int isread)
     return 0;
 }
 
-/** Ö÷´°¿ÚÎ»ÖÃX */
+/** ä¸»çª—å£ä½ç½®X */
 inline static int get_main_window_offset_x(Configure *c, void *a, int isread)
 {
     if(isread){
@@ -1439,7 +1441,7 @@ inline static int get_main_window_offset_x(Configure *c, void *a, int isread)
     return 0;
 }
 
-/** Ö÷´°¿ÚÎ»ÖÃY */
+/** ä¸»çª—å£ä½ç½®Y */
 inline static int get_main_window_offset_y(Configure *c, void *a, int isread)
 {
     if(isread){
@@ -1454,7 +1456,7 @@ inline static int get_main_window_offset_y(Configure *c, void *a, int isread)
     return 0;
 }
 
-/** ÊäÈë´°¿ÚÎ»ÖÃX */
+/** è¾“å…¥çª—å£ä½ç½®X */
 inline static int get_input_window_offset_x(Configure *c, void *a, int isread)
 {
     if(isread){
@@ -1469,7 +1471,7 @@ inline static int get_input_window_offset_x(Configure *c, void *a, int isread)
     return 0;
 }
 
-/** ÊäÈë´°¿ÚÎ»ÖÃY */
+/** è¾“å…¥çª—å£ä½ç½®Y */
 inline static int get_input_window_offset_y(Configure *c, void *a, int isread)
 {
     if(isread){
@@ -1488,37 +1490,37 @@ static int iIMIndex_tmp = 0;		/* Issue 11: piaoairy add 20080518 */
 
 Configure profiles[] = {
     {
-        .name = "°æ±¾",
+        .name = "ç‰ˆæœ¬",
         .value_type = CONFIG_OTHER,
         .config_rw = get_version,
     },
     {
-        .name = "Ö÷´°¿ÚÎ»ÖÃX",
+        .name = "ä¸»çª—å£ä½ç½®X",
         .value_type = CONFIG_OTHER,
         .config_rw = get_main_window_offset_x,
     },
     {
-        .name = "Ö÷´°¿ÚÎ»ÖÃY",
+        .name = "ä¸»çª—å£ä½ç½®Y",
         .value_type = CONFIG_OTHER,
         .config_rw = get_main_window_offset_y,
     },
     {
-        .name = "ÊäÈë´°¿ÚÎ»ÖÃX",
+        .name = "è¾“å…¥çª—å£ä½ç½®X",
         .value_type = CONFIG_OTHER,
         .config_rw = get_input_window_offset_x,
     },
     {
-        .name = "ÊäÈë´°¿ÚÎ»ÖÃY",
+        .name = "è¾“å…¥çª—å£ä½ç½®Y",
         .value_type = CONFIG_OTHER,
         .config_rw = get_input_window_offset_y,
     },
     {
-        .name = "È«½Ç",
+        .name = "å…¨è§’",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bCorner,
     },
     {
-        .name = "ÖĞÎÄ±êµã",
+        .name = "ä¸­æ–‡æ ‡ç‚¹",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bChnPunc,
     },
@@ -1528,38 +1530,38 @@ Configure profiles[] = {
         .value.integer = &bUseGBK,
     },
     {
-        .name = "¹â±ê¸úËæ",
+        .name = "å…‰æ ‡è·Ÿéš",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bTrackCursor,
     },
     {
-        .name = "ÁªÏë",
+        .name = "è”æƒ³",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bUseLegend,
     },
     {
-        .name = "µ±Ç°ÊäÈë·¨",	//  Issue 11: piaoairy: ±¾À´´òËã½«iIMIndex ¸ÄÎªintÀàĞÍ,
-        .value_type = CONFIG_INTEGER,	// ÎŞÄÎÊ¹ÓÃµÄµØ·½Ì«¶à,
-        .value.integer = &iIMIndex_tmp,	// Ö»ºÃÖØĞÂ¶¨Òå¸öiIMIndex_tmp´îÇÅ.
+        .name = "å½“å‰è¾“å…¥æ³•",	//  Issue 11: piaoairy: æœ¬æ¥æ‰“ç®—å°†iIMIndex æ”¹ä¸ºintç±»å‹,
+        .value_type = CONFIG_INTEGER,	// æ— å¥ˆä½¿ç”¨çš„åœ°æ–¹å¤ªå¤š,
+        .value.integer = &iIMIndex_tmp,	// åªå¥½é‡æ–°å®šä¹‰ä¸ªiIMIndex_tmpæ­æ¡¥.
     },
     {
-        .name = "½ûÖ¹¼üÅÌÇĞ»»",
+        .name = "ç¦æ­¢é”®ç›˜åˆ‡æ¢",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bLocked,
     },
     {
-        .name = "¼ò½àÄ£Ê½",
+        .name = "ç®€æ´æ¨¡å¼",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bCompactMainWindow,
     },
     {
-        .name = "GBK·±Ìå",
+        .name = "GBKç¹ä½“",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bUseGBKT,
     },
 #ifdef _ENABLE_RECORDING
     {
-        .name = "¼ÇÂ¼Ä£Ê½",
+        .name = "è®°å½•æ¨¡å¼",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bRecording,
     },
@@ -1570,7 +1572,7 @@ Configure profiles[] = {
 };
 
 /**
- * @brief ¼ÓÔØÅäÖÃÎÄ¼ş
+ * @brief åŠ è½½é…ç½®æ–‡ä»¶
  * @param void
  * @return void
  */
@@ -1581,12 +1583,12 @@ void LoadProfile (void)
     int             i;
     Configure       *tmpconfig;
 
-    /* Ç°½«´°¿ÚµÄÎ»ÖÃÉè¶¨Îª×îÔ­Ê¼µÄÄ¬ÈÏÖµ£¬½ÓÏÂÀ´Èç¹ûÅäÖÃÎÄ¼şÓĞ£¬
-     * »á´ÓÅäÖÃÎÄ¼şÖĞ¶ÁÈ¡£¬Èç¹ûÃ»ÓĞ¾ÍÊ¹ÓÃÕâ¸öÁË*/
-    iMainWindowX = MAINWND_STARTX;		//Ö÷´°¿ÚÎ»ÖÃX
-    iMainWindowY = MAINWND_STARTY;		//Ö÷´°¿ÚÎ»ÖÃY
-    iInputWindowX = INPUTWND_STARTX;	//ÊäÈë´°¿ÚÎ»ÖÃX
-    iInputWindowY = INPUTWND_STARTY;	//ÊäÈë´°¿ÚÎ»ÖÃY
+    /* å‰å°†çª—å£çš„ä½ç½®è®¾å®šä¸ºæœ€åŸå§‹çš„é»˜è®¤å€¼ï¼Œæ¥ä¸‹æ¥å¦‚æœé…ç½®æ–‡ä»¶æœ‰ï¼Œ
+     * ä¼šä»é…ç½®æ–‡ä»¶ä¸­è¯»å–ï¼Œå¦‚æœæ²¡æœ‰å°±ä½¿ç”¨è¿™ä¸ªäº†*/
+    iMainWindowX = MAINWND_STARTX;		//ä¸»çª—å£ä½ç½®X
+    iMainWindowY = MAINWND_STARTY;		//ä¸»çª—å£ä½ç½®Y
+    iInputWindowX = INPUTWND_STARTX;	//è¾“å…¥çª—å£ä½ç½®X
+    iInputWindowY = INPUTWND_STARTY;	//è¾“å…¥çª—å£ä½ç½®Y
 
     fp = UserConfigFile ("profile", "rt", NULL);
     if(!fp){
@@ -1595,7 +1597,7 @@ void LoadProfile (void)
         return;
     }
 
-    /* FIXME: Ò²ĞíÓ¦¸ÃÓÃÁíÍâ¸üÇ¡µ±µÄ»º³åÇø³¤¶È */
+    /* FIXME: ä¹Ÿè®¸åº”è¯¥ç”¨å¦å¤–æ›´æ°å½“çš„ç¼“å†²åŒºé•¿åº¦ */
     while(fgets(buf, PATH_MAX, fp)){
         i = strlen(buf);
         if(buf[i-1] != '\n'){
@@ -1688,8 +1690,8 @@ void SetHotKey (char *strKeys, HOTKEYS * hotkey)
 }
 
 /*
- * ¼ÆËãÎÄ¼şÖĞÓĞ¶àÉÙĞĞ
- * ×¢Òâ:ÎÄ¼şÖĞµÄ¿ÕĞĞÒ²×öÎªÒ»ĞĞ´¦Àí
+ * è®¡ç®—æ–‡ä»¶ä¸­æœ‰å¤šå°‘è¡Œ
+ * æ³¨æ„:æ–‡ä»¶ä¸­çš„ç©ºè¡Œä¹Ÿåšä¸ºä¸€è¡Œå¤„ç†
  */
 int CalculateRecordNumber (FILE * fpDict)
 {
@@ -1729,7 +1731,7 @@ void SetTriggerKeys (char *str)
     char            strKey[2][30];
     char           *p;
 
-    //Ê×ÏÈÀ´ÅĞ¶ÏÓÃ»§ÉèÖÃÁË¼¸¸öÈÈ¼ü£¬×î¶àÎª2
+    //é¦–å…ˆæ¥åˆ¤æ–­ç”¨æˆ·è®¾ç½®äº†å‡ ä¸ªçƒ­é”®ï¼Œæœ€å¤šä¸º2
     p = str;
 
     i = 0;
@@ -1814,8 +1816,8 @@ void SetTriggerKeys (char *str)
 Bool CheckHZCharset (char *strHZ)
 {
     if (!bUseGBK) {
-	//GB2312µÄºº×Ö±àÂë¹æÔòÎª£ºµÚÒ»¸ö×Ö½ÚµÄÖµÔÚ0xA1µ½0xFEÖ®¼ä(Êµ¼ÊÎª0xF7)£¬µÚ¶ş¸ö×Ö½ÚµÄÖµÔÚ0xA1µ½0xFEÖ®¼ä
-	//ÓÉÓÚ²éµ½µÄ×ÊÁÏËµ·¨²»Ò»£¬ÀÁµÃºËÊµ£¬¾ÍÕâÑù°É
+	//GB2312çš„æ±‰å­—ç¼–ç è§„åˆ™ä¸ºï¼šç¬¬ä¸€ä¸ªå­—èŠ‚çš„å€¼åœ¨0xA1åˆ°0xFEä¹‹é—´(å®é™…ä¸º0xF7)ï¼Œç¬¬äºŒä¸ªå­—èŠ‚çš„å€¼åœ¨0xA1åˆ°0xFEä¹‹é—´
+	//ç”±äºæŸ¥åˆ°çš„èµ„æ–™è¯´æ³•ä¸ä¸€ï¼Œæ‡’å¾—æ ¸å®ï¼Œå°±è¿™æ ·å§
 	int             i;
 
 	for (i = 0; i < strlen (strHZ); i++) {
@@ -1832,11 +1834,11 @@ static char    *gGBKS2TTable = NULL;
 static int      gGBKS2TTableSize = -1;
 
 /**
- * ¸Ãº¯Êı×°ÔØdata/gbks2t.tabµÄ¼òÌå×ª·±ÌåµÄÂë±í£¬
- * È»ºó°´Âë±í½«GBK×Ö·û×ª»»³ÉGBK·±Ìå×Ö·û¡£
+ * è¯¥å‡½æ•°è£…è½½data/gbks2t.tabçš„ç®€ä½“è½¬ç¹ä½“çš„ç è¡¨ï¼Œ
+ * ç„¶åæŒ‰ç è¡¨å°†GBKå­—ç¬¦è½¬æ¢æˆGBKç¹ä½“å­—ç¬¦ã€‚
  *
- * WARNING£º ¸Ãº¯Êı·µ»ØĞÂ·ÖÅäÄÚ´æ×Ö·û´®£¬Çëµ÷ÓÃÕß
- * ×¢ÒâÊÍ·Å¡£
+ * WARNINGï¼š è¯¥å‡½æ•°è¿”å›æ–°åˆ†é…å†…å­˜å­—ç¬¦ä¸²ï¼Œè¯·è°ƒç”¨è€…
+ * æ³¨æ„é‡Šæ”¾ã€‚
  */
 char           *ConvertGBKSimple2Tradition (char *strHZ)
 {
@@ -1914,7 +1916,7 @@ int CalHZIndex (char *strHZ)
 }
 
 /**
- * ¸Ãº¯Êı·ÃÎÊÖ¸¶¨µÄÓÃ»§ÅäÖÃÎÄ¼ş
+ * è¯¥å‡½æ•°è®¿é—®æŒ‡å®šçš„ç”¨æˆ·é…ç½®æ–‡ä»¶
  */
 FILE *UserConfigFile (char *strFileName, char *strMode, char **strFullPath)
 {
@@ -1928,7 +1930,7 @@ FILE *UserConfigFile (char *strFileName, char *strMode, char **strFullPath)
         strcat (strPath, "/.config");
     }
 
-    strcat (strPath, "/fcitx/");
+    strcat (strPath, FCITX_CONFIG_DIR);
     if (strMode) {
 	if (access (strPath, 0))
 	    mkdir (strPath, S_IRWXU);

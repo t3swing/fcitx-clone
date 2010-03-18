@@ -22,7 +22,7 @@
  * @author Yuking yuking_net@sohu.com
  * @date   2008-1-16
  * 
- * @brief  ÅäÖÃÎÄ¼ş¶ÁĞ´
+ * @brief  é…ç½®æ–‡ä»¶è¯»å†™
  * 
  * 
  */

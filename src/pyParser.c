@@ -231,7 +231,7 @@ void ParsePY (char *strPY, ParsePYStruct * parsePY, PYPARSEINPUTMODE mode)
 			if (parsePY->iMode != PARSE_ERROR)
 			    parsePY->iMode = PARSE_ABBR;
 		    }
-		    else {	//�ض��Ƿָ���
+		    else {	//必定是分隔符
 			strP++;
 			bSeperator = True;
 			parsePY->strPYParsed[parsePY->iHZCount][0] = PY_SEPARATOR;
@@ -258,15 +258,15 @@ void ParsePY (char *strPY, ParsePYStruct * parsePY, PYPARSEINPUTMODE mode)
 }
 
 /*
- * ��һ��ƴ��(������Ϊ��ĸ����ĸ)ת��Ϊƴ��ӳ��
- * ����TrueΪת���ɹ�������ΪFalse(һ������ΪstrPY����һ����׼��ƴ��)
+ * 将一个拼音(包括仅为声母或韵母)转换为拼音映射
+ * 返回True为转换成功，否则为False(一般是因为strPY不是一个标准的拼音)
  */
 Bool MapPY (char *strPY, char strMap[3], PYPARSEINPUTMODE mode)
 {
     char            str[5];
     int             iIndex;
 
-    //���⴦��eng
+    //特殊处理eng
     if (!strcmp (strPY, "eng") && MHPY_C[1].bMode) {
 	strcpy (strMap, "X0");
 	return True;
@@ -316,8 +316,8 @@ Bool MapPY (char *strPY, char strMap[3], PYPARSEINPUTMODE mode)
 }
 
 /*
- * ��һ��������ƴ��ӳ��ת��Ϊƴ��������False��ʾʧ�ܣ�
- * һ��ԭ����ƴ��ӳ�䲻��ȷ
+ * 将一个完整的拼音映射转换为拼音，返回False表示失败，
+ * 一般原因是拼音映射不正确
  */
 Bool MapToPY (char strMap[3], char *strPY)
 {
@@ -354,9 +354,9 @@ Bool MapToPY (char strMap[3], char *strPY)
 }
 
 /*
- * �Ƚ�һλƴ��ӳ��
- * 0��ʾ���
- * bָʾ����ĸ������ĸ��True��ʾ��ĸ
+ * 比较一位拼音映射
+ * 0表示相等
+ * b指示是声母还是韵母，True表示声母
  */
 int Cmp1Map (char map1, char map2, Bool b, Bool bUseMH)
 {
@@ -384,10 +384,10 @@ int Cmp1Map (char map1, char map2, Bool b, Bool bUseMH)
 }
 
 /*
- * �Ƚϵڶ�λƴ��ӳ���Ƿ�͵�һ�����
- * 0��ʾ���
- * >0��ʾǰ�ߴ�
- * <0��ʾ���ߴ�
+ * 比较第二位拼音映射是否和第一个相等
+ * 0表示相等
+ * >0表示前者大
+ * <0表示后者大
  */
 int Cmp2Map (char map1[3], char map2[3])
 {
@@ -405,10 +405,10 @@ int Cmp2Map (char map1[3], char map2[3])
 }
 
 /*
- * �ж�strMap2�Ƿ���strMap1��ƥ��
- * �� ����ֵΪ0
- * �� ����ֵ��Ϊ0
- * *iMatchedLength ��¼�˶����ܹ�ƥ��ĳ���
+ * 判断strMap2是否与strMap1相匹配
+ * 是 返回值为0
+ * 否 返回值不为0
+ * *iMatchedLength 记录了二者能够匹配的长度
  */
 int CmpMap (char *strMap1, char *strMap2, int *iMatchedLength)
 {

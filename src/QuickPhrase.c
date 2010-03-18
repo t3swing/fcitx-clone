@@ -38,13 +38,13 @@ extern MESSAGE         messageDown[];
 extern char strStringGet[];
 
 /**
- * @brief ���ؿ�������ʵ�
+ * @brief 加载快速输入词典
  * @param void
  * @return void
- * @note ������������;����Ϊ����Ϊ2,��������;�Ժ�ſ���ʹ�õġ�
- * ���ؿ�������ʵ�.�磺���롰zg����ֱ�ӳ��֡��л����񹲺͹����ȵȡ�
- * �ļ���ÿһ�����ݵĶ���Ϊ��<�ַ����> <����>
- * �磺��zg �л����񹲺͹���
+ * @note 快速输入是在;的行为定义为2,并且输入;以后才可以使用的。
+ * 加载快速输入词典.如：输入“zg”就直接出现“中华人民共和国”等等。
+ * 文件中每一行数据的定义为：<字符组合> <短语>
+ * 如：“zg 中华人民共和国”
  */
 void LoadQuickPhrase(void)
 {
@@ -77,8 +77,8 @@ void LoadQuickPhrase(void)
     quickPhrase=quickPhraseHead=(QUICK_PHRASE *)malloc(sizeof(QUICK_PHRASE));
     quickPhraseHead->prev=NULL;
 
-    // ����Ĵ����Ƚϼ򵥡���Ϊ�ǵ������Ե�ֵ��
-    // Ӧ��ע����ǣ������ڴ������Ե���������ġ�
+    // 这儿的处理比较简单。因为是单索引对单值。
+    // 应该注意的是，它在内存中是以单链表保存的。
     for (;;) {
 	if (EOF==fscanf (fp, "%s", strCode))
 	    break;
@@ -250,7 +250,7 @@ INPUT_RETURN_VALUE QuickPhraseGetCandWords (SEARCH_MODE mode)
 	strcpy (messageDown[uMessageDown].strMsg, quickPhraseCandWords[i]->strPhrase);
 	messageDown[uMessageDown++].type = ((i == 0) ? MSG_FIRSTCAND : MSG_OTHER);
 
-	//������ʾ
+	//编码提示
 	strcpy (messageDown[uMessageDown].strMsg, quickPhraseCandWords[i]->strCode + iInputLen);
 	if (i != (iCandWordCount - 1))
 	    strcat (messageDown[uMessageDown].strMsg, " ");

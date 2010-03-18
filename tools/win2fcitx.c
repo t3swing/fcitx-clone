@@ -15,10 +15,10 @@
  */
 
 /*
- * ��windows���뷨���������ɵ��ı��ļ�ת��ΪС������뷨�Ĵʿ�
- * windows���ɵ��ı��ļ���ʽ���£�
- *  ���� ���� ���� ...
- * ���ֺͱ�������û�пո񣬶��������ǿո� 
+ * 将windows输入法管理器生成的文本文件转换为小企鹅输入法的词库
+ * windows生成的文本文件格式如下：
+ *  汉字 编码 编码 ...
+ * 汉字和编码间可能没有空格，多个编码间是空格 
  */
 
 #include <stdio.h>
@@ -61,11 +61,11 @@ int main (int argc, char *argv[])
 
 	i = 0;
 	while (*pstr) {
-	    if (!isalpha (*pstr)) {	//�Ǻ���
+	    if (!isalpha (*pstr)) {	//是汉字
 		strHZ[i++] = *pstr++;
 		strHZ[i] = *pstr;
 	    }
-	    else {		//���ֽ���
+	    else {		//汉字结束
 		strHZ[i] = '\0';
 		break;
 	    }

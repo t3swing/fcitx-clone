@@ -825,6 +825,7 @@ void updateMessages()
         for (i=0;i<n;i++) {
             debug_dbus("Type: %d Text: %s\n",messageDown[i].type,(utfmsg=convertMessage(messageDown[i].strMsg)));
             free(utfmsg);
+
             if (messageDown[i].type == MSG_INDEX) {
                 if (nLabels) {
                     text[nTexts++] = strdup(cmb);

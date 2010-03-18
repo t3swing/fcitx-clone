@@ -142,7 +142,7 @@ extern char     strFindString[];
 extern ParsePYStruct findMap;
 
 /*
- * ¶ÁÈ¡Âë±íÊäÈë·¨µÄÃû³ÆºÍÎÄ¼şÂ·¾¶
+ * è¯»å–ç è¡¨è¾“å…¥æ³•çš„åç§°å’Œæ–‡ä»¶è·¯å¾„
  */
 void LoadTableInfo (void)
 {
@@ -173,7 +173,7 @@ void LoadTableInfo (void)
 	    return;
     }
 
-    //Ê×ÏÈÀ´¿´¿´ÓĞ¶àÉÙ¸öÂë±í
+    //é¦–å…ˆæ¥çœ‹çœ‹æœ‰å¤šå°‘ä¸ªç è¡¨
     while (1) {
 	if (!fgets (strPath, PATH_MAX, fp))
 	    break;
@@ -188,7 +188,7 @@ void LoadTableInfo (void)
 	if (pstr[0] == '#')
 	    continue;
 
-	if (strstr (pstr, "[Âë±í]"))
+	if (strstr (pstr, "[ç è¡¨]"))
 	    iTableCount++;
     }
 
@@ -216,11 +216,11 @@ void LoadTableInfo (void)
 	table[iTableIMIndex].bPromptTableCode = True;
 	table[iTableIMIndex].strSymbol[0] = '\0';
 	table[iTableIMIndex].bHasPinyin = False;
-	strcpy (table[iTableIMIndex].strChoose, "1234567890");//³õÊ¼»¯Îª1234567890
+	strcpy (table[iTableIMIndex].strChoose, "1234567890");//åˆå§‹åŒ–ä¸º1234567890
     }
 
     iTableIMIndex = -1;
-    //¶ÁÈ¡ÆäËüÊôĞÔµÄÄ¬ÈÏÖµ
+    //è¯»å–å…¶å®ƒå±æ€§çš„é»˜è®¤å€¼
     if (iTableCount) {
 	rewind (fp);
 
@@ -238,7 +238,7 @@ void LoadTableInfo (void)
 	    if (pstr[0] == '#')
 		continue;
 
-	    if (!strcmp (pstr, "[Âë±í]")) {
+	    if (!strcmp (pstr, "[ç è¡¨]")) {
 		if (iTableIMIndex != -1) {
 		    if (table[iTableIMIndex].strName[0] == '\0' || table[iTableIMIndex].strPath[0] == '\0') {
 			iTableCount = 0;
@@ -249,90 +249,90 @@ void LoadTableInfo (void)
 		}
 		iTableIMIndex++;
 	    }
-	    else if (MyStrcmp (pstr, "Ãû³Æ=")) {
+	    else if (MyStrcmp (pstr, "åç§°=")) {
 		pstr += 5;
 		strcpy (table[iTableIMIndex].strName, pstr);
 	    }
-	    else if (MyStrcmp (pstr, "Âë±í=")) {
+	    else if (MyStrcmp (pstr, "ç è¡¨=")) {
 		pstr += 5;
 		strcpy (table[iTableIMIndex].strPath, pstr);
 	    }
-	    else if (MyStrcmp (pstr, "µ÷Æµ=")) {
+	    else if (MyStrcmp (pstr, "è°ƒé¢‘=")) {
 		pstr += 5;
 		table[iTableIMIndex].tableOrder = (ADJUSTORDER) atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "Æ´Òô=")) {
+	    else if (MyStrcmp (pstr, "æ‹¼éŸ³=")) {
 		pstr += 5;
 		table[iTableIMIndex].bUsePY = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "Æ´Òô¼ü=")) {
+	    else if (MyStrcmp (pstr, "æ‹¼éŸ³é”®=")) {
 		pstr += 7;
 		while (*pstr == ' ')
 		    pstr++;
 		table[iTableIMIndex].cPinyin = *pstr;
 	    }
-	    else if (MyStrcmp (pstr, "×Ô¶¯ÉÏÆÁ=")) {
+	    else if (MyStrcmp (pstr, "è‡ªåŠ¨ä¸Šå±=")) {
 		pstr += 9;
 		table[iTableIMIndex].iTableAutoSendToClient = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "¿ÕÂë×Ô¶¯ÉÏÆÁ=")) {
+	    else if (MyStrcmp (pstr, "ç©ºç è‡ªåŠ¨ä¸Šå±=")) {
 		pstr += 13;
 		table[iTableIMIndex].iTableAutoSendToClientWhenNone = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "ÖĞÖ¹¼ü=")) {
+	    else if (MyStrcmp (pstr, "ä¸­æ­¢é”®=")) {
 		pstr += 7;
 		while (*pstr == ' ' || *pstr == '\t')
 		    pstr++;
 		table[iTableIMIndex].strEndCode = (char *) malloc (sizeof (char) * (strlen (pstr) + 1));
 		strcpy (table[iTableIMIndex].strEndCode, pstr);
 	    }
-	    else if (MyStrcmp (pstr, "Ä£ºı=")) {
+	    else if (MyStrcmp (pstr, "æ¨¡ç³Š=")) {
 		pstr += 5;
 		table[iTableIMIndex].bUseMatchingKey = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "Ä£ºı¼ü=")) {
+	    else if (MyStrcmp (pstr, "æ¨¡ç³Šé”®=")) {
 		pstr += 7;
 		while (*pstr == ' ')
 		    pstr++;
 		table[iTableIMIndex].cMatchingKey = *pstr;
 	    }
-	    else if (MyStrcmp (pstr, "¾«È·Æ¥Åä=")) {
+	    else if (MyStrcmp (pstr, "ç²¾ç¡®åŒ¹é…=")) {
 		pstr += 9;
 		table[iTableIMIndex].bTableExactMatch = atoi (pstr);
 	    }
-/*	    else if (MyStrcmp (pstr, "×î³¤´Ê×é×ÖÊı=")) {
+/*	    else if (MyStrcmp (pstr, "æœ€é•¿è¯ç»„å­—æ•°=")) {
 		pstr += 13;
 		table[iTableIMIndex].iMaxPhraseAllowed = atoi (pstr);
 	    }*/
-	    else if (MyStrcmp (pstr, "×Ô¶¯´Ê×é=")) {
+	    else if (MyStrcmp (pstr, "è‡ªåŠ¨è¯ç»„=")) {
 		pstr += 9;
 		table[iTableIMIndex].bAutoPhrase = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "×Ô¶¯´Ê×é³¤¶È=")) {
+	    else if (MyStrcmp (pstr, "è‡ªåŠ¨è¯ç»„é•¿åº¦=")) {
 		pstr += 13;
 		table[iTableIMIndex].iAutoPhrase = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "´Ê×é²ÎÓë×Ô¶¯Ôì´Ê=")) {
+	    else if (MyStrcmp (pstr, "è¯ç»„å‚ä¸è‡ªåŠ¨é€ è¯=")) {
 		pstr += 17;
 		table[iTableIMIndex].bAutoPhrasePhrase = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "±£´æ×Ô¶¯´Ê×é=")) {
+	    else if (MyStrcmp (pstr, "ä¿å­˜è‡ªåŠ¨è¯ç»„=")) {
 		pstr += 13;
 		table[iTableIMIndex].iSaveAutoPhraseAfter = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "ÌáÊ¾±àÂë=")) {
+	    else if (MyStrcmp (pstr, "æç¤ºç¼–ç =")) {
 		pstr += 9;
 		table[iTableIMIndex].bPromptTableCode = atoi (pstr);
 	    }
-	    else if (MyStrcmp (pstr, "·ûºÅ=")) {
+	    else if (MyStrcmp (pstr, "ç¬¦å·=")) {
 		pstr += 5;
 		strcpy (table[iTableIMIndex].strSymbol, pstr);
 	    }
-	    else if (MyStrcmp (pstr, "·ûºÅÎÄ¼ş=")) {
+	    else if (MyStrcmp (pstr, "ç¬¦å·æ–‡ä»¶=")) {
 		pstr += 9;
 		strcpy (table[iTableIMIndex].strSymbolFile, pstr);
 	    }
-	    else if(MyStrcmp (pstr, "ºòÑ¡´ÊÑ¡Ôñ¼ü=")){
+	    else if(MyStrcmp (pstr, "å€™é€‰è¯é€‰æ‹©é”®=")){
                 pstr += 13;
                 strncpy (table[iTableIMIndex].strChoose, pstr, 10);		
             }
@@ -355,13 +355,13 @@ Bool LoadTableDict (void)
     INT8            iVersion = 1;
     int             iRecordIndex;
 
-    //Ê×ÏÈ£¬À´¿´¿´ÎÒÃÇ¸Ãµ÷ÈëÄÄ¸öÂë±í
+    //é¦–å…ˆï¼Œæ¥çœ‹çœ‹æˆ‘ä»¬è¯¥è°ƒå…¥å“ªä¸ªç è¡¨
     for (i = 0; i < iTableCount; i++) {
 	if (table[i].iIMIndex == iIMIndex)
 	    iTableIMIndex = i;
     }
 
-    //¶ÁÈëÂë±í
+    //è¯»å…¥ç è¡¨
 #ifdef _DEBUG
     fprintf (stderr, "Loading Table Dict\n");
 #endif
@@ -385,8 +385,8 @@ Bool LoadTableDict (void)
 	}
     }
 
-    //ÏÈ¶ÁÈ¡Âë±íµÄĞÅÏ¢
-    //ÅĞ¶Ï°æ±¾ĞÅÏ¢
+    //å…ˆè¯»å–ç è¡¨çš„ä¿¡æ¯
+    //åˆ¤æ–­ç‰ˆæœ¬ä¿¡æ¯
     fread (&iTemp, sizeof (unsigned int), 1, fpDict);
     if (!iTemp) {
 	fread (&iVersion, sizeof (INT8), 1, fpDict);
@@ -397,7 +397,7 @@ Bool LoadTableDict (void)
     table[iTableIMIndex].strInputCode = (char *) malloc (sizeof (char) * (iTemp + 1));
     fread (table[iTableIMIndex].strInputCode, sizeof (char), iTemp + 1, fpDict);
     /*
-     * ½¨Á¢Ë÷Òı£¬¼Ó26ÊÇÎªÁËÎªÆ´Òô±àÂëÔ¤Áô¿Õ¼ä
+     * å»ºç«‹ç´¢å¼•ï¼ŒåŠ 26æ˜¯ä¸ºäº†ä¸ºæ‹¼éŸ³ç¼–ç é¢„ç•™ç©ºé—´
      */
     recordIndex = (RECORD_INDEX *) malloc ((strlen (table[iTableIMIndex].strInputCode) + 26) * sizeof (RECORD_INDEX));
     for (iTemp = 0; iTemp < strlen (table[iTableIMIndex].strInputCode) + 26; iTemp++) {
@@ -423,7 +423,7 @@ Bool LoadTableDict (void)
 
     fread (&(table[iTableIMIndex].bRule), sizeof (unsigned char), 1, fpDict);
 
-    if (table[iTableIMIndex].bRule) {	//±íÊ¾ÓĞ×é´Ê¹æÔò
+    if (table[iTableIMIndex].bRule) {	//è¡¨ç¤ºæœ‰ç»„è¯è§„åˆ™
 	table[iTableIMIndex].rule = (RULE *) malloc (sizeof (RULE) * (table[iTableIMIndex].iCodeLength - 1));
 	for (i = 0; i < table[iTableIMIndex].iCodeLength - 1; i++) {
 	    fread (&(table[iTableIMIndex].rule[i].iFlag), sizeof (unsigned char), 1, fpDict);
@@ -468,7 +468,7 @@ Bool LoadTableDict (void)
 	if (recTemp->iIndex > iTableIndex)
 	    iTableIndex = recTemp->iIndex;
 
-	/* ½¨Á¢Ë÷Òı */
+	/* å»ºç«‹ç´¢å¼• */
 	if (cChar != recTemp->strCode[0]) {
 	    cChar = recTemp->strCode[0];
 	    recordIndex[iRecordIndex].cCode = cChar;
@@ -476,7 +476,7 @@ Bool LoadTableDict (void)
 	    iRecordIndex++;
 	}
 	/* **************************************************************** */
-	/** Îªµ¥×ÖÉú³ÉÒ»¸ö±í   */
+	/** ä¸ºå•å­—ç”Ÿæˆä¸€ä¸ªè¡¨   */
 	if (strlen (recTemp->strHZ) == 2 && !IsIgnoreChar (strCode[0]) && !recTemp->bPinyin) {
 	    iTemp = CalHZIndex (recTemp->strHZ);
 	    if (iTemp >= 0 && iTemp < SINGLE_HZ_COUNT) {
@@ -505,7 +505,7 @@ Bool LoadTableDict (void)
     fprintf (stderr, "Load Table Dict OK\n");
 #endif
 
-    //¶ÁÈ¡ÏàÓ¦µÄÌØÊâ·ûºÅ±í
+    //è¯»å–ç›¸åº”çš„ç‰¹æ®Šç¬¦å·è¡¨
     fpDict = UserConfigFile (table[iTableIMIndex].strSymbolFile, "rt", NULL);
     if (!fpDict) {
 	snprintf (strPath, sizeof(strPath), PKGDATADIR "/data/%s",
@@ -541,10 +541,10 @@ Bool LoadTableDict (void)
 
     iAutoPhrase = 0;
     if (table[iTableIMIndex].bAutoPhrase) {
-	//Îª×Ô¶¯´Ê×é·ÖÅä¿Õ¼ä
+	//ä¸ºè‡ªåŠ¨è¯ç»„åˆ†é…ç©ºé—´
 	autoPhrase = (AUTOPHRASE *) malloc (sizeof (AUTOPHRASE) * AUTO_PHRASE_COUNT);
 
-	//¶ÁÈ¡ÉÏ´Î±£´æµÄ×Ô¶¯´Ê×éĞÅÏ¢
+	//è¯»å–ä¸Šæ¬¡ä¿å­˜çš„è‡ªåŠ¨è¯ç»„ä¿¡æ¯
 #ifdef _DEBUG
 	fprintf (stderr, "Loading Autophrase...\n");
 #endif
@@ -604,8 +604,8 @@ void TableInit (void)
 }
 
 /*
- * ÊÍ·Åµ±Ç°Âë±íËùÕ¼ÓÃµÄÄÚ´æ
- * Ä¿µÄÊÇÇĞ»»Âë±íÊ±Ê¹Õ¼ÓÃµÄÄÚ´æ¼õÉÙ
+ * é‡Šæ”¾å½“å‰ç è¡¨æ‰€å ç”¨çš„å†…å­˜
+ * ç›®çš„æ˜¯åˆ‡æ¢ç è¡¨æ—¶ä½¿å ç”¨çš„å†…å­˜å‡å°‘
  */
 void FreeTableIM (void)
 {
@@ -618,7 +618,7 @@ void FreeTableIM (void)
     if (iTableChanged)
 	SaveTableDict ();
 
-    //ÊÍ·ÅÂë±í
+    //é‡Šæ”¾ç è¡¨
     recTemp = recordHead->next;
     while (recTemp != recordHead) {
 	recNext = recTemp->next;
@@ -646,7 +646,7 @@ void FreeTableIM (void)
 
     free (strNewPhraseCode);
 
-    //ÊÍ·Å×é´Ê¹æÔòµÄ¿Õ¼ä
+    //é‡Šæ”¾ç»„è¯è§„åˆ™çš„ç©ºé—´
     if (table[iTableIMIndex].rule) {
 	for (i = 0; i < table[iTableIMIndex].iCodeLength - 1; i++)
 	    free (table[iTableIMIndex].rule[i].rule);
@@ -655,13 +655,13 @@ void FreeTableIM (void)
 	table[iTableIMIndex].rule = NULL;
     }
 
-    //ÊÍ·ÅË÷ÒıµÄ¿Õ¼ä
+    //é‡Šæ”¾ç´¢å¼•çš„ç©ºé—´
     if (recordIndex) {
 	free (recordIndex);
 	recordIndex = NULL;
     }
 
-    //ÊÍ·Å×Ô¶¯´Ê×éµÄ¿Õ¼ä
+    //é‡Šæ”¾è‡ªåŠ¨è¯ç»„çš„ç©ºé—´
     if (autoPhrase) {
 	for (i = 0; i < AUTO_PHRASE_COUNT; i++) {
 	    free (autoPhrase[i].strCode);
@@ -695,7 +695,7 @@ void SaveTableDict (void)
     unsigned int    i;
     char            cTemp;
 
-    //ÏÈ½«Âë±í±£´æÔÚÒ»¸öÁÙÊ±ÎÄ¼şÖĞ£¬Èç¹û±£´æ³É¹¦£¬ÔÙ½«¸ÃÁÙÊ±ÎÄ¼ş¸ÄÃûÊÇÂë±íÃû©¤©¤ÕâÑù¿ÉÒÔ·ÀÖ¹Âë±íÎÄ¼ş±»ÆÆ»µ
+    //å…ˆå°†ç è¡¨ä¿å­˜åœ¨ä¸€ä¸ªä¸´æ—¶æ–‡ä»¶ä¸­ï¼Œå¦‚æœä¿å­˜æˆåŠŸï¼Œå†å°†è¯¥ä¸´æ—¶æ–‡ä»¶æ”¹åæ˜¯ç è¡¨åâ”€â”€è¿™æ ·å¯ä»¥é˜²æ­¢ç è¡¨æ–‡ä»¶è¢«ç ´å
 #ifdef _ENABLE_LOG
     int		iDebug = 0;
     char	buf[PATH_MAX];
@@ -732,7 +732,7 @@ void SaveTableDict (void)
     fprintf (stderr, "Saving TABLE Dict...\n");
 #endif
 
-    //Ğ´Èë°æ±¾ºÅ--Èç¹ûµÚÒ»¸ö×ÖÎª0,±íÊ¾ºóÃæÄÇ¸ö×Ö½ÚÎª°æ±¾ºÅ£¬ÎªÁËÓëÀÏ°æ±¾¼æÈİ
+    //å†™å…¥ç‰ˆæœ¬å·--å¦‚æœç¬¬ä¸€ä¸ªå­—ä¸º0,è¡¨ç¤ºåé¢é‚£ä¸ªå­—èŠ‚ä¸ºç‰ˆæœ¬å·ï¼Œä¸ºäº†ä¸è€ç‰ˆæœ¬å…¼å®¹
     iTemp = 0;
     fwrite (&iTemp, sizeof (unsigned int), 1, fpDict);
     fwrite (&iInternalVersion, sizeof (INT8), 1, fpDict);
@@ -747,7 +747,7 @@ void SaveTableDict (void)
     fwrite (table[iTableIMIndex].strIgnoreChars, sizeof (char), iTemp + 1, fpDict);
 
     fwrite (&(table[iTableIMIndex].bRule), sizeof (unsigned char), 1, fpDict);
-    if (table[iTableIMIndex].bRule) {	//±íÊ¾ÓĞ×é´Ê¹æÔò
+    if (table[iTableIMIndex].bRule) {	//è¡¨ç¤ºæœ‰ç»„è¯è§„åˆ™
 	for (i = 0; i < table[iTableIMIndex].iCodeLength - 1; i++) {
 	    fwrite (&(table[iTableIMIndex].rule[i].iFlag), sizeof (unsigned char), 1, fpDict);
 	    fwrite (&(table[iTableIMIndex].rule[i].iWords), sizeof (unsigned char), 1, fpDict);
@@ -814,7 +814,7 @@ void SaveTableDict (void)
     iTableChanged = 0;
 
     if (autoPhrase) {
-	//±£´æÉÏ´ÎµÄ×Ô¶¯´Ê×éĞÅÏ¢
+	//ä¿å­˜ä¸Šæ¬¡çš„è‡ªåŠ¨è¯ç»„ä¿¡æ¯
 	fpDict = UserConfigFile(TEMP_FILE, "wb", &pstr);
 	strcpy (strPathTemp,pstr);
 	if (fpDict) {
@@ -999,7 +999,7 @@ INPUT_RETURN_VALUE DoTableInput (int iKey)
 			    TableGetCandWords (SM_FIRST);
 			}
 			else if (table[iTableIMIndex].iTableAutoSendToClient && (iCodeInputCount >= table[iTableIMIndex].iTableAutoSendToClient)) {
-			    if (iCandWordCount == 1 && (tableCandWord[0].flag != CT_AUTOPHRASE || (tableCandWord[0].flag == CT_AUTOPHRASE && !table[iTableIMIndex].iSaveAutoPhraseAfter))) {	//Èç¹ûÖ»ÓĞÒ»¸öºòÑ¡´Ê£¬ÔòËÍµ½¿Í»§³ÌĞòÖĞ
+			    if (iCandWordCount == 1 && (tableCandWord[0].flag != CT_AUTOPHRASE || (tableCandWord[0].flag == CT_AUTOPHRASE && !table[iTableIMIndex].iSaveAutoPhraseAfter))) {	//å¦‚æœåªæœ‰ä¸€ä¸ªå€™é€‰è¯ï¼Œåˆ™é€åˆ°å®¢æˆ·ç¨‹åºä¸­
 			    	retVal = IRV_DO_NOTHING;
 				if (tableCandWord[0].flag == CT_NORMAL) {
 				    if (tableCandWord[0].candWord.record->bPinyin)
@@ -1016,7 +1016,7 @@ INPUT_RETURN_VALUE DoTableInput (int iKey)
 				}
 			    }
 			}
-			else if ((iCodeInputCount == 1) && strTemp && !iCandWordCount) {	//Èç¹ûµÚÒ»¸ö×ÖÄ¸ÊÇ±êµã£¬²¢ÇÒÃ»ÓĞºòÑ¡×Ö/´Ê£¬Ôòµ±×ö±êµã´¦Àí©¤©¤ÊÊÓÃÓÚ¶ş±ÊÕâÑùµÄÊäÈë·¨
+			else if ((iCodeInputCount == 1) && strTemp && !iCandWordCount) {	//å¦‚æœç¬¬ä¸€ä¸ªå­—æ¯æ˜¯æ ‡ç‚¹ï¼Œå¹¶ä¸”æ²¡æœ‰å€™é€‰å­—/è¯ï¼Œåˆ™å½“åšæ ‡ç‚¹å¤„ç†â”€â”€é€‚ç”¨äºäºŒç¬”è¿™æ ·çš„è¾“å…¥æ³•
 			    strcpy (strStringGet, strTemp);
 			    retVal = IRV_PUNC;
 			}
@@ -1079,7 +1079,7 @@ INPUT_RETURN_VALUE DoTableInput (int iKey)
 	}
 	if (IsHotKey (iKey, hkTableAddPhrase)) {
 	    if (!bIsTableAddPhrase) {
-		if (iHZLastInputCount < 2 || !table[iTableIMIndex].bRule)	//´Ê×é×îÉÙÎªÁ½¸öºº×Ö
+		if (iHZLastInputCount < 2 || !table[iTableIMIndex].bRule)	//è¯ç»„æœ€å°‘ä¸ºä¸¤ä¸ªæ±‰å­—
 		    return IRV_DO_NOTHING;
 
 		iTableNewPhraseHZCount = 2;
@@ -1088,7 +1088,7 @@ INPUT_RETURN_VALUE DoTableInput (int iKey)
 		bShowCursor = False;
 
 		uMessageUp = 1;
-		strcpy (messageUp[0].strMsg, "×ó/ÓÒ¼üÔö¼Ó/¼õÉÙ£¬ENTERÈ·¶¨£¬ESCÈ¡Ïû");
+		strcpy (messageUp[0].strMsg, "å·¦/å³é”®å¢åŠ /å‡å°‘ï¼ŒENTERç¡®å®šï¼ŒESCå–æ¶ˆ");
 		messageUp[0].type = MSG_TIPS;
 
 		uMessageDown = 2;
@@ -1106,11 +1106,11 @@ INPUT_RETURN_VALUE DoTableInput (int iKey)
 	else if (IsHotKey (iKey, hkGetPY)) {
 	    char            strPY[100];
 
-	    //Èç¹ûÆ´Òôµ¥×Ö×Ö¿âÃ»ÓĞ¶ÁÈë£¬Ôò¶ÁÈëËü
+	    //å¦‚æœæ‹¼éŸ³å•å­—å­—åº“æ²¡æœ‰è¯»å…¥ï¼Œåˆ™è¯»å…¥å®ƒ
 	    if (!bPYBaseDictLoaded)
 		LoadPYBaseDict ();
 
-	    //Èç¹û¸Õ¸ÕÊäÈëµÄÊÇ¸ö´Ê×é£¬¸Õ²»²éÆ´Òô
+	    //å¦‚æœåˆšåˆšè¾“å…¥çš„æ˜¯ä¸ªè¯ç»„ï¼Œåˆšä¸æŸ¥æ‹¼éŸ³
 	    if (strlen (strStringGet) != 2)
 		return IRV_DO_NOTHING;
 
@@ -1119,10 +1119,10 @@ INPUT_RETURN_VALUE DoTableInput (int iKey)
 	    strcpy (messageUp[0].strMsg, strStringGet);
 	    messageUp[0].type = MSG_INPUT;
 	    uMessageDown = 2;
-	    strcpy (messageDown[0].strMsg, "¶ÁÒô£º");
+	    strcpy (messageDown[0].strMsg, "è¯»éŸ³ï¼š");
 	    messageDown[0].type = MSG_CODE;
 	    PYGetPYByHZ (strStringGet, strPY);
-	    strcpy (messageDown[1].strMsg, (strPY[0]) ? strPY : "ÎŞ·¨²éµ½¸Ã×Ö¶ÁÒô");
+	    strcpy (messageDown[1].strMsg, (strPY[0]) ? strPY : "æ— æ³•æŸ¥åˆ°è¯¥å­—è¯»éŸ³");
 	    messageDown[1].type = MSG_TIPS;
 	    bShowCursor = False;
 
@@ -1159,7 +1159,7 @@ INPUT_RETURN_VALUE DoTableInput (int iKey)
 			retVal = TableGetCandWords (SM_FIRST);
 		    }
 		    else {
-			//Èç¹ûÊÇÆ´Òô£¬½øÈë¿ìËÙµ÷Õû×ÖÆµ·½Ê½
+			//å¦‚æœæ˜¯æ‹¼éŸ³ï¼Œè¿›å…¥å¿«é€Ÿè°ƒæ•´å­—é¢‘æ–¹å¼
 			if (strcmp (strCodeInput, table[iTableIMIndex].strSymbol) && strCodeInput[0] == table[iTableIMIndex].cPinyin && table[iTableIMIndex].bUsePY)
 			    PYGetCandWord (iKey - 1);
 			strcpy (strStringGet, TableGetCandWord (iKey - 1));
@@ -1183,7 +1183,7 @@ INPUT_RETURN_VALUE DoTableInput (int iKey)
 
 		bIsTableAdjustOrder = True;
 		uMessageUp = 1;
-		strcpy (messageUp[0].strMsg, "Ñ¡ÔñĞèÒªÌáÇ°µÄ´Ê×éĞòºÅ£¬ESC½áÊø");
+		strcpy (messageUp[0].strMsg, "é€‰æ‹©éœ€è¦æå‰çš„è¯ç»„åºå·ï¼ŒESCç»“æŸ");
 		messageUp[0].type = MSG_TIPS;
 		retVal = IRV_DISPLAY_MESSAGE;
 	    }
@@ -1193,7 +1193,7 @@ INPUT_RETURN_VALUE DoTableInput (int iKey)
 
 		bIsTableDelPhrase = True;
 		uMessageUp = 1;
-		strcpy (messageUp[0].strMsg, "Ñ¡ÔñĞèÒªÉ¾³ıµÄ´Ê×éĞòºÅ£¬ESCÈ¡Ïû");
+		strcpy (messageUp[0].strMsg, "é€‰æ‹©éœ€è¦åˆ é™¤çš„è¯ç»„åºå·ï¼ŒESCå–æ¶ˆ");
 		messageUp[0].type = MSG_TIPS;
 		retVal = IRV_DISPLAY_MESSAGE;
 	    }
@@ -1292,7 +1292,7 @@ void		TableUpdateHitFrequency (RECORD * record)
 }
 
 /*
- * µÚ¶ş¸ö²ÎÊı±íÊ¾ÊÇ·ñ½øÈëÁªÏëÄ£Ê½£¬ÊµÏÖ×Ô¶¯ÉÏÆÁ¹¦ÄÜÊ±£¬²»ÄÜÊ¹ÓÃÁªÏëÄ£Ê½
+ * ç¬¬äºŒä¸ªå‚æ•°è¡¨ç¤ºæ˜¯å¦è¿›å…¥è”æƒ³æ¨¡å¼ï¼Œå®ç°è‡ªåŠ¨ä¸Šå±åŠŸèƒ½æ—¶ï¼Œä¸èƒ½ä½¿ç”¨è”æƒ³æ¨¡å¼
  */
 char           *_TableGetCandWord (int iIndex, Bool _bLegend)
 {
@@ -1324,10 +1324,10 @@ char           *_TableGetCandWord (int iIndex, Bool _bLegend)
 	break;
     case CT_AUTOPHRASE:
 	if (table[iTableIMIndex].iSaveAutoPhraseAfter) {
-	    /* µ±_bLegendÎªFalseÊ±£¬²»Ó¦¸Ã¼ÆËã×Ô¶¯×é´ÊµÄÆµ¶È£¬Òò´Ë´ËÊ±Êµ¼Ê²¢Ã»ÓĞÑ¡ÔñÕâ¸ö´Ê */
+	    /* å½“_bLegendä¸ºFalseæ—¶ï¼Œä¸åº”è¯¥è®¡ç®—è‡ªåŠ¨ç»„è¯çš„é¢‘åº¦ï¼Œå› æ­¤æ­¤æ—¶å®é™…å¹¶æ²¡æœ‰é€‰æ‹©è¿™ä¸ªè¯ */
 	    if (table[iTableIMIndex].iSaveAutoPhraseAfter >= tableCandWord[iIndex].candWord.autoPhrase->iSelected && _bLegend)
 		tableCandWord[iIndex].candWord.autoPhrase->iSelected++;
-	    if (table[iTableIMIndex].iSaveAutoPhraseAfter == tableCandWord[iIndex].candWord.autoPhrase->iSelected)	//±£´æ×Ô¶¯´Ê×é
+	    if (table[iTableIMIndex].iSaveAutoPhraseAfter == tableCandWord[iIndex].candWord.autoPhrase->iSelected)	//ä¿å­˜è‡ªåŠ¨è¯ç»„
 		TableInsertPhrase (tableCandWord[iIndex].candWord.autoPhrase->strCode, tableCandWord[iIndex].candWord.autoPhrase->strHZ);
 	}
 	pCandWord = tableCandWord[iIndex].candWord.autoPhrase->strHZ;
@@ -1394,7 +1394,7 @@ INPUT_RETURN_VALUE TableGetPinyinCandWords (SEARCH_MODE mode)
     else
 	PYGetCandWords (mode);
 
-    //ÏÂÃæ½«Æ´ÒôµÄºòÑ¡×Ö±í×ª»»ÎªÂë±íÊäÈë·¨µÄÑùÊ½
+    //ä¸‹é¢å°†æ‹¼éŸ³çš„å€™é€‰å­—è¡¨è½¬æ¢ä¸ºç è¡¨è¾“å…¥æ³•çš„æ ·å¼
     for (i = 0; i < iCandWordCount; i++) {
 	tableCandWord[i].flag = CT_PYPHRASE;
 	PYGetCandText (i, tableCandWord[i].candWord.strPYPhrase);
@@ -1492,7 +1492,7 @@ INPUT_RETURN_VALUE TableGetCandWords (SEARCH_MODE mode)
 	if (mode != SM_PREV)
 	    iTableCandDisplayed += iCandWordCount;
 
-	//ÓÉÓÚiCurrentCandPageºÍiCandPageCountÓÃÀ´Ö¸Ê¾ÊÇ·ñÏÔÊ¾ÉÏ/ÏÂ·­Ò³Í¼±ê£¬Òò´Ë£¬´Ë´¦ĞèÒªÉèÖÃÒ»ÏÂ
+	//ç”±äºiCurrentCandPageå’ŒiCandPageCountç”¨æ¥æŒ‡ç¤ºæ˜¯å¦æ˜¾ç¤ºä¸Š/ä¸‹ç¿»é¡µå›¾æ ‡ï¼Œå› æ­¤ï¼Œæ­¤å¤„éœ€è¦è®¾ç½®ä¸€ä¸‹
 	iCurrentCandPage = (iTableCandDisplayed == iCandWordCount) ? 0 : 1;
 	iCandPageCount = (iTableCandDisplayed >= iTableTotalCandCount) ? 1 : 2;
 	if (iCandWordCount == iTableTotalCandCount)
@@ -1507,7 +1507,7 @@ INPUT_RETURN_VALUE TableGetCandWords (SEARCH_MODE mode)
     else
 	strTemp[1] = '\0';
 
-    /* Èç¹ûÓÃ»§ÉèÖÃÁË¹Ì¶¨ÊäÈëÌõ¿í¶È£¬¾ÍÔÚ´Ë½øĞĞ´¦Àí */
+    /* å¦‚æœç”¨æˆ·è®¾ç½®äº†å›ºå®šè¾“å…¥æ¡å®½åº¦ï¼Œå°±åœ¨æ­¤è¿›è¡Œå¤„ç† */
     if (iFixedInputWindowWidth && !(strCodeInput[0] == table[iTableIMIndex].cPinyin && table[iTableIMIndex].bUsePY)) {
 	uint            iWidth = 2 * INPUTWND_START_POS_DOWN + 1;
 
@@ -1587,7 +1587,7 @@ INPUT_RETURN_VALUE TableGetCandWords (SEARCH_MODE mode)
 	    iCandWordCount -= i;
 	}
 	else {
-	    //Èç¹ûÊÇÏòºó·­£¬ĞèÒª´ÓÇ°Íùºó¼ÆËã³¤¶È
+	    //å¦‚æœæ˜¯å‘åç¿»ï¼Œéœ€è¦ä»å‰å¾€åè®¡ç®—é•¿åº¦
 	    iTemp = iCandWordCount;
 	    for (i = 0; i < iCandWordCount; i++) {
 		strTemp[0] = i + 1 + '0';
@@ -1897,7 +1897,7 @@ int TableCompareCode (char *strUser, char *strDict)
     }
     if (table[iTableIMIndex].bTableExactMatch) {
 	if (strlen (strUser) != strlen (strDict))
-	    return -999;	//ËæÒâµÄÒ»¸öÖµ
+	    return -999;	//éšæ„çš„ä¸€ä¸ªå€¼
     }
 
     return 0;
@@ -1936,12 +1936,12 @@ int TableFindFirstMatchCode (void)
 }
 
 /*
- * ·´²é±àÂë
- * bMode=True±íÊ¾ÓÃÓÚ×é´Ê£¬´ËÊ±²»²éÒ»¡¢¶ş¼¶¼òÂë¡£µ«Èç¹ûÖ»ÓĞ¶ş¼¶¼òÂëÊ±·µ»Ø¶ş¼¶¼òÂë£¬²»²éÒ»¼¶¼òÂë
+ * åæŸ¥ç¼–ç 
+ * bMode=Trueè¡¨ç¤ºç”¨äºç»„è¯ï¼Œæ­¤æ—¶ä¸æŸ¥ä¸€ã€äºŒçº§ç®€ç ã€‚ä½†å¦‚æœåªæœ‰äºŒçº§ç®€ç æ—¶è¿”å›äºŒçº§ç®€ç ï¼Œä¸æŸ¥ä¸€çº§ç®€ç 
  */
 /*RECORD         *TableFindCode (char *strHZ, Bool bMode)
 {
-    RECORD         *recShort = NULL;	//¼ÇÂ¼¶ş¼¶¼òÂëµÄÎ»ÖÃ
+    RECORD         *recShort = NULL;	//è®°å½•äºŒçº§ç®€ç çš„ä½ç½®
     int             i;
 
     for (i = 0; i < iSingleHZCount; i++) {
@@ -1960,8 +1960,8 @@ int TableFindFirstMatchCode (void)
 }*/
 
 /*
- * ¸ù¾İĞòºÅµ÷Õû´Ê×éË³Ğò£¬ĞòºÅ´Ó1¿ªÊ¼
- * ½«Ö¸¶¨µÄ×Ö/´Êµ÷Õûµ½Í¬Ñù±àÂëµÄ×îÇ°Ãæ
+ * æ ¹æ®åºå·è°ƒæ•´è¯ç»„é¡ºåºï¼Œåºå·ä»1å¼€å§‹
+ * å°†æŒ‡å®šçš„å­—/è¯è°ƒæ•´åˆ°åŒæ ·ç¼–ç çš„æœ€å‰é¢
  */
 void TableAdjustOrderByIndex (int iIndex)
 {
@@ -1974,10 +1974,10 @@ void TableAdjustOrderByIndex (int iIndex)
     recTemp = tableCandWord[iIndex - 1].candWord.record;
     while (!strcmp (recTemp->strCode, recTemp->prev->strCode))
 	recTemp = recTemp->prev;
-    if (recTemp == tableCandWord[iIndex - 1].candWord.record)	//ËµÃ÷ÒÑ¾­ÊÇµÚÒ»¸ö
+    if (recTemp == tableCandWord[iIndex - 1].candWord.record)	//è¯´æ˜å·²ç»æ˜¯ç¬¬ä¸€ä¸ª
 	return;
 
-    //½«Ö¸¶¨µÄ×Ö/´Ê·Åµ½recTempÇ°
+    //å°†æŒ‡å®šçš„å­—/è¯æ”¾åˆ°recTempå‰
     tableCandWord[iIndex - 1].candWord.record->prev->next = tableCandWord[iIndex - 1].candWord.record->next;
     tableCandWord[iIndex - 1].candWord.record->next->prev = tableCandWord[iIndex - 1].candWord.record->prev;
     recTemp->prev->next = tableCandWord[iIndex - 1].candWord.record;
@@ -1987,7 +1987,7 @@ void TableAdjustOrderByIndex (int iIndex)
 
     iTableChanged++;
 
-    //ĞèÒªµÄ»°£¬¸üĞÂË÷Òı
+    //éœ€è¦çš„è¯ï¼Œæ›´æ–°ç´¢å¼•
     if (tableCandWord[iIndex - 1].candWord.record->strCode[1] == '\0') {
 	for (iTemp = 0; iTemp < strlen (table[iTableIMIndex].strInputCode); iTemp++) {
 	    if (recordIndex[iTemp].cCode == tableCandWord[iIndex - 1].candWord.record->strCode[0]) {
@@ -1999,7 +1999,7 @@ void TableAdjustOrderByIndex (int iIndex)
 }
 
 /*
- * ¸ù¾İĞòºÅÉ¾³ı´Ê×é£¬ĞòºÅ´Ó1¿ªÊ¼
+ * æ ¹æ®åºå·åˆ é™¤è¯ç»„ï¼Œåºå·ä»1å¼€å§‹
  */
 void TableDelPhraseByIndex (int iIndex)
 {
@@ -2013,7 +2013,7 @@ void TableDelPhraseByIndex (int iIndex)
 }
 
 /*
- * ¸ù¾İ×Ö´®É¾³ı´Ê×é
+ * æ ¹æ®å­—ä¸²åˆ é™¤è¯ç»„
  */
 void TableDelPhraseByHZ (char *strHZ)
 {
@@ -2037,7 +2037,7 @@ void TableDelPhrase (RECORD * record)
 }
 
 /*
- *ÅĞ¶ÏÄ³¸ö´Ê×éÊÇ²»ÊÇÒÑ¾­ÔÚ´Ê¿âÖĞ,ÓĞ·µ»ØNULL£¬ÎŞ·µ»Ø²åÈëµã
+ *åˆ¤æ–­æŸä¸ªè¯ç»„æ˜¯ä¸æ˜¯å·²ç»åœ¨è¯åº“ä¸­,æœ‰è¿”å›NULLï¼Œæ— è¿”å›æ’å…¥ç‚¹
  */
 RECORD         *TableHasPhrase (char *strCode, char *strHZ)
 {
@@ -2054,7 +2054,7 @@ RECORD         *TableHasPhrase (char *strCode, char *strHZ)
 	    if (strcmp (recTemp->strCode, strCode) > 0)
 	        break;
 	    else if (!strcmp (recTemp->strCode, strCode)) {
-	        if (!strcmp (recTemp->strHZ, strHZ))	//¸Ã´Ê×éÒÑ¾­ÔÚ´Ê¿âÖĞ
+	        if (!strcmp (recTemp->strHZ, strHZ))	//è¯¥è¯ç»„å·²ç»åœ¨è¯åº“ä¸­
 		    return NULL;
 	    }
         }
@@ -2065,7 +2065,7 @@ RECORD         *TableHasPhrase (char *strCode, char *strHZ)
 }
 
 /*
- *¸ù¾İ×Ö´®ÅĞ¶Ï´Ê¿âÖĞÊÇ·ñÓĞÄ³¸ö×Ö/´Ê£¬×¢Òâ¸Ãº¯Êı»áºöÂÔÆ´Òô´Ê×é
+ *æ ¹æ®å­—ä¸²åˆ¤æ–­è¯åº“ä¸­æ˜¯å¦æœ‰æŸä¸ªå­—/è¯ï¼Œæ³¨æ„è¯¥å‡½æ•°ä¼šå¿½ç•¥æ‹¼éŸ³è¯ç»„
  */
 RECORD         *TableFindPhrase (char *strHZ)
 {
@@ -2073,7 +2073,7 @@ RECORD         *TableFindPhrase (char *strHZ)
     char            strTemp[3];
     int             i;
 
-    //Ê×ÏÈ£¬ÏÈ²éÕÒµÚÒ»¸öºº×ÖµÄ±àÂë
+    //é¦–å…ˆï¼Œå…ˆæŸ¥æ‰¾ç¬¬ä¸€ä¸ªæ±‰å­—çš„ç¼–ç 
     strTemp[0] = strHZ[0];
     strTemp[1] = strHZ[1];
     strTemp[2] = '\0';
@@ -2082,7 +2082,7 @@ RECORD         *TableFindPhrase (char *strHZ)
     if (!recTemp)
 	return (RECORD *) NULL;
 
-    //È»ºó¸ù¾İ¸Ã±àÂëÕÒµ½¼ìË÷µÄÆğÊ¼µã
+    //ç„¶åæ ¹æ®è¯¥ç¼–ç æ‰¾åˆ°æ£€ç´¢çš„èµ·å§‹ç‚¹
     i = 0;
     while (recTemp->strCode[0] != recordIndex[i].cCode)
 	i++;
@@ -2190,7 +2190,7 @@ void TableCreatePhraseCode (char *strHZ)
 }
 
 /*
- * »ñÈ¡ÁªÏëºòÑ¡×ÖÁĞ±í
+ * è·å–è”æƒ³å€™é€‰å­—åˆ—è¡¨
  */
 INPUT_RETURN_VALUE TableGetLegendCandWords (SEARCH_MODE mode)
 {
@@ -2250,7 +2250,7 @@ INPUT_RETURN_VALUE TableGetLegendCandWords (SEARCH_MODE mode)
 	iLegendCandPageCount = iTableTotalLengendCandCount / iMaxCandWord - ((iTableTotalLengendCandCount % iMaxCandWord) ? 0 : 1);
 
     uMessageUp = 2;
-    strcpy (messageUp[0].strMsg, "ÁªÏë£º");
+    strcpy (messageUp[0].strMsg, "è”æƒ³ï¼š");
     messageUp[0].type = MSG_TIPS;
     strcpy (messageUp[1].strMsg, strTableLegendSource);
     messageUp[1].type = MSG_INPUT;
@@ -2432,32 +2432,32 @@ Bool TablePhraseTips (void)
     if (!recordHead)
 	return False;
 
-    //Èç¹û×î½üÊäÈëÁËÒ»¸ö´Ê×é£¬Õâ¸ö¹¤×÷¾Í²»ĞèÒªÁË
+    //å¦‚æœæœ€è¿‘è¾“å…¥äº†ä¸€ä¸ªè¯ç»„ï¼Œè¿™ä¸ªå·¥ä½œå°±ä¸éœ€è¦äº†
     if (lastIsSingleHZ != 1)
 	return False;
 
     j = (iHZLastInputCount > PHRASE_MAX_LENGTH) ? iHZLastInputCount - PHRASE_MAX_LENGTH : 0;
     for (i = j; i < iHZLastInputCount; i++)
 	strcat (strTemp, hzLastInput[i].strHZ);
-    //Èç¹ûÖ»ÓĞÒ»¸öºº×Ö£¬Õâ¸ö¹¤×÷Ò²²»ĞèÒªÁË
+    //å¦‚æœåªæœ‰ä¸€ä¸ªæ±‰å­—ï¼Œè¿™ä¸ªå·¥ä½œä¹Ÿä¸éœ€è¦äº†
     if (strlen (strTemp) < 4)
 	return False;
 
-    //Ê×ÏÈÒªÅĞ¶ÏÊÇ²»ÊÇÒÑ¾­ÔÚ´Ê¿âÖĞ
+    //é¦–å…ˆè¦åˆ¤æ–­æ˜¯ä¸æ˜¯å·²ç»åœ¨è¯åº“ä¸­
     for (i = 0; i < (iHZLastInputCount - j - 1); i++) {
 	recTemp = TableFindPhrase (strTemp + i * 2);
 	if (recTemp) {
-	    strcpy (messageUp[0].strMsg, "´Ê¿âÖĞÓĞ´Ê×é ");
+	    strcpy (messageUp[0].strMsg, "è¯åº“ä¸­æœ‰è¯ç»„ ");
 	    messageUp[0].type = MSG_TIPS;
 	    strcpy (messageUp[1].strMsg, strTemp + i * 2);
 	    messageUp[1].type = MSG_INPUT;
 	    uMessageUp = 2;
 
-	    strcpy (messageDown[0].strMsg, "±àÂëÎª ");
+	    strcpy (messageDown[0].strMsg, "ç¼–ç ä¸º ");
 	    messageDown[0].type = MSG_FIRSTCAND;
 	    strcpy (messageDown[1].strMsg, recTemp->strCode);
 	    messageDown[1].type = MSG_CODE;
-	    strcpy (messageDown[2].strMsg, " ^DELÉ¾³ı");
+	    strcpy (messageDown[2].strMsg, " ^DELåˆ é™¤");
 	    messageDown[2].type = MSG_TIPS;
 	    uMessageDown = 3;
 	    bTablePhraseTips = True;
@@ -2480,7 +2480,7 @@ void TableCreateAutoPhrase (INT8 iCount)
 
     strHZ=(char *)malloc((table[iTableIMIndex].iAutoPhrase * 2 + 1)*sizeof(char));
     /*
-     * ÎªÁËÌá¸ßĞ§ÂÊ£¬´Ë´¦Ö»ÖØĞÂÉú³ÉĞÂÂ¼Èë×Ö¹¹³ÉµÄ´Ê×é
+     * ä¸ºäº†æé«˜æ•ˆç‡ï¼Œæ­¤å¤„åªé‡æ–°ç”Ÿæˆæ–°å½•å…¥å­—æ„æˆçš„è¯ç»„
      */
     j = iHZLastInputCount - table[iTableIMIndex].iAutoPhrase - iCount;
     if (j < 0)
@@ -2495,12 +2495,12 @@ void TableCreateAutoPhrase (INT8 iCount)
 	    for (k = 1; k < i; k++)
 		strcat (strHZ, hzLastInput[j + k].strHZ);
 
-	    //ÔÙÈ¥µôÖØ¸´µÄ´Ê×é
+	    //å†å»æ‰é‡å¤çš„è¯ç»„
 	    for (k = 0; k < iAutoPhrase; k++) {
 		if (!strcmp (autoPhrase[k].strHZ, strHZ))
 		    goto _next;
 	    }
-	    //È»ºóÈ¥µôÏµÍ³ÖĞÒÑ¾­ÓĞµÄ´Ê×é
+	    //ç„¶åå»æ‰ç³»ç»Ÿä¸­å·²ç»æœ‰çš„è¯ç»„
 	    if (TableFindPhrase (strHZ))
 	    	goto _next;
 

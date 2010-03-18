@@ -105,8 +105,8 @@ SP_S            SPMap_S[] = {
 Bool            bSP_UseSemicolon = False;
 Bool            bSP = False;
 char            cNonS = 'o';
-char            strDefaultSP[100] = "×ÔÈ»Âë";
-SP_FROM         iSPFrom = SP_FROM_USER;	//´ÓºÎ´¦¶ÁÈ¡µÄË«Æ´·½°¸£¬0£ºÓÃ»§Ä¿Â¼£¬1£ºÏµÍ³ÉèÖÃ£¬2£ºÏµÍ³Ë«Æ´ÉèÖÃÎÄ¼ş
+char            strDefaultSP[100] = "è‡ªç„¶ç ";
+SP_FROM         iSPFrom = SP_FROM_USER;	//ä»ä½•å¤„è¯»å–çš„åŒæ‹¼æ–¹æ¡ˆï¼Œ0ï¼šç”¨æˆ·ç›®å½•ï¼Œ1ï¼šç³»ç»Ÿè®¾ç½®ï¼Œ2ï¼šç³»ç»ŸåŒæ‹¼è®¾ç½®æ–‡ä»¶
 
 //extern Bool     bSingleHZMode;
 
@@ -165,7 +165,7 @@ void LoadSPData (void)
 	if (!strlen (pstr) || pstr[0] == '#')
 	    continue;
 
-	if (!strncmp (pstr, "Ä¬ÈÏ·½°¸=", 9)) {
+	if (!strncmp (pstr, "é»˜è®¤æ–¹æ¡ˆ=", 9)) {
 	    if (iSPFrom != SP_FROM_SYSTEM_CONFIG) {
 		pstr += 9;
 		if (*pstr == ' ' || *pstr == '\t')
@@ -175,7 +175,7 @@ void LoadSPData (void)
 	    continue;
 	}
 
-	if (!strncmp (pstr, "·½°¸Ãû³Æ=", 9)) {
+	if (!strncmp (pstr, "æ–¹æ¡ˆåç§°=", 9)) {
 	    pstr += 9;
 	    if (*pstr == ' ' || *pstr == '\t')
 		pstr++;
@@ -186,7 +186,7 @@ void LoadSPData (void)
 	if (!bIsDefault)
 	    continue;
 
-	if (pstr[0] == '=')	//ÊÇÁãÉùÄ¸ÉèÖÃ
+	if (pstr[0] == '=')	//æ˜¯é›¶å£°æ¯è®¾ç½®
 	    cNonS = tolower (pstr[1]);
 	else {
 	    i = 0;
@@ -213,7 +213,7 @@ void LoadSPData (void)
 
     fclose (fp);
 
-    //ÏÂÃæÅĞ¶ÏÊÇ·ñÊ¹ÓÃÁË';'
+    //ä¸‹é¢åˆ¤æ–­æ˜¯å¦ä½¿ç”¨äº†';'
     i = 0;
     while (SPMap_C[i].strQP[0]) {
 	if (SPMap_C[i++].cJP == ';')
@@ -233,8 +233,8 @@ void LoadSPData (void)
 }
 
 /*
- * ½«Ò»¸öÈ«Æ´×ª»»ÎªË«Æ´
- * strQPÖ»ÄÜÊÇÒ»¸ö±ê×¼µÄÈ«Æ´£¬±¾º¯Êı²»¼ì²é´íÎó
+ * å°†ä¸€ä¸ªå…¨æ‹¼è½¬æ¢ä¸ºåŒæ‹¼
+ * strQPåªèƒ½æ˜¯ä¸€ä¸ªæ ‡å‡†çš„å…¨æ‹¼ï¼Œæœ¬å‡½æ•°ä¸æ£€æŸ¥é”™è¯¯
  */
 /*void QP2SP (char *strQP, char *strSP)
 {
@@ -242,7 +242,7 @@ void LoadSPData (void)
     int             iIndex;
 
     strSP[2] = '\0';
-    //"ang"ÊÇÎ¨Ò»Ò»¸ö¿Éµ¥¶ÀÊ¹ÓÃ¡¢³¤Îª3µÄÆ´Òô£¬µ¥¶À´¦Àí
+    //"ang"æ˜¯å”¯ä¸€ä¸€ä¸ªå¯å•ç‹¬ä½¿ç”¨ã€é•¿ä¸º3çš„æ‹¼éŸ³ï¼Œå•ç‹¬å¤„ç†
     if (!strcmp (strQP, "ang")) {
 	strSP[0] = cNonS;
 	strSP[1] = SPMap_C[GetSPIndexQP_C (strQP)].cJP;
@@ -285,7 +285,7 @@ void LoadSPData (void)
 }
 */
 /*
- * ´Ë´¦Ö»×ª»»µ¥¸öË«Æ´£¬²¢ÇÒ²»¼ì²é´íÎó
+ * æ­¤å¤„åªè½¬æ¢å•ä¸ªåŒæ‹¼ï¼Œå¹¶ä¸”ä¸æ£€æŸ¥é”™è¯¯
  */
 void SP2QP (char *strSP, char *strQP)
 {
@@ -328,7 +328,7 @@ void SP2QP (char *strSP, char *strQP)
     }
 
     if (FindPYFAIndex (strQP, False) != -1)
-	iIndex2 = 0;		//ÕâÖ»ÊÇ½«iIndex2ÖÃÎª·Ç-1,ÒÔÃâºóÃæµÄÅĞ¶Ï
+	iIndex2 = 0;		//è¿™åªæ˜¯å°†iIndex2ç½®ä¸ºé-1,ä»¥å…åé¢çš„åˆ¤æ–­
 
     strTmp[0] = strSP[0];
     strTmp[1] = '\0';

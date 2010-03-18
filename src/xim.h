@@ -74,7 +74,7 @@ void            DestroyConnectID (CARD16 connect_id);
 void            SetConnectID (CARD16 connect_id, IME_STATE imState);
 IME_STATE       ConnectIDGetState (CARD16 connect_id);
 
-/* 用于lumaqq支持
+/* 鐢ㄤ簬lumaqq鏀寔
 Bool            ConnectIDGetReset (CARD16 connect_id);
 void            ConnectIDSetReset (CARD16 connect_id, Bool bReset);
 void            ConnectIDResetReset (void);

@@ -22,7 +22,7 @@
  * @author Yuking yuking_net@sohu.com 
  * @date   2008-1-16
  * 
- * @brief ×Ô¶¯ÇĞ»»µ½Ó¢ÎÄ×´Ì¬
+ * @brief è‡ªåŠ¨åˆ‡æ¢åˆ°è‹±æ–‡çŠ¶æ€
 *
 *
 */
@@ -39,14 +39,14 @@ typedef struct {
 } AUTO_ENG;
 
 /** 
- * ´Ó ~/.fcitx/!AutoEng.dat 
- * £¨Èç¹û²»´æÔÚ£¬Ôò´Ó /usr/local/share/fcitx/data/!AutoEng.dat£©
- * ¶ÁÈ¡ĞèÒª×Ô¶¯×ª»»µ½Ó¢ÎÄÊäÈë×´Ì¬µÄÇé¿öµÄÊı¾İ¡£
+ * ä» ~/.fcitx/!AutoEng.dat 
+ * ï¼ˆå¦‚æœä¸å­˜åœ¨ï¼Œåˆ™ä» /usr/local/share/fcitx/data/!AutoEng.datï¼‰
+ * è¯»å–éœ€è¦è‡ªåŠ¨è½¬æ¢åˆ°è‹±æ–‡è¾“å…¥çŠ¶æ€çš„æƒ…å†µçš„æ•°æ®ã€‚
  */
 void            LoadAutoEng (void);
 
 /** 
- * ÊÍ·ÅÏà¹Ø×ÊÔ´  
+ * é‡Šæ”¾ç›¸å…³èµ„æº  
  */
 void            FreeAutoEng (void);
 Bool            SwitchToEng (char *);

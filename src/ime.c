@@ -22,7 +22,7 @@
  * @author Yuking yuking_net@sohu.com
  * @date   2008-1-16
  *
- * @brief  °´¼üºÍÊäÈë·¨Í¨ÓÃ¹¦ÄÜ´¦Àí
+ * @brief  æŒ‰é”®å’Œè¾“å…¥æ³•é€šç”¨åŠŸèƒ½å¤„ç†
  *
  *
  */
@@ -73,24 +73,24 @@ int             iCodeInputCount;
 
 // *************************************************************
 char            strCodeInput[MAX_USER_INPUT + 1];
-char            strStringGet[MAX_USER_INPUT + 1];	//±£´æÊäÈë·¨·µ»ØµÄĞèÒªËÍµ½¿Í»§³ÌĞòÖĞµÄ×Ö´®
+char            strStringGet[MAX_USER_INPUT + 1];	//ä¿å­˜è¾“å…¥æ³•è¿”å›çš„éœ€è¦é€åˆ°å®¢æˆ·ç¨‹åºä¸­çš„å­—ä¸²
 
 // *************************************************************
 
 ENTER_TO_DO     enterToDo = K_ENTER_SEND;
 
-Bool            bCorner = False;	//È«°ë½ÇÇĞ»»
-Bool            bChnPunc = True;	//ÖĞÓ¢ÎÄ±êµãÇĞ»»
-Bool            bUseGBK = False;	//ÊÇ·ñÖ§³ÖGBK
-Bool            bIsDoInputOnly = False;	//±íÃ÷ÊÇ·ñÖ»ÓÉÊäÈë·¨À´´¦Àí¼üÅÌ
-Bool            bLastIsNumber = False;	//ÉÏÒ»´ÎÊäÈëÊÇ²»ÊÇ°¢À­²®Êı×Ö
-char		cLastIsAutoConvert = 0;	//ÉÏÒ»´ÎÊäÈëÊÇ²»ÊÇ·ûºÏÊı×Öºó×Ô¶¯×ª»»µÄ·ûºÅ£¬Èç'.'/','£¬0±íÊ¾²»ÊÇÕâÑùµÄ·ûºÅ
-INT8            iInCap = 0;		//ÊÇ²»ÊÇ´¦ÓÚ´óĞ´ºóµÄÓ¢ÎÄ×´Ì¬,0--²»£¬1--°´ÏÂ´óĞ´¼ü£¬2--°´ÏÂ·ÖºÅ¼ü
+Bool            bCorner = False;	//å…¨åŠè§’åˆ‡æ¢
+Bool            bChnPunc = True;	//ä¸­è‹±æ–‡æ ‡ç‚¹åˆ‡æ¢
+Bool            bUseGBK = False;	//æ˜¯å¦æ”¯æŒGBK
+Bool            bIsDoInputOnly = False;	//è¡¨æ˜æ˜¯å¦åªç”±è¾“å…¥æ³•æ¥å¤„ç†é”®ç›˜
+Bool            bLastIsNumber = False;	//ä¸Šä¸€æ¬¡è¾“å…¥æ˜¯ä¸æ˜¯é˜¿æ‹‰ä¼¯æ•°å­—
+char		cLastIsAutoConvert = 0;	//ä¸Šä¸€æ¬¡è¾“å…¥æ˜¯ä¸æ˜¯ç¬¦åˆæ•°å­—åè‡ªåŠ¨è½¬æ¢çš„ç¬¦å·ï¼Œå¦‚'.'/','ï¼Œ0è¡¨ç¤ºä¸æ˜¯è¿™æ ·çš„ç¬¦å·
+INT8            iInCap = 0;		//æ˜¯ä¸æ˜¯å¤„äºå¤§å†™åçš„è‹±æ–‡çŠ¶æ€,0--ä¸ï¼Œ1--æŒ‰ä¸‹å¤§å†™é”®ï¼Œ2--æŒ‰ä¸‹åˆ†å·é”®
 
 /*
-Bool            bAutoHideInputWindow = False;	//ÊÇ·ñ×Ô¶¯Òş²ØÊäÈëÌõ
+Bool            bAutoHideInputWindow = False;	//æ˜¯å¦è‡ªåŠ¨éšè—è¾“å…¥æ¡
 */
-Bool            bEngPuncAfterNumber = True;	//Êı×ÖºóÃæÊä³ö°ë½Ç·ûºÅ(Ö»¶Ô'.'/','ÓĞĞ§)
+Bool            bEngPuncAfterNumber = True;	//æ•°å­—åé¢è¾“å‡ºåŠè§’ç¬¦å·(åªå¯¹'.'/','æœ‰æ•ˆ)
 Bool            bPhraseTips = True;
 INT8            lastIsSingleHZ = 0;
 Bool            bUseGBKT = False;
@@ -102,8 +102,8 @@ Bool            bDisablePagingInLegend = True;
 
 Bool            bVK = False;
 
-int             i2ndSelectKey = 50;	//µÚ¶ş¸öºòÑ¡´ÊÑ¡Ôñ¼ü£¬ÎªÉ¨ÃèÂë-Ä¬ÈÏÊÇSHIFT
-int             i3rdSelectKey = 62;	//µÚÈı¸öºòÑ¡´ÊÑ¡Ôñ¼ü£¬ÎªÉ¨ÃèÂë
+int             i2ndSelectKey = 50;	//ç¬¬äºŒä¸ªå€™é€‰è¯é€‰æ‹©é”®ï¼Œä¸ºæ‰«æç -é»˜è®¤æ˜¯SHIFT
+int             i3rdSelectKey = 62;	//ç¬¬ä¸‰ä¸ªå€™é€‰è¯é€‰æ‹©é”®ï¼Œä¸ºæ‰«æç 
 
 Time            lastKeyPressedTime;
 unsigned int    iTimeInterval = 250;
@@ -112,14 +112,14 @@ KEY_RELEASED    keyReleased = KR_OTHER;
 Bool            bDoubleSwitchKey = False;
 KEY_CODE        switchKey = L_CTRL;
 
-//ÈÈ¼ü¶¨Òå
+//çƒ­é”®å®šä¹‰
 HOTKEYS         hkTrigger[HOT_KEY_COUNT] = { CTRL_SPACE, 0 };
 HOTKEYS         hkGBK[HOT_KEY_COUNT] = { CTRL_M, 0 };
 HOTKEYS         hkLegend[HOT_KEY_COUNT] = { CTRL_L, 0 };
-HOTKEYS         hkCorner[HOT_KEY_COUNT] = { SHIFT_SPACE, 0 };	//È«°ë½ÇÇĞ»»
-HOTKEYS         hkPunc[HOT_KEY_COUNT] = { ALT_SPACE, 0 };	//ÖĞÎÄ±êµã
-HOTKEYS         hkNextPage[HOT_KEY_COUNT] = { '.', 0 };	//ÏÂÒ»Ò³
-HOTKEYS         hkPrevPage[HOT_KEY_COUNT] = { ',', 0 };	//ÉÏÒ»Ò³
+HOTKEYS         hkCorner[HOT_KEY_COUNT] = { SHIFT_SPACE, 0 };	//å…¨åŠè§’åˆ‡æ¢
+HOTKEYS         hkPunc[HOT_KEY_COUNT] = { ALT_SPACE, 0 };	//ä¸­æ–‡æ ‡ç‚¹
+HOTKEYS         hkNextPage[HOT_KEY_COUNT] = { '.', 0 };	//ä¸‹ä¸€é¡µ
+HOTKEYS         hkPrevPage[HOT_KEY_COUNT] = { ',', 0 };	//ä¸Šä¸€é¡µ
 HOTKEYS         hkTrack[HOT_KEY_COUNT] = { CTRL_K, 0 };
 HOTKEYS         hkGBT[HOT_KEY_COUNT] = { CTRL_ALT_F, 0 };
 HOTKEYS         hkHideMainWindow[HOT_KEY_COUNT] = { CTRL_ALT_H, 0 };
@@ -142,16 +142,16 @@ char		strExternIM[PATH_MAX];
 
 Bool            bPointAfterNumber = True;
 
-/* ¼ÆËã´ò×ÖËÙ¶È */
+/* è®¡ç®—æ‰“å­—é€Ÿåº¦ */
 time_t          timeStart;
 Bool            bStartRecordType;
 Bool            bShowUserSpeed = True;
 Bool            bShowVersion = True;
 uint            iHZInputed = 0;
 
-char            strNameOfPinyin[41] = "ÖÇÄÜÆ´Òô";
-char            strNameOfShuangpin[41] = "ÖÇÄÜË«Æ´";
-char            strNameOfQuwei[41] = "ÇøÎ»";
+char            strNameOfPinyin[41] = "æ™ºèƒ½æ‹¼éŸ³";
+char            strNameOfShuangpin[41] = "æ™ºèƒ½åŒæ‹¼";
+char            strNameOfQuwei[41] = "åŒºä½";
 
 Bool		bCursorAuto=False;
 
@@ -328,7 +328,7 @@ void ChangeIMState (CARD16 _connect_id)
 }
 
 /*
- * ×ª»»strStringGetÖĞµÄ±êµãÎªÖĞÎÄ±êµã
+ * è½¬æ¢strStringGetä¸­çš„æ ‡ç‚¹ä¸ºä¸­æ–‡æ ‡ç‚¹
  */
 void ConvertPunc (void)
 {
@@ -378,9 +378,9 @@ void ProcessKey (IMForwardEventStruct * call_data)
     }
 
     /*
-     * Ô­ÒâÊÇÎªÁË½â¾öxine-uiÖĞºòÑ¡×Ö×Ô¶¯Ñ¡ÖĞµÄÎÊÌâ
-     * xine-uiÃ¿ÃëÖÓ²úÉúÒ»¸ö×óSHIFT¼üµÄÊÍ·ÅÊÂ¼ş
-     * µ«Õâ¶Î´úÂë¶ÔĞÂµÄxine-uiÒÑ¾­²»Æğ×÷ÓÃÁË
+     * åŸæ„æ˜¯ä¸ºäº†è§£å†³xine-uiä¸­å€™é€‰å­—è‡ªåŠ¨é€‰ä¸­çš„é—®é¢˜
+     * xine-uiæ¯ç§’é’Ÿäº§ç”Ÿä¸€ä¸ªå·¦SHIFTé”®çš„é‡Šæ”¾äº‹ä»¶
+     * ä½†è¿™æ®µä»£ç å¯¹æ–°çš„xine-uiå·²ç»ä¸èµ·ä½œç”¨äº†
      */
      /*if (kev->same_screen && (kev->keycode == switchKey || kev->keycode == i2ndSelectKey || kev->keycode == i3rdSelectKey)) {
 	IMForwardEvent (ims, (XPointer) call_data);
@@ -422,7 +422,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 		        ChangVK();
 		}
 		else if (kev->keycode == switchKey && keyReleased == KR_CTRL && !bDoubleSwitchKey) {
-		    /* °´ÏÂÁÙÊ±Ó¢ÎÄ¼ü»á°ÑÒÑ¾­ÊäÈëµÄÓ¢ÎÄËÍµ½¿Í»§³ÌĞòÖĞ£¬µ«Êµ¼ÊÊ¹ÓÃ·¢ÏÖ£¬ÕâÖÖ·½Ê½²»¾ßÈËĞÔ»¯
+		    /* æŒ‰ä¸‹ä¸´æ—¶è‹±æ–‡é”®ä¼šæŠŠå·²ç»è¾“å…¥çš„è‹±æ–‡é€åˆ°å®¢æˆ·ç¨‹åºä¸­ï¼Œä½†å®é™…ä½¿ç”¨å‘ç°ï¼Œè¿™ç§æ–¹å¼ä¸å…·äººæ€§åŒ–
 		     * if (iCodeInputCount) {
 			strcpy (strStringGet, strCodeInput);
 			retVal = IRV_ENG;
@@ -473,7 +473,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 			    retVal = IRV_DISPLAY_CANDWORDS;
 		    }
 		    else {
-			strcpy (strStringGet, "¡¡");
+			strcpy (strStringGet, "ã€€");
 			uMessageDown = 0;
 			retVal = IRV_GET_CANDWORDS;
 		    }
@@ -558,11 +558,11 @@ void ProcessKey (IMForwardEventStruct * call_data)
 				retVal = IRV_TO_PROCESS;
 			}
 			else {
-			    //µ÷ÓÃÊäÈë·¨Ä£¿é
+			    //è°ƒç”¨è¾“å…¥æ³•æ¨¡å—
 			    if (bCorner && (iKey >= 32 && iKey <= 126)) {
-				//ÓĞÈË±¨ ¿Õ¸ñ µÄÈ«½Ç²»¶Ô£¬ÕıÈ·µÄÊÇ0xa1 0xa1
-				//µ«²é×ÊÁÏÈ´ËµÈ«½Ç·ûºÅ×ÜÊÇÒÔ0xa3¿ªÊ¼¡£
-				//ÓÉÓÚ0xa3 0xa0¿ÉÄÜ»áÏÔÊ¾ÂÒÂë£¬Òò´Ë²ÉÓÃ0xa1 0xa1µÄ·½Ê½
+				//æœ‰äººæŠ¥ ç©ºæ ¼ çš„å…¨è§’ä¸å¯¹ï¼Œæ­£ç¡®çš„æ˜¯0xa1 0xa1
+				//ä½†æŸ¥èµ„æ–™å´è¯´å…¨è§’ç¬¦å·æ€»æ˜¯ä»¥0xa3å¼€å§‹ã€‚
+				//ç”±äº0xa3 0xa0å¯èƒ½ä¼šæ˜¾ç¤ºä¹±ç ï¼Œå› æ­¤é‡‡ç”¨0xa1 0xa1çš„æ–¹å¼
 				if (iKey == ' ')
 				    sprintf (strStringGet, "%c%c", 0xa1, 0xa1);
 				else
@@ -577,7 +577,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 				    if (!bCursorAuto && !IsIM (strNameOfPinyin) && !IsIM (strNameOfShuangpin))
 					iCursorPos = iCodeInputCount;
 
-				    //ÎªÁËÊµÏÖ×Ô¶¯Ó¢ÎÄ×ª»»
+				    //ä¸ºäº†å®ç°è‡ªåŠ¨è‹±æ–‡è½¬æ¢
 				    strcpy (strTemp, strCodeInput);
 				    if (retVal == IRV_TO_PROCESS) {
 					strTemp[strlen (strTemp) + 1] = '\0';
@@ -607,7 +607,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 					    if (pstr) {
 						SendHZtoClient (call_data, pstr);
 						strcpy (strStringGet, pstr);
-						//´ÖÂÔÍ³¼Æ×ÖÊı
+						//ç²—ç•¥ç»Ÿè®¡å­—æ•°
 						iHZInputed += (int) (strlen (strStringGet) / 2);
 						iCodeInputCount = 0;
 					    }
@@ -617,7 +617,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 					if (iInCap != 2)
 					    iInCap = 2;
 					else
-					    iKey = ' ';	//Ê¹ÓÃµÚ2¸ö·ÖºÅÊäÈëÖĞÎÄ·ÖºÅ
+					    iKey = ' ';	//ä½¿ç”¨ç¬¬2ä¸ªåˆ†å·è¾“å…¥ä¸­æ–‡åˆ†å·
 				    }
 				    else if (!iInCap) {
 					if (IsHotKey (iKey, hkPrevPage))
@@ -629,7 +629,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 				    if (retVal == IRV_TO_PROCESS) {
 					if (iInCap) {
 					    if ((iKey == ' ') && (iCodeInputCount == 0)) {
-						strcpy (strStringGet, "£»");
+						strcpy (strStringGet, "ï¼›");
 						retVal = IRV_ENG;
 						uMessageUp = uMessageDown = 0;
 						iInCap = 0;
@@ -669,11 +669,11 @@ void ProcessKey (IMForwardEventStruct * call_data)
 						uMessageUp = 1;
 						if (iInCap == 2) {
 						    if (semicolonToDo == K_SEMICOLON_ENG) {
-							strcpy (messageUp[0].strMsg, "Ó¢ÎÄÊäÈë ");
+							strcpy (messageUp[0].strMsg, "è‹±æ–‡è¾“å…¥ ");
 							iCursorPos += 9;
 						    }
 						    else {
-							strcpy (messageUp[0].strMsg, "×Ô¶¨ÒåÊäÈë ");
+							strcpy (messageUp[0].strMsg, "è‡ªå®šä¹‰è¾“å…¥ ");
 							iCursorPos += 11;
 						    }
 
@@ -687,9 +687,9 @@ void ProcessKey (IMForwardEventStruct * call_data)
 
 						    if (retVal != IRV_DISPLAY_CANDWORDS) {
 							if (iCodeInputCount)
-							    strcpy (messageDown[0].strMsg, "°´ Enter ÊäÈëÓ¢ÎÄ");
+							    strcpy (messageDown[0].strMsg, "æŒ‰ Enter è¾“å…¥è‹±æ–‡");
 							else
-							    strcpy (messageDown[0].strMsg, "¿Õ¸ñÊäÈë£»EnterÊäÈë;");
+							    strcpy (messageDown[0].strMsg, "ç©ºæ ¼è¾“å…¥ï¼›Enterè¾“å…¥;");
 							uMessageDown = 1;
 							messageDown[0].type = MSG_TIPS;
 						    }
@@ -699,7 +699,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 						    uMessageDown = 1;
 						    messageDown[0].type = MSG_TIPS;
 						    strcpy (messageUp[0].strMsg, strCodeInput);
-						    strcpy (messageDown[0].strMsg, "°´ Enter ÊäÈëÓ¢ÎÄ");
+						    strcpy (messageDown[0].strMsg, "æŒ‰ Enter è¾“å…¥è‹±æ–‡");
 						    messageUp[0].type = MSG_INPUT;
 						}
 					    }
@@ -742,7 +742,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 						    else {
 							bLastIsNumber = False;
 							if (iKey == ' ')
-							    retVal = IRV_DONOT_PROCESS_CLEAN;	//ÎªÁËÓëmozilla¼æÈİ
+							    retVal = IRV_DONOT_PROCESS_CLEAN;	//ä¸ºäº†ä¸mozillaå…¼å®¹
 							else {
 							    strStringGet[0] = '\0';
 							    if (!bIsInLegend)
@@ -891,7 +891,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 		    else if (IsHotKey (iKey, hkSaveAll)) {
 			SaveIM();
 			uMessageDown = 1;
-			strcpy(messageDown[0].strMsg,"´Ê¿âÒÑ±£´æ");
+			strcpy(messageDown[0].strMsg,"è¯åº“å·²ä¿å­˜");
 			messageDown[0].type = MSG_TIPS;
 			retVal = IRV_DISPLAY_MESSAGE;
 		    }
@@ -985,7 +985,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 	break;
     case IRV_GET_LEGEND:
 	SendHZtoClient (call_data, strStringGet);
-	iHZInputed += (int) (strlen (strStringGet) / 2);	//´ÖÂÔÍ³¼Æ×ÖÊı
+	iHZInputed += (int) (strlen (strStringGet) / 2);	//ç²—ç•¥ç»Ÿè®¡å­—æ•°
 	if (iLegendCandWordCount) {
 	    bShowNext = bShowPrev = False;
 	    if (iCurrentLegendCandPage > 0)
@@ -1041,11 +1041,11 @@ void ProcessKey (IMForwardEventStruct * call_data)
         lastIsSingleHZ = 0;
 	break;
     case IRV_ENG:
-	//Èç¹û´¦ÓÚÖĞÎÄ±êµãÄ£Ê½£¬Ó¦¸Ã½«ÆäÖĞµÄ±êµã×ª»»ÎªÈ«½Ç
+	//å¦‚æœå¤„äºä¸­æ–‡æ ‡ç‚¹æ¨¡å¼ï¼Œåº”è¯¥å°†å…¶ä¸­çš„æ ‡ç‚¹è½¬æ¢ä¸ºå…¨è§’
 	if (bChnPunc && bConvertPunc)
 	    ConvertPunc ();
     case IRV_PUNC:
-	iHZInputed += (int) (strlen (strStringGet) / 2);	//´ÖÂÔÍ³¼Æ×ÖÊı
+	iHZInputed += (int) (strlen (strStringGet) / 2);	//ç²—ç•¥ç»Ÿè®¡å­—æ•°
 	ResetInput ();
 	if (!uMessageDown)
 	    XUnmapWindow (dpy, inputWindow);
@@ -1055,7 +1055,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 	lastIsSingleHZ = 0;
 
 	if (retVal == IRV_GET_CANDWORDS_NEXT || lastIsSingleHZ == -1) {
-	    iHZInputed += (int) (strlen (strStringGet) / 2);	//´ÖÂÔÍ³¼Æ×ÖÊı
+	    iHZInputed += (int) (strlen (strStringGet) / 2);	//ç²—ç•¥ç»Ÿè®¡å­—æ•°
 	    if (!bUseDBus)
 		DisplayInputWindow ();
 	}
@@ -1069,7 +1069,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 	;
     }
 
-    //¼ÆËã´ò×ÖËÙ¶ÈµÄ¹¦ÄÜ
+    //è®¡ç®—æ‰“å­—é€Ÿåº¦çš„åŠŸèƒ½
     if (retVal == IRV_DISPLAY_MESSAGE || retVal == IRV_DISPLAY_CANDWORDS || retVal == IRV_PUNC) {
 	if (!bStartRecordType) {
 	    bStartRecordType = True;
@@ -1386,7 +1386,7 @@ void SetIM (void)
     im = (IM *) malloc (sizeof (IM) * iIMCount);
     iIMCount = 0;
 
-    /* ¶ÔÊäÈë·¨µÄ´ÎĞò½øĞĞÌí¼Ó */
+    /* å¯¹è¾“å…¥æ³•çš„æ¬¡åºè¿›è¡Œæ·»åŠ  */
     for ( i = 0; i < INPUT_METHODS; i++ )
         bFlag[i] = False;
 
@@ -1432,7 +1432,7 @@ void SetIM (void)
 	}
     }
 
-    if ( (!inputMethods[IM_SP] && (!inputMethods[IM_TABLE] || !iTableCount)) && !iIMCount )	 //ÖÁÉÙÓ¦¸ÃÓĞÒ»ÖÖÊäÈë·¨
+    if ( (!inputMethods[IM_SP] && (!inputMethods[IM_TABLE] || !iTableCount)) && !iIMCount )	 //è‡³å°‘åº”è¯¥æœ‰ä¸€ç§è¾“å…¥æ³•
 	RegisterNewIM (strNameOfPinyin, ResetPYStatus, DoPYInput, PYGetCandWords, PYGetCandWord, PYGetLegendCandWord, NULL, PYInit, NULL);
 
     if (strExternIM[0] && strExternIM[1])

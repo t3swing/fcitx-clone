@@ -22,7 +22,7 @@
  * @author Yuking yuking_net@sohu.com
  * @date   2008-1-16
  * 
- * @brief  ÊäÈëÌõ´°¿Ú
+ * @brief  è¾“å…¥æ¡çª—å£
  * 
  * 
  */
@@ -41,21 +41,21 @@
 /* #define INPUTWND_START_POS_UP	8 */
 #define INPUTWND_START_POS_DOWN	8
 
-#define MESSAGE_MAX_LENGTH	300	//ÊäÈëÌõÉÏÏÔÊ¾µÄ×î³¤³¤¶È£¬ÒÔ×Ö·û¼Æ
+#define MESSAGE_MAX_LENGTH	300	//è¾“å…¥æ¡ä¸Šæ˜¾ç¤ºçš„æœ€é•¿é•¿åº¦ï¼Œä»¥å­—ç¬¦è®¡
 
-/* ½«ÊäÈëÌõÉÏÏÔÊ¾µÄÄÚÈÝ·ÖÎªÒÔÏÂ¼¸Àà */
+/* å°†è¾“å…¥æ¡ä¸Šæ˜¾ç¤ºçš„å†…å®¹åˆ†ä¸ºä»¥ä¸‹å‡ ç±» */
 #define MESSAGE_TYPE_COUNT	7
 
 typedef enum {
-    MSG_TIPS,			//ÌáÊ¾ÎÄ±¾
-    MSG_INPUT,			//ÓÃ»§µÄÊäÈë
-    MSG_INDEX,			//ºòÑ¡×ÖÇ°ÃæµÄÐòºÅ
-    MSG_FIRSTCAND,		//µÚÒ»¸öºòÑ¡×Ö
-    MSG_USERPHR,		//ÓÃ»§´Ê×é
-    MSG_CODE,			//ÏÔÊ¾µÄ±àÂë
-    MSG_OTHER,			//ÆäËüÎÄ±¾
+    MSG_TIPS,			//æç¤ºæ–‡æœ¬
+    MSG_INPUT,			//ç”¨æˆ·çš„è¾“å…¥
+    MSG_INDEX,			//å€™é€‰å­—å‰é¢çš„åºå·
+    MSG_FIRSTCAND,		//ç¬¬ä¸€ä¸ªå€™é€‰å­—
+    MSG_USERPHR,		//ç”¨æˆ·è¯ç»„
+    MSG_CODE,			//æ˜¾ç¤ºçš„ç¼–ç 
+    MSG_OTHER,			//å…¶å®ƒæ–‡æœ¬
 #ifdef _ENABLE_RECORDING
-    MSG_RECORDING		//¼ÇÂ¼ÌáÊ¾
+    MSG_RECORDING		//è®°å½•æç¤º
 #endif
 } MSG_TYPE;
 

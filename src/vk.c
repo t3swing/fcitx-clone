@@ -57,7 +57,7 @@ unsigned char   iVKCount = 0;
 VKS             vks[VK_MAX];
 char            vkTable[VK_NUMBERS + 1] = "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./";
 
-char            strCharTable[] = "`~1!2@3#4$5%6^7&8*9(0)-_=+[{]}\\|;:'\",<.>/?";	//ÓÃÓÚ×ª»»ÉÏ/ÏÂµµ¼ü
+char            strCharTable[] = "`~1!2@3#4$5%6^7&8*9(0)-_=+[{]}\\|;:'\",<.>/?";	//ç”¨äºè½¬æ¢ä¸Š/ä¸‹æ¡£é”®
 
 Bool            bShiftPressed = False;
 Bool            bVKCaps = False;
@@ -153,15 +153,15 @@ void DrawVKWindow (void)
     }
     XPutImage (dpy, VKWindow, VKWindowColor.backGC, pVKLogo, 0, 0, 0, 0, VK_WINDOW_WIDTH, VK_WINDOW_HEIGHT);
 
-    /* ÏÔÊ¾×Ö·û */
-    /* Ãû³Æ */
+    /* æ˜¾ç¤ºå­—ç¬¦ */
+    /* åç§° */
 #ifdef _USE_XFT
     OutputString (VKWindow, xftVKWindowFont, vks[iCurrentVK].strName, (VK_WINDOW_WIDTH - StringWidth (vks[iCurrentVK].strName, xftVKWindowFont)) / 2, iVKWindowFontSize + 6, VKWindowFontColor.color);
 #else
     OutputString (VKWindow, fontSetVKWindow, vks[iCurrentVK].strName, (VK_WINDOW_WIDTH - StringWidth (vks[iCurrentVK].strName, fontSetVKWindow)) / 2, iVKWindowFontSize + 6, VKWindowFontColor.gc);
 #endif
 
-    /* µÚÒ»ÅÅ */
+    /* ç¬¬ä¸€æ’ */
     iPos = 13;
     for (i = 0; i < 13; i++) {
 #ifdef _USE_XFT
@@ -174,7 +174,7 @@ void DrawVKWindow (void)
 	iPos += 24;
 #endif
     }
-    /* µÚ¶şÅÅ */
+    /* ç¬¬äºŒæ’ */
     iPos = 48;
     for (i = 13; i < 26; i++) {
 #ifdef _USE_XFT
@@ -187,7 +187,7 @@ void DrawVKWindow (void)
 	iPos += 24;
 #endif
     }
-    /* µÚÈıÅÅ */
+    /* ç¬¬ä¸‰æ’ */
     iPos = 55;
     for (i = 26; i < 37; i++) {
 #ifdef _USE_XFT
@@ -203,7 +203,7 @@ void DrawVKWindow (void)
     if (bVKCaps)
 	Draw3DEffect (VKWindow, 5, 85, 38, 25, _3D_LOWER);
 
-    /* µÚËÄÅÅ */
+    /* ç¬¬å››æ’ */
     iPos = 72;
     for (i = 37; i < 47; i++) {
 #ifdef _USE_XFT
@@ -222,7 +222,7 @@ void DrawVKWindow (void)
 }
 
 /*
- * ´¦ÀíÏà¹ØÊó±ê¼ü
+ * å¤„ç†ç›¸å…³é¼ æ ‡é”®
  */
 Bool VKMouseKey (int x, int y)
 {
@@ -239,7 +239,7 @@ Bool VKMouseKey (int x, int y)
 
 	strKey[1] = '\0';
 	pstr = strKey;
-	if (y >= 28 && y <= 55) {	//µÚÒ»ĞĞ
+	if (y >= 28 && y <= 55) {	//ç¬¬ä¸€è¡Œ
 	    if (x < 4 || x > 348)
 		return False;
 
@@ -250,7 +250,7 @@ Bool VKMouseKey (int x, int y)
 	    }
 	    else {
 		iIndex = x / 24;
-		if (iIndex > 12)	//±ÜÃâ³öÏÖ´íÎó
+		if (iIndex > 12)	//é¿å…å‡ºç°é”™è¯¯
 		    iIndex = 12;
 		pstr = vks[iCurrentVK].strSymbol[iIndex][bShiftPressed ^ bVKCaps];
 		if (bShiftPressed) {
@@ -259,7 +259,7 @@ Bool VKMouseKey (int x, int y)
 		}
 	    }
 	}
-	else if (y >= 56 && y <= 83) {	//µÚ¶şĞĞ
+	else if (y >= 56 && y <= 83) {	//ç¬¬äºŒè¡Œ
 	    if (x < 4 || x > 350)
 		return False;
 
@@ -276,12 +276,12 @@ Bool VKMouseKey (int x, int y)
 		}
 	    }
 	}
-	else if (y >= 84 && y <= 111) {	//µÚÈıĞĞ
+	else if (y >= 84 && y <= 111) {	//ç¬¬ä¸‰è¡Œ
 	    if (x < 4 || x > 350)
 		return False;
 
 	    if (x >= 4 && x < 44) {	//Caps
-		//¸Ä±ä´óĞ´¼ü×´Ì¬
+		//æ”¹å˜å¤§å†™é”®çŠ¶æ€
 		bVKCaps = !bVKCaps;
 		pstr = (char *) NULL;
 		DrawVKWindow ();
@@ -297,12 +297,12 @@ Bool VKMouseKey (int x, int y)
 		}
 	    }
 	}
-	else if (y >= 112 && y <= 139) {	//µÚËÄĞĞ
+	else if (y >= 112 && y <= 139) {	//ç¬¬å››è¡Œ
 	    if (x < 4 || x > 302)
 		return False;
 
 	    if (x >= 4 && x < 62) {	//SHIFT
-		//¸Ä±äSHIFT¼ü×´Ì¬
+		//æ”¹å˜SHIFTé”®çŠ¶æ€
 		bShiftPressed = !bShiftPressed;
 		pstr = (char *) NULL;
 		DrawVKWindow ();
@@ -316,9 +316,9 @@ Bool VKMouseKey (int x, int y)
 		}
 	    }
 	}
-	else if (y >= 140 && y <= 162) {	//µÚÎåĞĞ         
+	else if (y >= 140 && y <= 162) {	//ç¬¬äº”è¡Œ         
 	    if (x >= 4 && x < 38) {	//Ins
-		//¸Ä±äINS¼ü×´Ì¬
+		//æ”¹å˜INSé”®çŠ¶æ€
 		MyIMForwardEvent (connect_id, CurrentIC->id, 106);
 		return True;
 	    }
@@ -326,7 +326,7 @@ Bool VKMouseKey (int x, int y)
 		MyIMForwardEvent (connect_id, CurrentIC->id, 107);
 		return True;
 	    }
-	    else if (x >= 99 && x < 270)	//¿Õ¸ñ
+	    else if (x >= 99 && x < 270)	//ç©ºæ ¼
 		strcpy (strKey, "\xa1\xa1");
 	    else if (x >= 312 && x <= 350) {	//ESC
 		SwitchVK ();
@@ -341,7 +341,7 @@ Bool VKMouseKey (int x, int y)
 	    forwardEvent.connect_id = connect_id;
 	    forwardEvent.icid = CurrentIC->id;
 	    SendHZtoClient (&forwardEvent, pstr);
-	    iHZInputed += (int) (strlen (pstr) / 2);	//´ÖÂÔÍ³¼Æ×ÖÊı
+	    iHZInputed += (int) (strlen (pstr) / 2);	//ç²—ç•¥ç»Ÿè®¡å­—æ•°
 	}
     }
 
@@ -349,7 +349,7 @@ Bool VKMouseKey (int x, int y)
 }
 
 /*
- * ¶ÁÈ¡ĞéÄâ¼üÅÌÓ³ÉäÎÄ¼ş
+ * è¯»å–è™šæ‹Ÿé”®ç›˜æ˜ å°„æ–‡ä»¶
  */
 void LoadVKMapFile (void)
 {
@@ -366,9 +366,6 @@ void LoadVKMapFile (void)
 	vks[j].strName[0] = '\0';
     }
 
-    strcpy (strPath, (char *) getenv ("HOME"));
-    strcat (strPath, "/.fcitx/");
-    strcat (strPath, VK_FILE);
     fp = UserConfigFile(VK_FILE, "rt", NULL);
     if (!fp) {
 	strcpy (strPath, PKGDATADIR "/data/");
@@ -446,7 +443,7 @@ void LoadVKMapFile (void)
 }
 
 /*
- * ¸ù¾İ×Ö·û²éÕÒ·ûºÅ
+ * æ ¹æ®å­—ç¬¦æŸ¥æ‰¾ç¬¦å·
  */
 char           *VKGetSymbol (char cChar)
 {
@@ -463,7 +460,7 @@ char           *VKGetSymbol (char cChar)
 }
 
 /*
- * ÉÏ/ÏÂµµ¼ü×Ö·û×ª»»£¬ÒÔÈ¡´útoupperºÍtolower
+ * ä¸Š/ä¸‹æ¡£é”®å­—ç¬¦è½¬æ¢ï¼Œä»¥å–ä»£toupperå’Œtolower
  */
 int MyToUpper (int iChar)
 {

@@ -35,7 +35,7 @@ typedef enum PARSEPYMODE {
 typedef enum {
     PY_PARSE_INPUT_USER = '0',
     PY_PARSE_INPUT_SYSTEM = ' '
-} PYPARSEINPUTMODE;		//Õâ¸öÖµ²»ÄÜËæÒâĞŞ¸Ä
+} PYPARSEINPUTMODE;		//è¿™ä¸ªå€¼ä¸èƒ½éšæ„ä¿®æ”¹
 
 typedef struct {
     char            strPYParsed[MAX_WORDS_USER_INPUT + 3][MAX_PY_LENGTH + 2];

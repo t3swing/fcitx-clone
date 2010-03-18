@@ -44,7 +44,7 @@
 
 #include "DBus.h"
 
-//ÏÂÃæµÄË³Ğò²»ÄÜµßµ¹
+//ä¸‹é¢çš„é¡ºåºä¸èƒ½é¢ å€’
 #include "next.xpm"
 #include "prev.xpm"
 
@@ -70,18 +70,18 @@ MESSAGE_COLOR   messageColor[MESSAGE_TYPE_COUNT] = {
     {NULL, {0, 0, 0, 0}}
 };
 
-MESSAGE_COLOR   inputWindowLineColor = { NULL, {0, 90 << 8, 160 << 8, 90 << 8} };	//ÊäÈë¿òÖĞµÄÏßÌõÉ«
-XColor          colorArrow = { 0, 255 << 8, 0, 0 };	//¼ıÍ·µÄÑÕÉ«
+MESSAGE_COLOR   inputWindowLineColor = { NULL, {0, 90 << 8, 160 << 8, 90 << 8} };	//è¾“å…¥æ¡†ä¸­çš„çº¿æ¡è‰²
+XColor          colorArrow = { 0, 255 << 8, 0, 0 };	//ç®­å¤´çš„é¢œè‰²
 
 WINDOW_COLOR    inputWindowColor = { NULL, NULL, {0, 240 << 8, 255 << 8, 240 << 8} };
 MESSAGE_COLOR   cursorColor = { NULL, {0, 92 << 8, 210 << 8, 131 << 8} };
 
 // *************************************************************
-MESSAGE         messageUp[32];	//ÊäÈëÌõÉÏ²¿·ÖÏÔÊ¾µÄÄÚÈİ
+MESSAGE         messageUp[32];	//è¾“å…¥æ¡ä¸Šéƒ¨åˆ†æ˜¾ç¤ºçš„å†…å®¹
 uint            uMessageUp = 0;
 
 // *************************************************************
-MESSAGE         messageDown[32];	//ÊäÈëÌõÏÂ²¿·ÖÏÔÊ¾µÄÄÚÈİ
+MESSAGE         messageDown[32];	//è¾“å…¥æ¡ä¸‹éƒ¨åˆ†æ˜¾ç¤ºçš„å†…å®¹
 uint            uMessageDown = 0;
 
 XImage         *pNext = NULL, *pPrev = NULL;
@@ -98,8 +98,8 @@ Bool            bShowCursor = False;
 
 _3D_EFFECT      _3DEffectInputWindow = _3D_LOWER;
 
-//ÕâÁ½¸ö±äÁ¿ÊÇGTK+ OverTheSpot¹â±ê¸úËæµÄÁÙÊ±½â¾ö·½°¸
-/* Issue 11: piaoairy: ÎªÊÊÓ¦generic_config_integer(), ¸ÄINT8 Îªint */
+//è¿™ä¸¤ä¸ªå˜é‡æ˜¯GTK+ OverTheSpotå…‰æ ‡è·Ÿéšçš„ä¸´æ—¶è§£å†³æ–¹æ¡ˆ
+/* Issue 11: piaoairy: ä¸ºé€‚åº”generic_config_integer(), æ”¹INT8 ä¸ºint */
 int		iOffsetX = 0;
 int		iOffsetY = 16;
 
@@ -118,7 +118,7 @@ extern GC       lightGC;
 
 extern Bool     bUseGBKT;
 
-//¼ÆËãËÙ¶È
+//è®¡ç®—é€Ÿåº¦
 extern Bool     bStartRecordType;
 extern Bool     bShowUserSpeed;
 extern Bool     bShowVersion;
@@ -149,9 +149,9 @@ Bool CreateInputWindow (void)
     XTextProperty	tp;
     char		strWindowName[]="Fcitx Input Window";
 
-    //¸ù¾İ´°¿ÚµÄ±³¾°É«À´ÉèÖÃXPMµÄÉ«²Ê
+    //æ ¹æ®çª—å£çš„èƒŒæ™¯è‰²æ¥è®¾ç½®XPMçš„è‰²å½©
     sprintf (strXPMBackColor, ". c #%02x%02x%02x", inputWindowColor.backColor.red >> 8, inputWindowColor.backColor.green >> 8, inputWindowColor.backColor.blue >> 8);
-    //ÉèÖÃ¼ıÍ·µÄÑÕÉ«
+    //è®¾ç½®ç®­å¤´çš„é¢œè‰²
     sprintf (strXPMColor, "# c #%02x%02x%02x", colorArrow.red >> 8, colorArrow.green >> 8, colorArrow.blue >> 8);
 
     CalculateInputWindowHeight ();
@@ -184,7 +184,7 @@ Bool CreateInputWindow (void)
 }
 
 /*
- * ¸ù¾İ×ÖÌåµÄ´óĞ¡À´µ÷Õû´°¿ÚµÄ¸ß¶È
+ * æ ¹æ®å­—ä½“çš„å¤§å°æ¥è°ƒæ•´çª—å£çš„é«˜åº¦
  */
 void CalculateInputWindowHeight (void)
 {
@@ -243,7 +243,7 @@ void InitInputWindowColor (void)
     if (cursorColor.gc)
 	XFreeGC (dpy, cursorColor.gc);
     cursorColor.gc = XCreateGC (dpy, inputWindow, 0, &values);
-    //ÎªÁË»­ÂÌÉ«¹â±ê
+    //ä¸ºäº†ç”»ç»¿è‰²å…‰æ ‡
     if (XAllocColor (dpy, DefaultColormap (dpy, DefaultScreen (dpy)), &cursorColor.color))
 	iPixel = cursorColor.color.pixel;
     else
@@ -289,7 +289,7 @@ void CalInputWindow (void)
 	strcat (messageDown[0].strMsg, strXModifiers);
 	messageDown[0].type = MSG_CODE;
 #else
-	//ÏÔÊ¾´ò×ÖËÙ¶È
+	//æ˜¾ç¤ºæ‰“å­—é€Ÿåº¦
 	if (bStartRecordType && bShowUserSpeed) {
 	    double          timePassed;
 
@@ -298,15 +298,15 @@ void CalInputWindow (void)
 		timePassed = 1.0;
 
 	    uMessageDown = 6;
-	    strcpy (messageDown[0].strMsg, "´ò×ÖËÙ¶È£º");
+	    strcpy (messageDown[0].strMsg, "æ‰“å­—é€Ÿåº¦ï¼š");
 	    messageDown[0].type = MSG_OTHER;
 	    sprintf (messageDown[1].strMsg, "%d", (int) (iHZInputed * 60 / timePassed));
 	    messageDown[1].type = MSG_CODE;
-	    strcpy (messageDown[2].strMsg, "/·Ö  ÓÃÊ±£º");
+	    strcpy (messageDown[2].strMsg, "/åˆ†  ç”¨æ—¶ï¼š");
 	    messageDown[2].type = MSG_OTHER;
 	    sprintf (messageDown[3].strMsg, "%d", (int) timePassed);
 	    messageDown[3].type = MSG_CODE;
-	    strcpy (messageDown[4].strMsg, "Ãë  ×ÖÊı£º");
+	    strcpy (messageDown[4].strMsg, "ç§’  å­—æ•°ï¼š");
 	    messageDown[4].type = MSG_OTHER;
 	    sprintf (messageDown[5].strMsg, "%u", iHZInputed);
 	    messageDown[5].type = MSG_CODE;
@@ -320,7 +320,7 @@ void CalInputWindow (void)
 	    if ( messageUp[uMessageUp-1].type==MSG_RECORDING )
 	        uMessageUp --;
 	}
-	strcpy(messageUp[uMessageUp].strMsg,"  [¼ÇÂ¼Ä£Ê½]");
+	strcpy(messageUp[uMessageUp].strMsg,"  [è®°å½•æ¨¡å¼]");
 	messageUp[uMessageUp].type = MSG_RECORDING;
 	uMessageUp ++;
     }
@@ -332,7 +332,7 @@ void CalInputWindow (void)
 	p1 = messageUp[i].strMsg;
 	while (*p1) {
 	    p2 = strTemp;
-	    if (isprint (*p1))	//Ê¹ÓÃÖĞÎÄ×ÖÌå
+	    if (isprint (*p1))	//ä½¿ç”¨ä¸­æ–‡å­—ä½“
 		bEn = True;
 	    else {
 		*p2++ = *p1++;
@@ -372,7 +372,7 @@ void CalInputWindow (void)
 	p1 = messageDown[i].strMsg;
 	while (*p1) {
 	    p2 = strTemp;
-	    if (isprint (*p1))	//Ê¹ÓÃÖĞÎÄ×ÖÌå
+	    if (isprint (*p1))	//ä½¿ç”¨ä¸­æ–‡å­—ä½“
 		bEn = True;
 	    else {
 		*p2++ = *p1++;
@@ -464,7 +464,7 @@ void DrawInputWindow(void)
 }
 
 /*
- * ÔÚÊäÈë´°µÄÉÏ²¿·ÖÏÔÊ¾ĞÅÏ¢
+ * åœ¨è¾“å…¥çª—çš„ä¸Šéƒ¨åˆ†æ˜¾ç¤ºä¿¡æ¯
  */
 void DisplayMessageUp (void)
 {
@@ -491,7 +491,7 @@ void DisplayMessageUp (void)
 	iPos = 0;
 	while (*p1) {
 	    p2 = strTemp;
-	    if (isprint (*p1))	//Ê¹ÓÃÖĞÎÄ×ÖÌå
+	    if (isprint (*p1))	//ä½¿ç”¨ä¸­æ–‡å­—ä½“
 		bEn = True;
 	    else {
 		*p2++ = *p1++;
@@ -548,7 +548,7 @@ void DisplayMessageUp (void)
 		p1 = strText;
 		while (*p1) {
 		    p2 = strTemp;
-		    if (isprint (*p1))	//Ê¹ÓÃÖĞÎÄ×ÖÌå
+		    if (isprint (*p1))	//ä½¿ç”¨ä¸­æ–‡å­—ä½“
 			bEn = True;
 		    else {
 			*p2++ = *p1++;
@@ -589,7 +589,7 @@ void DisplayMessageUp (void)
 }
 
 /*
- * ÔÚÊäÈë´°µÄÏÂ²¿·ÖÏÔÊ¾ĞÅÏ¢
+ * åœ¨è¾“å…¥çª—çš„ä¸‹éƒ¨åˆ†æ˜¾ç¤ºä¿¡æ¯
  */
 void DisplayMessageDown (void)
 {
@@ -606,14 +606,14 @@ void DisplayMessageDown (void)
 
     iPos = INPUTWND_START_POS_DOWN;
     for (i = 0; i < uMessageDown; i++) {
-	//½èÓÃiInputWindowDownWidth×÷ÎªÒ»¸öÁÙÊ±±äÁ¿
+	//å€Ÿç”¨iInputWindowDownWidthä½œä¸ºä¸€ä¸ªä¸´æ—¶å˜é‡
 
 #ifdef _USE_XFT
 	p1 = messageDown[i].strMsg;
 
 	while (*p1) {
 	    p2 = strTemp;
-	    if (isprint (*p1))	//Ê¹ÓÃÖĞÎÄ×ÖÌå
+	    if (isprint (*p1))	//ä½¿ç”¨ä¸­æ–‡å­—ä½“
 		bEn = True;
 	    else {
 		*p2++ = *p1++;

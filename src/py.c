@@ -39,6 +39,7 @@
 #include "PYFA.h"
 #include "pyParser.h"
 #include "sp.h"
+#include "utf8.h"
 
 int             iPYFACount;
 PYFA           *PYFAList;
@@ -77,7 +78,7 @@ INT8            iOrderCount = 0;
 INT8            iNewFreqCount = 0;
 
 INT8            iYCDZ = 0;
-char            cPYYCDZ[3] = "[]";	//ÒÔ´Ê¶¨×Ö
+char            cPYYCDZ[3] = "[]";	//ä»¥è¯å®šå­—
 
 HOTKEYS         hkPYAddFreq[HOT_KEY_COUNT] = { CTRL_8, 0 };
 Bool            bIsPYAddFreq = False;
@@ -86,7 +87,7 @@ Bool            bIsPYDelFreq = False;
 HOTKEYS         hkPYDelUserPhr[HOT_KEY_COUNT] = { CTRL_DELETE, 0 };
 Bool            bIsPYDelUserPhr = False;
 
-Bool            bFullPY = False;	//¸Ã±äÁ¿Ö¸Ê¾Ö»ÒªÈ«Æ´ÊäÈë(²»Ê¹ÓÃ¼òÆ´)
+Bool            bFullPY = False;	//è¯¥å˜é‡æŒ‡ç¤ºåªè¦å…¨æ‹¼è¾“å…¥(ä¸ä½¿ç”¨ç®€æ‹¼)
 
 Bool		isSavingPYUserPhrase = False;
 Bool		isSavingPYIndex = False;
@@ -154,8 +155,10 @@ Bool LoadPYBaseDict (void)
 	fread (&(PYFAList[i].iBase), sizeof (int), 1, fp);
 	PYFAList[i].pyBase = (PyBase *) malloc (sizeof (PyBase) * PYFAList[i].iBase);
 	for (j = 0; j < PYFAList[i].iBase; j++) {
-	    fread (PYFAList[i].pyBase[j].strHZ, sizeof (char) * 2, 1, fp);
-	    PYFAList[i].pyBase[j].strHZ[2] = '\0';
+		INT8 len;
+	    fread (&len, sizeof (INT8) , 1, fp);
+	    fread (PYFAList[i].pyBase[j].strHZ, sizeof (char) * len, 1, fp);
+	    PYFAList[i].pyBase[j].strHZ[len] = '\0';
 	    fread (&iLen, sizeof (int), 1, fp);
 	    PYFAList[i].pyBase[j].iIndex = iLen;
 	    PYFAList[i].pyBase[j].iHit = 0;
@@ -182,11 +185,11 @@ Bool LoadPYBaseDict (void)
 
 Bool LoadPYOtherDict (void)
 {
-    //ÏÂÃæ¿ªÊ¼¶ÁÏµÍ³´Ê×é
+    //ä¸‹é¢å¼€å§‹è¯»ç³»ç»Ÿè¯ç»„
     FILE           *fp;
     char            strPath[PATH_MAX];
     int             i, j, k, iLen;
-    char            strBase[3];
+    char            strBase[UTF8_MAX_LENGTH + 1];
     PyPhrase       *phrase, *temp;
     uint            iIndex;
     PyFreq         *pyFreqTemp, *pPyFreq;
@@ -210,11 +213,14 @@ Bool LoadPYOtherDict (void)
 	fprintf (stderr, "\nCan not find System Database of Pinyin!\n");
     else {
 	while (!feof (fp)) {
+        INT8 clen;
 	    if (!fread (&i, sizeof (int), 1, fp))
 		break;
-	    if (!fread (strBase, sizeof (char) * 2, 1, fp))
+	    if (!fread (&clen, sizeof (INT8), 1, fp))
 		break;
-	    strBase[2] = '\0';
+	    if (!fread (strBase, sizeof (char) * clen, 1, fp))
+		break;
+	    strBase[clen] = '\0';
 	    if (!fread (&k, sizeof (int), 1, fp))
 		break;
 
@@ -230,6 +236,7 @@ Bool LoadPYOtherDict (void)
 		PYFAList[i].pyBase[j].phrase[k].strMap = (char *) malloc (sizeof (char) * (iLen + 1));
 		fread (PYFAList[i].pyBase[j].phrase[k].strMap, sizeof (char) * iLen, 1, fp);
 		PYFAList[i].pyBase[j].phrase[k].strMap[iLen] = '\0';
+		fread (&iLen, sizeof (int), 1, fp);
 		PYFAList[i].pyBase[j].phrase[k].strPhrase = (char *) malloc (sizeof (char) * (iLen + 1));
 		fread (PYFAList[i].pyBase[j].phrase[k].strPhrase, sizeof (char) * iLen, 1, fp);
 		PYFAList[i].pyBase[j].phrase[k].strPhrase[iLen] = '\0';
@@ -245,15 +252,18 @@ Bool LoadPYOtherDict (void)
 	iOrigCounter = iCounter;
     }
 
-    //ÏÂÃæ¿ªÊ¼¶ÁÈ¡ÓÃ»§´Ê¿â
+    //ä¸‹é¢å¼€å§‹è¯»å–ç”¨æˆ·è¯åº“
     fp = UserConfigFile (PY_USERPHRASE_FILE, "rb", NULL);
     if (fp) {
 	while (!feof (fp)) {
+		INT8 clen;
 	    if (!fread (&i, sizeof (int), 1, fp))
 		break;
-	    if (!fread (strBase, sizeof (char) * 2, 1, fp))
+	    if (!fread (&clen, sizeof (INT8), 1, fp))
 		break;
-	    strBase[2] = '\0';
+	    if (!fread (strBase, sizeof (char) * clen, 1, fp))
+		break;
+	    strBase[clen] = '\0';
 	    if (!fread (&k, sizeof (int), 1, fp))
 		break;
 
@@ -269,6 +279,7 @@ Bool LoadPYOtherDict (void)
 		phrase->strMap = (char *) malloc (sizeof (char) * (iLen + 1));
 		fread (phrase->strMap, sizeof (char) * iLen, 1, fp);
 		phrase->strMap[iLen] = '\0';
+		fread (&iLen, sizeof (int), 1, fp);
 		phrase->strPhrase = (char *) malloc (sizeof (char) * (iLen + 1));
 		fread (phrase->strPhrase, sizeof (char) * iLen, 1, fp);
 		phrase->strPhrase[iLen] = '\0';
@@ -290,7 +301,7 @@ Bool LoadPYOtherDict (void)
 	fclose (fp);
     }
 
-    //ÏÂÃæ¶ÁÈ¡Ë÷ÒıÎÄ¼ş
+    //ä¸‹é¢è¯»å–ç´¢å¼•æ–‡ä»¶
     fp = UserConfigFile (PY_INDEX_FILE, "rb" ,NULL);
     if (fp) {
 	fread (&iLen, sizeof (uint), 1, fp);
@@ -322,7 +333,7 @@ Bool LoadPYOtherDict (void)
 	fclose (fp);
     }
 
-    //ÏÂÃæ¶ÁÈ¡³£ÓÃ´Ê±í
+    //ä¸‹é¢è¯»å–å¸¸ç”¨è¯è¡¨
     fp = UserConfigFile (PY_FREQ_FILE, "rb", NULL);
     if (fp) {
 	pPyFreq = pyFreq;
@@ -343,8 +354,10 @@ Bool LoadPYOtherDict (void)
 	    pHZ = pyFreqTemp->HZList;
 
 	    for (k = 0; k < pyFreqTemp->iCount; k++) {
+		INT8 slen;
 		HZTemp = (HZ *) malloc (sizeof (HZ));
-		fread (HZTemp->strHZ, sizeof (char) * 2, 1, fp);
+		fread (&slen, sizeof (INT8), 1, fp);
+		fread (HZTemp->strHZ, sizeof (char) * slen, 1, fp);
 		HZTemp->strHZ[2] = '\0';
 		fread (&j, sizeof (int), 1, fp);
 		HZTemp->iPYFA = j;
@@ -364,7 +377,7 @@ Bool LoadPYOtherDict (void)
 	fclose (fp);
     }
 
-    //ÏÂÃæ¶ÁÈ¡ÌØÊâ·ûºÅ±í
+    //ä¸‹é¢è¯»å–ç‰¹æ®Šç¬¦å·è¡¨
     fp = UserConfigFile (PY_SYMBOL_FILE, "rb", NULL);
     if (!fp) {
 	strcpy (strPath, PKGDATADIR "/data/");
@@ -382,7 +395,7 @@ Bool LoadPYOtherDict (void)
     }
     if (fp) {
 	char            strTxt[256];
-	char            str1[MAX_PY_PHRASE_LENGTH * MAX_PY_LENGTH + 1], str2[MAX_PY_PHRASE_LENGTH * 2 + 1];
+	char            str1[MAX_PY_PHRASE_LENGTH * MAX_PY_LENGTH + 1], str2[MAX_PY_PHRASE_LENGTH * UTF8_MAX_LENGTH + 1];
 	char           *str;
 
 	for (;;) {
@@ -400,7 +413,7 @@ Bool LoadPYOtherDict (void)
 		continue;
 	    sscanf (str, "%s %s", str1, str2);
 
-	    //Ê×ÏÈ¿´¿´str1ÊÇ·ñÒÑ¾­ÔÚÁĞ±íÖĞ
+	    //é¦–å…ˆçœ‹çœ‹str1æ˜¯å¦å·²ç»åœ¨åˆ—è¡¨ä¸­
 	    pyFreqTemp = pyFreq->next;
 	    pPyFreq = pyFreq;
 	    while (pyFreqTemp) {
@@ -422,7 +435,7 @@ Bool LoadPYOtherDict (void)
 		iPYFreqCount++;
 	    }
 	    else {
-		if (!pyFreqTemp->bIsSym)	//²»ÄÜÓë³£ÓÃ×ÖµÄ±àÂëÏàÍ¬
+		if (!pyFreqTemp->bIsSym)	//ä¸èƒ½ä¸å¸¸ç”¨å­—çš„ç¼–ç ç›¸åŒ
 		    continue;
 	    }
 
@@ -455,7 +468,7 @@ void ResetPYStatus ()
     bIsPYDelFreq = False;
     bIsPYDelUserPhr = False;
 
-    findMap.iMode = PARSE_SINGLEHZ;	//Ö»Òª²»ÊÇPARSE_ERROR¾Í¿ÉÒÔ
+    findMap.iMode = PARSE_SINGLEHZ;	//åªè¦ä¸æ˜¯PARSE_ERRORå°±å¯ä»¥
 }
 
 int GetBaseIndex (int iPYFA, char *strBase)
@@ -509,7 +522,7 @@ INPUT_RETURN_VALUE DoPYInput (int iKey)
 
 	    val = 0;
 	    for (i = 0; i < iPYSelected; i++)
-		val += strlen (pySelected[i].strHZ) / 2;
+		val += utf8_strlen (pySelected[i].strHZ);
 
 	    if (findMap.iHZCount > (MAX_WORDS_USER_INPUT - val)) {
 		UpdateFindString ();
@@ -610,7 +623,7 @@ INPUT_RETURN_VALUE DoPYInput (int iKey)
 
 		if (!iCandWordCount) {
 		    if (iCodeInputCount == 1 && strCodeInput[0] == ';' && bSP) {
-			strcpy (strStringGet, "£»");
+			strcpy (strStringGet, "ï¼›");
 			return IRV_PUNC;
 		    }
 		    return IRV_TO_PROCESS;
@@ -647,7 +660,7 @@ INPUT_RETURN_VALUE DoPYInput (int iKey)
 		bIsDoInputOnly = True;
 
 		uMessageUp = 1;
-		strcpy (messageUp[0].strMsg, "Ñ¡Ôñ±êºÅµÄÓÃ»§´Ê×é½«±»É¾³ı(ESCÈ¡Ïû)");
+		strcpy (messageUp[0].strMsg, "é€‰æ‹©æ ‡å·çš„ç”¨æˆ·è¯ç»„å°†è¢«åˆ é™¤(ESCå–æ¶ˆ)");
 		messageUp[0].type = MSG_TIPS;
 		bShowCursor = False;
 
@@ -660,7 +673,7 @@ INPUT_RETURN_VALUE DoPYInput (int iKey)
 		bIsDoInputOnly = True;
 
 		uMessageUp = 1;
-		sprintf (messageUp[0].strMsg, "Ñ¡Ôñ±êºÅµÄ×Ö½«½øÈë %s µÄ³£ÓÃ×Ö±í(ESCÈ¡Ïû)", strFindString);
+		sprintf (messageUp[0].strMsg, "é€‰æ‹©æ ‡å·çš„å­—å°†è¿›å…¥ %s çš„å¸¸ç”¨å­—è¡¨(ESCå–æ¶ˆ)", strFindString);
 		messageUp[0].type = MSG_TIPS;
 		bShowCursor = False;
 
@@ -677,9 +690,9 @@ INPUT_RETURN_VALUE DoPYInput (int iKey)
 		if (!val)
 		    return IRV_DO_NOTHING;
 		else if (val == 1)
-		    sprintf (messageUp[0].strMsg, "°´ 1 É¾³ı %s µÄ³£ÓÃ×Ö(ESCÈ¡Ïû)", strFindString);
+		    sprintf (messageUp[0].strMsg, "æŒ‰ 1 åˆ é™¤ %s çš„å¸¸ç”¨å­—(ESCå–æ¶ˆ)", strFindString);
 		else
-		    sprintf (messageUp[0].strMsg, "°´ 1-%d É¾³ı %s µÄ³£ÓÃ×Ö(ESCÈ¡Ïû)", val, strFindString);
+		    sprintf (messageUp[0].strMsg, "æŒ‰ 1-%d åˆ é™¤ %s çš„å¸¸ç”¨å­—(ESCå–æ¶ˆ)", val, strFindString);
 
 		bIsPYDelFreq = True;
 		bIsDoInputOnly = True;
@@ -755,7 +768,7 @@ INPUT_RETURN_VALUE DoPYInput (int iKey)
 	    if (bIsPYAddFreq || bIsPYDelFreq || bIsPYDelUserPhr)
 		return IRV_DO_NOTHING;
 
-	    //ÏÂÃæÊµÏÖÒÔ´Ê¶¨×Ö
+	    //ä¸‹é¢å®ç°ä»¥è¯å®šå­—
 	    if (iCandWordCount) {
 		if (iKey == cPYYCDZ[0] || iKey == cPYYCDZ[1]) {
 		    if (PYCandWords[iYCDZ].iWhich == PY_CAND_USERPHRASE || PYCandWords[iYCDZ].iWhich == PY_CAND_SYMPHRASE) {
@@ -842,7 +855,7 @@ INPUT_RETURN_VALUE DoPYInput (int iKey)
 }
 
 /*
- * ±¾º¯Êı¸ù¾İµ±Ç°²åÈëµã¼ÆËã¹â±êµÄÊµ¼ÊÎ»ÖÃ
+ * æœ¬å‡½æ•°æ ¹æ®å½“å‰æ’å…¥ç‚¹è®¡ç®—å…‰æ ‡çš„å®é™…ä½ç½®
  */
 void CalculateCursorPosition (void)
 {
@@ -870,7 +883,7 @@ void CalculateCursorPosition (void)
 }
 
 /*
- * ÓÉÓÚÆ´ÒôµÄ±à¼­¹¦ÄÜĞŞ¸ÄÁËstrFindString£¬±ØĞë±£Ö¤strCodeInputÓëÓÃ»§µÄÊäÈëÒ»ÖÂ
+ * ç”±äºæ‹¼éŸ³çš„ç¼–è¾‘åŠŸèƒ½ä¿®æ”¹äº†strFindStringï¼Œå¿…é¡»ä¿è¯strCodeInputä¸ç”¨æˆ·çš„è¾“å…¥ä¸€è‡´
  */
 void UpdateCodeInputPY (void)
 {
@@ -951,7 +964,7 @@ INPUT_RETURN_VALUE PYGetCandWords (SEARCH_MODE mode)
 
 	PYResetFlags ();
 
-	//ÅĞ¶ÏÊÇ²»ÊÇÒªÊäÈë³£ÓÃ×Ö»ò·ûºÅ
+	//åˆ¤æ–­æ˜¯ä¸æ˜¯è¦è¾“å…¥å¸¸ç”¨å­—æˆ–ç¬¦å·
 	pCurFreq = pyFreq->next;
 	for (iVal = 0; iVal < iPYFreqCount; iVal++) {
 	    if (!strcmp (strFindString, pCurFreq->strPY))
@@ -977,7 +990,7 @@ INPUT_RETURN_VALUE PYGetCandWords (SEARCH_MODE mode)
 		return IRV_DO_NOTHING;
 
 	    iCurrentCandPage--;
-	    //ĞèÒª½«Ä¿Ç°µÄºòÑ¡´ÊµÄ±êÖ¾ÖØÖÃ
+	    //éœ€è¦å°†ç›®å‰çš„å€™é€‰è¯çš„æ ‡å¿—é‡ç½®
 	    PYSetCandWordsFlag (False);
 	}
 
@@ -1037,20 +1050,20 @@ void PYCreateCandString (void)
 	else {
 	    pPhrase = NULL;
 	    switch (PYCandWords[iVal].iWhich) {
-	    case PY_CAND_BASE:	//ÊÇÏµÍ³µ¥×Ö
+	    case PY_CAND_BASE:	//æ˜¯ç³»ç»Ÿå•å­—
 		pBase = PYFAList[PYCandWords[iVal].cand.base.iPYFA].pyBase[PYCandWords[iVal].cand.base.iBase].strHZ;
 		break;
-	    case PY_CAND_USERPHRASE:	//ÊÇÓÃ»§´Ê×é
+	    case PY_CAND_USERPHRASE:	//æ˜¯ç”¨æˆ·è¯ç»„
 		iType = MSG_USERPHR;
-	    case PY_CAND_SYMPHRASE:	//ÊÇÏµÍ³´Ê×é
+	    case PY_CAND_SYMPHRASE:	//æ˜¯ç³»ç»Ÿè¯ç»„
 		pBase = PYFAList[PYCandWords[iVal].cand.phrase.iPYFA].pyBase[PYCandWords[iVal].cand.phrase.iBase].strHZ;
 		pPhrase = PYCandWords[iVal].cand.phrase.phrase->strPhrase;
 		break;
-	    case PY_CAND_FREQ:	//ÊÇ³£ÓÃ×Ö
+	    case PY_CAND_FREQ:	//æ˜¯å¸¸ç”¨å­—
 		pBase = PYCandWords[iVal].cand.freq.hz->strHZ;
 		iType = MSG_CODE;
 		break;
-	    case PY_CAND_SYMBOL:	//ÊÇÌØÊâ·ûºÅ
+	    case PY_CAND_SYMBOL:	//æ˜¯ç‰¹æ®Šç¬¦å·
 		pBase = PYCandWords[iVal].cand.freq.hz->strHZ;
 		break;
 	    }
@@ -1079,18 +1092,18 @@ void PYGetCandText (int iIndex, char *strText)
 	pPhrase = NULL;
 
 	switch (PYCandWords[iIndex].iWhich) {
-	case PY_CAND_BASE:	//ÊÇÏµÍ³µ¥×Ö
+	case PY_CAND_BASE:	//æ˜¯ç³»ç»Ÿå•å­—
 	    pBase = PYFAList[PYCandWords[iIndex].cand.base.iPYFA].pyBase[PYCandWords[iIndex].cand.base.iBase].strHZ;
 	    break;
-	case PY_CAND_USERPHRASE:	//ÊÇÓÃ»§´Ê×é
-	case PY_CAND_SYMPHRASE:	//ÊÇÏµÍ³´Ê×é
+	case PY_CAND_USERPHRASE:	//æ˜¯ç”¨æˆ·è¯ç»„
+	case PY_CAND_SYMPHRASE:	//æ˜¯ç³»ç»Ÿè¯ç»„
 	    pBase = PYFAList[PYCandWords[iIndex].cand.phrase.iPYFA].pyBase[PYCandWords[iIndex].cand.phrase.iBase].strHZ;
 	    pPhrase = PYCandWords[iIndex].cand.phrase.phrase->strPhrase;
 	    break;
-	case PY_CAND_FREQ:	//ÊÇ³£ÓÃ×Ö
+	case PY_CAND_FREQ:	//æ˜¯å¸¸ç”¨å­—
 	    pBase = PYCandWords[iIndex].cand.freq.hz->strHZ;
 	    break;
-	case PY_CAND_SYMBOL:	//ÊÇÌØÊâ·ûºÅ
+	case PY_CAND_SYMBOL:	//æ˜¯ç‰¹æ®Šç¬¦å·
 	    pBase = PYCandWords[iIndex].cand.freq.hz->strHZ;
 	    break;
 	}
@@ -1128,8 +1141,8 @@ void PYSetCandWordFlag (int iIndex, Bool flag)
 }
 
 /*
- * ¸ù¾İÓÃ»§µÄÂ¼Èë×Ô¶¯Éú³ÉÒ»¸öºº×Ö×éºÏ
- * ´Ë´¦²ÉÓÃµÄ²ßÂÔÊÇ°´ÕÕÊ¹ÓÃÆµÂÊ×î¸ßµÄ×Ö/´Ê
+ * æ ¹æ®ç”¨æˆ·çš„å½•å…¥è‡ªåŠ¨ç”Ÿæˆä¸€ä¸ªæ±‰å­—ç»„åˆ
+ * æ­¤å¤„é‡‡ç”¨çš„ç­–ç•¥æ˜¯æŒ‰ç…§ä½¿ç”¨é¢‘ç‡æœ€é«˜çš„å­—/è¯
  */
 void PYCreateAuto (void)
 {
@@ -1185,7 +1198,7 @@ void PYCreateAuto (void)
 				    }
 				    else if (strlen (phrase->strMap) <= (findMap.iHZCount - 1) * 2) {
 					if (strlen (phrase->strMap) == strlen (phraseSelected->strMap)) {
-					    //ÏÈ¿´´ÊÆµ£¬Èç¹û´ÊÆµÒ»Ñù£¬ÔÙ×î½üÓÅÏÈ
+					    //å…ˆçœ‹è¯é¢‘ï¼Œå¦‚æœè¯é¢‘ä¸€æ ·ï¼Œå†æœ€è¿‘ä¼˜å…ˆ
 					    if ((phrase->iHit > phraseSelected->iHit) || ((phrase->iHit == phraseSelected->iHit) && (phrase->iIndex > phraseSelected->iIndex))) {
 						baseSelected = &(PYFAList[candPos.iPYFA].pyBase[candPos.iBase]);
 						pPYFA = &PYFAList[candPos.iPYFA];
@@ -1222,7 +1235,7 @@ void PYCreateAuto (void)
 				    }
 				    else if (strlen (PYFAList[candPos.iPYFA].pyBase[candPos.iBase].phrase[candPos.iPhrase].strMap) <= (findMap.iHZCount - 1) * 2) {
 					if (strlen (PYFAList[candPos.iPYFA].pyBase[candPos.iBase].phrase[candPos.iPhrase].strMap) == strlen (phraseSelected->strMap)) {
-					    //ÏÈ¿´´ÊÆµ£¬Èç¹û´ÊÆµÒ»Ñù£¬ÔÙ×î½üÓÅÏÈ
+					    //å…ˆçœ‹è¯é¢‘ï¼Œå¦‚æœè¯é¢‘ä¸€æ ·ï¼Œå†æœ€è¿‘ä¼˜å…ˆ
 					    if ((PYFAList[candPos.iPYFA].pyBase[candPos.iBase].phrase[candPos.iPhrase].iHit > phraseSelected->iHit) ||
 						((PYFAList[candPos.iPYFA].pyBase[candPos.iBase].phrase[candPos.iPhrase].iHit == phraseSelected->iHit) &&
 						 (PYFAList[candPos.iPYFA].pyBase[candPos.iBase].phrase[candPos.iPhrase].iIndex > phraseSelected->iIndex))) {
@@ -1272,7 +1285,7 @@ void PYCreateAuto (void)
 		strcat (strPYAuto, baseSelected->strHZ);
 		strcat (strPYAutoMap, pPYFA->strMap);
 	    }
-	    else {		//³ö´íÁË
+	    else {		//å‡ºé”™äº†
 		strPYAuto[0] = '\0';
 		return;
 	    }
@@ -1281,7 +1294,7 @@ void PYCreateAuto (void)
 }
 
 /*
- * ** ´ÓºóÍùÇ°²éÕÒ
+ * ** ä»åå¾€å‰æŸ¥æ‰¾
  */
 /*void PYCreateAuto (void)
 {
@@ -1332,7 +1345,7 @@ void PYCreateAuto (void)
 			    for (candPos.iPhrase = 0; candPos.iPhrase < PYFAList[candPos.iPYFA].pyBase[candPos.iBase].iUserPhrase; candPos.iPhrase++) {
 				val = CmpMap (phrase->strMap, strMap, &iMatchedLength);
 				if (!val) {
-				    if ( iMatchedLength == (findMap.iHZCount - 1) * 2) //²éÕÒ³É¹¦£¬±íÊ¾´Ê¿âÖĞÒÑ¾­ÓĞÕâ¸öÆ´Òô×éºÏÁË£¬´Ë´¦²»´¦ÀíÕâÖÖÇé¿ö
+				    if ( iMatchedLength == (findMap.iHZCount - 1) * 2) //æŸ¥æ‰¾æˆåŠŸï¼Œè¡¨ç¤ºè¯åº“ä¸­å·²ç»æœ‰è¿™ä¸ªæ‹¼éŸ³ç»„åˆäº†ï¼Œæ­¤å¤„ä¸å¤„ç†è¿™ç§æƒ…å†µ
 					return;
 				    if ( !phraseSelected || phraseSelected->iHit<phrase->iHit) {
 					baseSelected=&(PYFAList[candPos.iPYFA].pyBase[candPos.iBase]);
@@ -1353,7 +1366,7 @@ void PYCreateAuto (void)
 				if (CheckHZCharset (PYFAList[candPos.iPYFA].pyBase[candPos.iBase].phrase[candPos.iPhrase].strPhrase) && CheckHZCharset (PYFAList[candPos.iPYFA].pyBase[candPos.iBase].strHZ)) {
 				    val = CmpMap (PYFAList[candPos.iPYFA].pyBase[candPos.iBase].phrase[candPos.iPhrase].strMap, strMap, &iMatchedLength);
 				    if (!val) {
-					if (iMatchedLength == (findMap.iHZCount - 1) * 2)  //²éÕÒ³É¹¦£¬±íÊ¾´Ê¿âÖĞÒÑ¾­ÓĞÕâ¸öÆ´Òô×éºÏÁË£¬´Ë´¦²»´¦ÀíÕâÖÖÇé¿ö
+					if (iMatchedLength == (findMap.iHZCount - 1) * 2)  //æŸ¥æ‰¾æˆåŠŸï¼Œè¡¨ç¤ºè¯åº“ä¸­å·²ç»æœ‰è¿™ä¸ªæ‹¼éŸ³ç»„åˆäº†ï¼Œæ­¤å¤„ä¸å¤„ç†è¿™ç§æƒ…å†µ
 					    return;
 					if ( !phraseSelected || phraseSelected->iHit<PYFAList[candPos.iPYFA].pyBase[candPos.iBase].phrase[candPos.iPhrase].iHit) {
 					    baseSelected=&(PYFAList[candPos.iPYFA].pyBase[candPos.iBase]);
@@ -1367,7 +1380,7 @@ void PYCreateAuto (void)
 		    }
 		}
 
-		if (baseSelected) {   //ÒòÎªÊÇÄæĞò²éÕÒµÄ£¬Òò´ËĞèÒªµ¹¹ıÀ´
+		if (baseSelected) {   //å› ä¸ºæ˜¯é€†åºæŸ¥æ‰¾çš„ï¼Œå› æ­¤éœ€è¦å€’è¿‡æ¥
 		    strcpy (strAutoTemp, baseSelected->strHZ);
 		    strcat (strAutoTemp, phraseSelected->strPhrase);
 		    strcat (strAutoTemp, strPYAuto);
@@ -1399,7 +1412,7 @@ void PYCreateAuto (void)
 			}
 		    }
 
-		    if (baseSelected) {   //ÒòÎªÊÇÄæĞò²éÕÒµÄ£¬Òò´ËĞèÒªµ¹¹ıÀ´
+		    if (baseSelected) {   //å› ä¸ºæ˜¯é€†åºæŸ¥æ‰¾çš„ï¼Œå› æ­¤éœ€è¦å€’è¿‡æ¥
 			strcpy (strAutoTemp, baseSelected->strHZ);
 			strcat (strAutoTemp, strPYAuto);
 			strcpy (strPYAuto, strAutoTemp);
@@ -1408,7 +1421,7 @@ void PYCreateAuto (void)
 			strcat (strAutoMapTemp, strPYAutoMap);
 			strcpy (strPYAutoMap, strAutoMapTemp);
 		    }
-		    else {		//³ö´íÁË
+		    else {		//å‡ºé”™äº†
 			strPYAuto[0] = '\0';
 			return;
 		    }
@@ -1425,7 +1438,7 @@ char           *PYGetCandWord (int iIndex)
     uint           *pIndex = NULL;
     Bool            bAddNewPhrase = True;
     int             i;
-    char            strHZString[MAX_WORDS_USER_INPUT * 2 + 1];
+    char            strHZString[MAX_WORDS_USER_INPUT * UTF8_MAX_LENGTH + 1];
     int             iLen;
 
     if (!iCandWordCount)
@@ -1438,15 +1451,15 @@ char           *PYGetCandWord (int iIndex)
 	pBaseMap = strPYAutoMap;
 	bAddNewPhrase = bPYSaveAutoAsPhrase;
 	break;
-    case PY_CAND_BASE:		//ÊÇÏµÍ³µ¥×Ö
+    case PY_CAND_BASE:		//æ˜¯ç³»ç»Ÿå•å­—
 	pBase = PYFAList[PYCandWords[iIndex].cand.base.iPYFA].pyBase[PYCandWords[iIndex].cand.base.iBase].strHZ;
 	pBaseMap = PYFAList[PYCandWords[iIndex].cand.base.iPYFA].strMap;
 	pIndex = &(PYFAList[PYCandWords[iIndex].cand.base.iPYFA].pyBase[PYCandWords[iIndex].cand.base.iBase].iIndex);
 	PYFAList[PYCandWords[iIndex].cand.base.iPYFA].pyBase[PYCandWords[iIndex].cand.base.iBase].iHit++;
 	iOrderCount++;
 	break;
-    case PY_CAND_SYMPHRASE:	//ÊÇÏµÍ³´Ê×é
-    case PY_CAND_USERPHRASE:	//ÊÇÓÃ»§´Ê×é
+    case PY_CAND_SYMPHRASE:	//æ˜¯ç³»ç»Ÿè¯ç»„
+    case PY_CAND_USERPHRASE:	//æ˜¯ç”¨æˆ·è¯ç»„
 	pBase = PYFAList[PYCandWords[iIndex].cand.phrase.iPYFA].pyBase[PYCandWords[iIndex].cand.phrase.iBase].strHZ;
 	pBaseMap = PYFAList[PYCandWords[iIndex].cand.phrase.iPYFA].strMap;
 	pPhrase = PYCandWords[iIndex].cand.phrase.phrase->strPhrase;
@@ -1455,14 +1468,14 @@ char           *PYGetCandWord (int iIndex)
 	PYCandWords[iIndex].cand.phrase.phrase->iHit++;
 	iOrderCount++;
 	break;
-    case PY_CAND_FREQ:		//ÊÇ³£ÓÃ×Ö
+    case PY_CAND_FREQ:		//æ˜¯å¸¸ç”¨å­—
 	pBase = PYCandWords[iIndex].cand.freq.hz->strHZ;
 	pBaseMap = PYFAList[PYCandWords[iIndex].cand.freq.hz->iPYFA].strMap;
 	PYCandWords[iIndex].cand.freq.hz->iHit++;
 	pIndex = &(PYCandWords[iIndex].cand.freq.hz->iIndex);
 	iNewFreqCount++;
 	break;
-    case PY_CAND_SYMBOL:	//ÊÇÌØÊâ·ûºÅ
+    case PY_CAND_SYMBOL:	//æ˜¯ç‰¹æ®Šç¬¦å·
 	pBase = PYCandWords[iIndex].cand.freq.hz->strHZ;
 	bAddNewPhrase = False;
 	break;
@@ -1485,7 +1498,7 @@ char           *PYGetCandWord (int iIndex)
     strcpy (strHZString, pBase);
     if (pPhrase)
 	strcat (strHZString, pPhrase);
-    iLen = strlen (strHZString) / 2;
+    iLen = utf8_strlen (strHZString);
     if (iLen == findMap.iHZCount || PYCandWords[iIndex].iWhich == PY_CAND_SYMBOL) {
 	strPYAuto[0] = '\0';
 	for (iLen = 0; iLen < iPYSelected; iLen++)
@@ -1514,7 +1527,7 @@ char           *PYGetCandWord (int iIndex)
 	return strPYAuto;
     }
 
-    //´ËÊ±½øÈë×ÔÔì´Ê×´Ì¬
+    //æ­¤æ—¶è¿›å…¥è‡ªé€ è¯çŠ¶æ€
     pySelected[iPYSelected].strPY[0] = '\0';
     pySelected[iPYSelected].strMap[0] = '\0';
     for (i = 0; i < iLen; i++)
@@ -1710,8 +1723,8 @@ void PYGetPhraseCandWords (SEARCH_MODE mode)
 }
 
 /*
- * ½«Ò»¸ö´Ê¼ÓÈëµ½ºòÑ¡ÁĞ±íµÄºÏÊÊÎ»ÖÃÖĞ
- * b = True ±íÊ¾ÊÇÏµÍ³´Ê×é£¬False±íÊ¾ÊÇÓÃ»§´Ê×é
+ * å°†ä¸€ä¸ªè¯åŠ å…¥åˆ°å€™é€‰åˆ—è¡¨çš„åˆé€‚ä½ç½®ä¸­
+ * b = True è¡¨ç¤ºæ˜¯ç³»ç»Ÿè¯ç»„ï¼ŒFalseè¡¨ç¤ºæ˜¯ç”¨æˆ·è¯ç»„
  */
 Bool PYAddPhraseCandWord (PYCandIndex pos, PyPhrase * phrase, SEARCH_MODE mode, Bool b)
 {
@@ -1763,7 +1776,7 @@ Bool PYAddPhraseCandWord (PYCandIndex pos, PyPhrase * phrase, SEARCH_MODE mode, 
 		return False;
 	}
 	break;
-	//ÏÂÃæÁ½²¿·Ö¿ÉÒÔ·ÅÔÚÒ»Æğ¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á
+	//ä¸‹é¢ä¸¤éƒ¨åˆ†å¯ä»¥æ”¾åœ¨ä¸€èµ·Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—
     case AD_FAST:
 	if (mode == SM_PREV) {
 	    for (i = (iCandWordCount - 1); i >= 0; i--) {
@@ -1874,7 +1887,7 @@ Bool PYAddPhraseCandWord (PYCandIndex pos, PyPhrase * phrase, SEARCH_MODE mode, 
 	}
 	break;
     }
-    //¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á
+    //Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—
 
     if (mode == SM_PREV) {
 	if (iCandWordCount == iMaxCandWord) {
@@ -1899,7 +1912,7 @@ Bool PYAddPhraseCandWord (PYCandIndex pos, PyPhrase * phrase, SEARCH_MODE mode, 
 	    }
 	}
 	else {
-	    //²åÔÚiµÄÇ°Ãæ
+	    //æ’åœ¨içš„å‰é¢
 	    for (j = iCandWordCount; j > i; j--) {
 		PYCandWords[j].iWhich = PYCandWords[j - 1].iWhich;
 		switch (PYCandWords[j].iWhich) {
@@ -1976,8 +1989,8 @@ void PYGetSymCandWords (SEARCH_MODE mode)
 }
 
 /*
- * ½«Ò»¸ö·ûºÅ¼ÓÈëµ½ºòÑ¡ÁĞ±íµÄºÏÊÊÎ»ÖÃÖĞ
- * ·ûºÅ²»Ğè½øĞĞÆµÂÊµ÷Õû
+ * å°†ä¸€ä¸ªç¬¦å·åŠ å…¥åˆ°å€™é€‰åˆ—è¡¨çš„åˆé€‚ä½ç½®ä¸­
+ * ç¬¦å·ä¸éœ€è¿›è¡Œé¢‘ç‡è°ƒæ•´
  */
 Bool PYAddSymCandWord (HZ * hz, SEARCH_MODE mode)
 {
@@ -2039,7 +2052,7 @@ void PYGetBaseCandWords (SEARCH_MODE mode)
 }
 
 /*
- * ½«Ò»¸ö×Ö¼ÓÈëµ½ºòÑ¡ÁĞ±íµÄºÏÊÊÎ»ÖÃÖĞ
+ * å°†ä¸€ä¸ªå­—åŠ å…¥åˆ°å€™é€‰åˆ—è¡¨çš„åˆé€‚ä½ç½®ä¸­
  */
 Bool PYAddBaseCandWord (PYCandIndex pos, SEARCH_MODE mode)
 {
@@ -2251,7 +2264,7 @@ void PYGetFreqCandWords (SEARCH_MODE mode)
 }
 
 /*
- * ½«Ò»¸ö³£ÓÃ×Ö¼ÓÈëµ½ºòÑ¡ÁĞ±íµÄºÏÊÊÎ»ÖÃÖĞ
+ * å°†ä¸€ä¸ªå¸¸ç”¨å­—åŠ å…¥åˆ°å€™é€‰åˆ—è¡¨çš„åˆé€‚ä½ç½®ä¸­
  */
 Bool PYAddFreqCandWord (HZ * hz, char *strPY, SEARCH_MODE mode)
 {
@@ -2412,44 +2425,47 @@ Bool PYAddFreqCandWord (HZ * hz, char *strPY, SEARCH_MODE mode)
 }
 
 /*
- * ½«Ò»¸ö´Ê×é±£´æµ½ÓÃ»§´Ê×é¿âÖĞ
- * ·µ»ØTrue±íÊ¾ÊÇĞÂ´Ê×é
+ * å°†ä¸€ä¸ªè¯ç»„ä¿å­˜åˆ°ç”¨æˆ·è¯ç»„åº“ä¸­
+ * è¿”å›Trueè¡¨ç¤ºæ˜¯æ–°è¯ç»„
  */
 Bool PYAddUserPhrase (char *phrase, char *map)
 {
     PyPhrase       *userPhrase, *newPhrase, *temp;
-    char            str[3];
+    char            str[UTF8_MAX_LENGTH + 1];
     int             i, j, k, iTemp;
+	int             clen;
 
-    //Èç¹û¶ÌÓÚÁ½¸öºº×Ö£¬Ôò²»ÄÜ×é³É´Ê×é
-    if (strlen (phrase) < 4)
+    //å¦‚æœçŸ­äºä¸¤ä¸ªæ±‰å­—ï¼Œåˆ™ä¸èƒ½ç»„æˆè¯ç»„
+    if (utf8_strlen (phrase) < 2)
 	return False;
     str[0] = map[0];
     str[1] = map[1];
     str[2] = '\0';
     i = GetBaseMapIndex (str);
-    str[0] = phrase[0];
-    str[1] = phrase[1];
+
+	clen = utf8_char_len(phrase);
+	strncpy(str, phrase, clen);
+	str[clen] = '\0';
     j = GetBaseIndex (i, str);;
-    //ÅĞ¶Ï¸Ã´Ê×éÊÇ·ñÒÑ¾­ÔÚ¿âÖĞ
-    //Ê×ÏÈ£¬¿´ËüÊÇ²»ÊÇÔÚÓÃ»§´Ê×é¿âÖĞ
+    //åˆ¤æ–­è¯¥è¯ç»„æ˜¯å¦å·²ç»åœ¨åº“ä¸­
+    //é¦–å…ˆï¼Œçœ‹å®ƒæ˜¯ä¸æ˜¯åœ¨ç”¨æˆ·è¯ç»„åº“ä¸­
     userPhrase = PYFAList[i].pyBase[j].userPhrase->next;
     for (k = 0; k < PYFAList[i].pyBase[j].iUserPhrase; k++) {
-	if (!strcmp (map + 2, userPhrase->strMap) && !strcmp (phrase + 2, userPhrase->strPhrase))
+	if (!strcmp (map + 2, userPhrase->strMap) && !strcmp (phrase + clen, userPhrase->strPhrase))
 	    return False;
 	userPhrase = userPhrase->next;
     }
 
-    //È»ºó£¬¿´ËüÊÇ²»ÊÇÔÚÏµÍ³´Ê×é¿âÖĞ
+    //ç„¶åï¼Œçœ‹å®ƒæ˜¯ä¸æ˜¯åœ¨ç³»ç»Ÿè¯ç»„åº“ä¸­
     for (k = 0; k < PYFAList[i].pyBase[j].iPhrase; k++)
-	if (!strcmp (map + 2, PYFAList[i].pyBase[j].phrase[k].strMap) && !strcmp (phrase + 2, PYFAList[i].pyBase[j].phrase[k].strPhrase))
+	if (!strcmp (map + 2, PYFAList[i].pyBase[j].phrase[k].strMap) && !strcmp (phrase + clen, PYFAList[i].pyBase[j].phrase[k].strPhrase))
 	    return False;
-    //ÏÂÃæ½«´Ê×éÌí¼Óµ½ÁĞ±íÖĞ
+    //ä¸‹é¢å°†è¯ç»„æ·»åŠ åˆ°åˆ—è¡¨ä¸­
     newPhrase = (PyPhrase *) malloc (sizeof (PyPhrase));
     newPhrase->strMap = (char *) malloc (sizeof (char) * strlen (map + 2) + 1);
-    newPhrase->strPhrase = (char *) malloc (sizeof (char) * strlen (phrase + 2) + 1);
+    newPhrase->strPhrase = (char *) malloc (sizeof (char) * strlen (phrase + clen) + 1);
     strcpy (newPhrase->strMap, map + 2);
-    strcpy (newPhrase->strPhrase, phrase + 2);
+    strcpy (newPhrase->strPhrase, phrase + clen);
     newPhrase->iIndex = ++iCounter;
     newPhrase->iHit = 1;
     newPhrase->flag = 0;
@@ -2478,7 +2494,7 @@ void PYDelUserPhrase (int iPYFA, int iBase, PyPhrase * phrase)
 {
     PyPhrase       *temp;
 
-    //Ê×ÏÈ¶¨Î»¸Ã´Ê×é
+    //é¦–å…ˆå®šä½è¯¥è¯ç»„
     temp = PYFAList[iPYFA].pyBase[iBase].userPhrase;
     while (temp) {
 	if (temp->next == phrase)
@@ -2511,7 +2527,7 @@ int GetBaseMapIndex (char *strMap)
 }
 
 /*
- * ±£´æÓÃ»§´Ê¿â
+ * ä¿å­˜ç”¨æˆ·è¯åº“
  */
 void SavePYUserPhrase (void)
 {
@@ -2530,7 +2546,7 @@ void SavePYUserPhrase (void)
     fp = UserConfigFile (TEMP_FILE, "wb", &pstr);
     if (!fp) {
 	isSavingPYUserPhrase = False;
-	fprintf (stderr, "ÎŞ·¨±£´æÆ´ÒôÓÃ»§´Ê¿â£º%s\n", pstr);
+	fprintf (stderr, "æ— æ³•ä¿å­˜æ‹¼éŸ³ç”¨æˆ·è¯åº“ï¼š%s\n", pstr);
 	return;
     }
     strcpy(strPathTemp, pstr);
@@ -2583,7 +2599,7 @@ void SavePYFreq (void)
     fp = UserConfigFile(TEMP_FILE, "wb", &pstr);
     if (!fp) {
 	isSavingPYFreq = False;
-	fprintf (stderr, "ÎŞ·¨±£´æ³£ÓÃ´Ê±í£º%s\n", pstr);
+	fprintf (stderr, "æ— æ³•ä¿å­˜å¸¸ç”¨è¯è¡¨ï¼š%s\n", pstr);
 	return;
     }
     strcpy(strPathTemp, pstr);
@@ -2628,7 +2644,7 @@ void SavePYFreq (void)
 }
 
 /*
- * ±£´æË÷ÒıÎÄ¼ş
+ * ä¿å­˜ç´¢å¼•æ–‡ä»¶
  */
 void SavePYIndex (void)
 {
@@ -2644,14 +2660,14 @@ void SavePYIndex (void)
     fp = UserConfigFile (TEMP_FILE, "wb", &pstr);
     if (!fp) {
 	isSavingPYIndex = False;
-	fprintf (stderr, "ÎŞ·¨±£´æË÷ÒıÎÄ¼ş£º%s\n", pstr);
+	fprintf (stderr, "æ— æ³•ä¿å­˜ç´¢å¼•æ–‡ä»¶ï¼š%s\n", pstr);
 	return;
     }
     strcpy(strPathTemp, pstr);
 
-    //±£´æ¼ÆÊıÆ÷
+    //ä¿å­˜è®¡æ•°å™¨
     fwrite (&iCounter, sizeof (uint), 1, fp);
-    //ÏÈ±£´æË÷Òı²»Îª0µÄµ¥×Ö
+    //å…ˆä¿å­˜ç´¢å¼•ä¸ä¸º0çš„å•å­—
     k = -1;
     for (i = 0; i < iPYFACount; i++) {
 	for (j = 0; j < PYFAList[i].iBase; j++) {
@@ -2667,7 +2683,7 @@ void SavePYIndex (void)
 	}
     }
 
-    //ÔÙ±£´æË÷Òı²»Îª0µÄÏµÍ³´Ê×é
+    //å†ä¿å­˜ç´¢å¼•ä¸ä¸º0çš„ç³»ç»Ÿè¯ç»„
     for (i = 0; i < iPYFACount; i++) {
 	for (j = 0; j < PYFAList[i].iBase; j++) {
 	    for (k = 0; k < PYFAList[i].pyBase[j].iPhrase; k++) {
@@ -2695,10 +2711,10 @@ void SavePYIndex (void)
 }
 
 /*
- * ÉèÖÃÆ´ÒôµÄ³£ÓÃ×Ö±í
- * Ö»ÓĞÒÔÏÂÇéĞÎ²ÅÄÜÉèÖÃ
- *	µ±ÓÃ»§ÊäÈëµ¥×ÖÊ±
- * ÖÁÓÚ³£ÓÃ´ÊµÄÎÊÌâÔİÊ±²»¿¼ÂÇ
+ * è®¾ç½®æ‹¼éŸ³çš„å¸¸ç”¨å­—è¡¨
+ * åªæœ‰ä»¥ä¸‹æƒ…å½¢æ‰èƒ½è®¾ç½®
+ *	å½“ç”¨æˆ·è¾“å…¥å•å­—æ—¶
+ * è‡³äºå¸¸ç”¨è¯çš„é—®é¢˜æš‚æ—¶ä¸è€ƒè™‘
  */
 void PYAddFreq (int iIndex)
 {
@@ -2707,13 +2723,13 @@ void PYAddFreq (int iIndex)
     PyFreq         *freq;
     HZ             *hz;
 
-    //ÄÜµ½Õâ¶ùÀ´£¬¾ÍËµÃ÷ºòÑ¡ÁĞ±íÖĞ¶¼ÊÇµ¥×Ö
-    //Ê×ÏÈ£¬¿´Õâ¸ö×ÖÊÇ²»ÊÇÒÑ¾­ÔÚ³£ÓÃ×Ö±íÖĞ
+    //èƒ½åˆ°è¿™å„¿æ¥ï¼Œå°±è¯´æ˜å€™é€‰åˆ—è¡¨ä¸­éƒ½æ˜¯å•å­—
+    //é¦–å…ˆï¼Œçœ‹è¿™ä¸ªå­—æ˜¯ä¸æ˜¯å·²ç»åœ¨å¸¸ç”¨å­—è¡¨ä¸­
     i = 1;
     if (pCurFreq) {
 	i = -1;
 	if (PYCandWords[iIndex].iWhich != PY_CAND_FREQ) {
-	    //ËµÃ÷¸Ã×ÖÊÇÏµÍ³µ¥×Ö
+	    //è¯´æ˜è¯¥å­—æ˜¯ç³»ç»Ÿå•å­—
 	    HZTemp = pCurFreq->HZList->next;
 	    for (i = 0; i < pCurFreq->iCount; i++) {
 		if (!strcmp (PYFAList[PYCandWords[iIndex].cand.base.iPYFA].pyBase[PYCandWords[iIndex].cand.base.iBase].strHZ, HZTemp->strHZ)) {
@@ -2725,11 +2741,11 @@ void PYAddFreq (int iIndex)
 	}
     }
 
-    //½èÓÃiÀ´Ö¸Ê¾ÊÇ·ñĞèÒªÌí¼ÓĞÂµÄ³£ÓÃ×Ö
+    //å€Ÿç”¨iæ¥æŒ‡ç¤ºæ˜¯å¦éœ€è¦æ·»åŠ æ–°çš„å¸¸ç”¨å­—
     if (i < 0)
 	return;
     PYSetCandWordsFlag (False);
-    //ĞèÒªÌí¼Ó¸Ã×Ö£¬´ËÊ±¸Ã×Ö±ØÈ»ÊÇÏµÍ³µ¥×Ö
+    //éœ€è¦æ·»åŠ è¯¥å­—ï¼Œæ­¤æ—¶è¯¥å­—å¿…ç„¶æ˜¯ç³»ç»Ÿå•å­—
     if (!pCurFreq) {
 	freq = (PyFreq *) malloc (sizeof (PyFreq));
 	freq->HZList = (HZ *) malloc (sizeof (HZ));
@@ -2753,7 +2769,7 @@ void PYAddFreq (int iIndex)
     HZTemp->iIndex = 0;
     HZTemp->flag = 0;
     HZTemp->next = NULL;
-    //½«HZTemp¼Óµ½Á´±íÎ²²¿
+    //å°†HZTempåŠ åˆ°é“¾è¡¨å°¾éƒ¨
     hz = pCurFreq->HZList;
     for (i = 0; i < pCurFreq->iCount; i++)
 	hz = hz->next;
@@ -2767,18 +2783,18 @@ void PYAddFreq (int iIndex)
 }
 
 /*
- * É¾³ıÆ´Òô³£ÓÃ×Ö±íÖĞµÄÄ³¸ö×Ö
+ * åˆ é™¤æ‹¼éŸ³å¸¸ç”¨å­—è¡¨ä¸­çš„æŸä¸ªå­—
  */
 void PYDelFreq (int iIndex)
 {
     HZ             *hz;
 
-    //ÄÜµ½Õâ¶ùÀ´£¬¾ÍËµÃ÷ºòÑ¡ÁĞ±íÖĞ¶¼ÊÇµ¥×Ö
-    //Ê×ÏÈ£¬¿´Õâ¸ö×ÖÊÇ²»ÊÇÒÑ¾­ÔÚ³£ÓÃ×Ö±íÖĞ
+    //èƒ½åˆ°è¿™å„¿æ¥ï¼Œå°±è¯´æ˜å€™é€‰åˆ—è¡¨ä¸­éƒ½æ˜¯å•å­—
+    //é¦–å…ˆï¼Œçœ‹è¿™ä¸ªå­—æ˜¯ä¸æ˜¯å·²ç»åœ¨å¸¸ç”¨å­—è¡¨ä¸­
     if (PYCandWords[iIndex].iWhich != PY_CAND_FREQ)
 	return;
     PYSetCandWordsFlag (False);
-    //ÏÈÕÒµ½ĞèÒªÉ¾³ıµ¥×ÖµÄÎ»ÖÃ
+    //å…ˆæ‰¾åˆ°éœ€è¦åˆ é™¤å•å­—çš„ä½ç½®
     hz = pCurFreq->HZList;
     while (hz->next != PYCandWords[iIndex].cand.freq.hz)
 	hz = hz->next;
@@ -2793,7 +2809,7 @@ void PYDelFreq (int iIndex)
 }
 
 /*
- * ÅĞ¶ÏÒ»¸ö×ÖÊÇ·ñÒÑ¾­ÊÇ³£ÓÃ×Ö
+ * åˆ¤æ–­ä¸€ä¸ªå­—æ˜¯å¦å·²ç»æ˜¯å¸¸ç”¨å­—
  */
 Bool PYIsInFreq (char *strHZ)
 {
@@ -2813,8 +2829,8 @@ Bool PYIsInFreq (char *strHZ)
 }
 
 /*
- * È¡µÃÆ´ÒôµÄÁªÏë×Ö´®
- * 	°´ÕÕÆµÂÊÀ´¶¨ÅÅÁĞË³Ğò
+ * å–å¾—æ‹¼éŸ³çš„è”æƒ³å­—ä¸²
+ * 	æŒ‰ç…§é¢‘ç‡æ¥å®šæ’åˆ—é¡ºåº
  */
 INPUT_RETURN_VALUE PYGetLegendCandWords (SEARCH_MODE mode)
 {
@@ -2934,7 +2950,7 @@ INPUT_RETURN_VALUE PYGetLegendCandWords (SEARCH_MODE mode)
     }
 
     uMessageUp = 2;
-    strcpy (messageUp[0].strMsg, "ÁªÏë£º");
+    strcpy (messageUp[0].strMsg, "è”æƒ³ï¼š");
     messageUp[0].type = MSG_TIPS;
     strcpy (messageUp[1].strMsg, strPYLegendSource);
     messageUp[1].type = MSG_INPUT;

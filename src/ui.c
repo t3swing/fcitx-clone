@@ -78,8 +78,6 @@ iconv_t         convUTF8;
 GC              dimGC = (GC) NULL;
 GC              lightGC = (GC) NULL;
 
-Bool            bIsUtf8 = False;
-
 #ifdef _USE_XFT
 char            strFontName[100] = "AR PL ShanHeiSun Uni";
 char            strFontEnName[100] = "Courier New";
@@ -214,7 +212,7 @@ void InitGC (Window window)
 }
 
 /*
- * µ±localeÎªUTF-8Ê±£¬setlocale(LC_CTYPE,"")»áµ¼ÖÂ³ÌÐò±ÀÀ£
+ * å½“localeä¸ºUTF-8æ—¶ï¼Œsetlocale(LC_CTYPE,"")ä¼šå¯¼è‡´ç¨‹åºå´©æºƒ
  */
 /*void SetLocale(void)
 {
@@ -227,7 +225,7 @@ void InitGC (Window window)
 			p=getenv("LANG");
 	}
 
-	//ÊÔÑé·¢ÏÖ£¬µ±localeÎªzh_CN.UTF-8Ê±£¬setlocale±ØÐëÉèÖÃÕâzh_CN.UTF-8¶ø²»ÄÜÊÇzh_CN.utf-8
+	//è¯•éªŒå‘çŽ°ï¼Œå½“localeä¸ºzh_CN.UTF-8æ—¶ï¼Œsetlocaleå¿…é¡»è®¾ç½®è¿™zh_CN.UTF-8è€Œä¸èƒ½æ˜¯zh_CN.utf-8
 	if ( p ) {
 		strcpy(strUserLocale,p);
 		p=strUserLocale;
@@ -247,7 +245,7 @@ void InitGC (Window window)
 #ifdef _USE_XFT
 void CreateFont (void)
 {
-    //ÎªÁËÈÃ½çÃæÄÜ¹»Õý³£ÏÔÊ¾£¬±ØÐëÉèÖÃÎªÖÐÎÄÄ£Ê½
+    //ä¸ºäº†è®©ç•Œé¢èƒ½å¤Ÿæ­£å¸¸æ˜¾ç¤ºï¼Œå¿…é¡»è®¾ç½®ä¸ºä¸­æ–‡æ¨¡å¼
     if (strUserLocale[0])
 	setlocale (LC_CTYPE, strUserLocale);
 
@@ -287,7 +285,7 @@ void CreateFont (void)
     char           *default_string;
     char            strFont[256];
 
-    //ÎªÁËÈÃ½çÃæÄÜ¹»Õý³£ÏÔÊ¾£¬±ØÐëÉèÖÃÎªÖÐÎÄÄ£Ê½
+    //ä¸ºäº†è®©ç•Œé¢èƒ½å¤Ÿæ­£å¸¸æ˜¾ç¤ºï¼Œå¿…é¡»è®¾ç½®ä¸ºä¸­æ–‡æ¨¡å¼
     if (strUserLocale[0])
 	setlocale (LC_CTYPE, strUserLocale);
 
@@ -341,10 +339,10 @@ void CreateFont (void)
 #endif
 
 /*
- * ÈÃÖ¸¶¨µÄÇøÓòÏÔÊ¾ÈýÎ¬Ð§¹û
+ * è®©æŒ‡å®šçš„åŒºåŸŸæ˜¾ç¤ºä¸‰ç»´æ•ˆæžœ
  * effect:
- *	_3D_UPPER:ÏÔÊ¾ÎªÍ¹³öÐ§¹û
- *	_3D_LOWER:ÏÔÊ¾Îª°¼ÏÂÐ§¹û
+ *	_3D_UPPER:æ˜¾ç¤ºä¸ºå‡¸å‡ºæ•ˆæžœ
+ *	_3D_LOWER:æ˜¾ç¤ºä¸ºå‡¹ä¸‹æ•ˆæžœ
  */
 void Draw3DEffect (Window window, int x, int y, int width, int height, _3D_EFFECT effect)
 {
@@ -372,8 +370,8 @@ void Draw3DEffect (Window window, int x, int y, int width, int height, _3D_EFFEC
 }
 
 /*
- * ÓÐ¹Ø½çÃæµÄÏûÏ¢¶¼ÔÚÕâÀï´¦Àí
- *     ÓÐ¹ØtrayÖØ»­µÄÎÊÌâ£¬´Ë´¦µÄ½â¾ö·½°¸ËÆºõºÜdirt
+ * æœ‰å…³ç•Œé¢çš„æ¶ˆæ¯éƒ½åœ¨è¿™é‡Œå¤„ç†
+ *     æœ‰å…³trayé‡ç”»çš„é—®é¢˜ï¼Œæ­¤å¤„çš„è§£å†³æ–¹æ¡ˆä¼¼ä¹Žå¾ˆdirt
  */
 void MyXEventHandler (XEvent * event)
 {
@@ -567,7 +565,7 @@ void MyXEventHandler (XEvent * event)
 }
 
 /*
- * ÅÐ¶ÏÊó±êµã»÷´¦ÊÇ·ñ´¦ÓÚÖ¸¶¨µÄÇøÓòÄÚ
+ * åˆ¤æ–­é¼ æ ‡ç‚¹å‡»å¤„æ˜¯å¦å¤„äºŽæŒ‡å®šçš„åŒºåŸŸå†…
  */
 Bool IsInBox (int x0, int y0, int x1, int y1, int x2, int y2)
 {
@@ -581,21 +579,11 @@ Bool IsInBox (int x0, int y0, int x1, int y1, int x2, int y2)
 int StringWidth (char *str, XftFont * font)
 {
     XGlyphInfo      extents;
-    char            str1[100];
-    char           *ps;
-    size_t          l1, l2;
-    int             il;
 
     if (!font)
 	return 0;
 
-    il = l1 = strlen (str);
-    l2 = 99;
-    ps = str1;
-
-    l1 = iconv (convUTF8, (ICONV_CONST char **) &str, &l1, &ps, &l2);
-    *ps = '\0';
-    XftTextExtentsUtf8 (dpy, font, (FcChar8 *) str1, strlen (str1), &extents);
+    XftTextExtentsUtf8 (dpy, font, (FcChar8 *) str, strlen (str), &extents);
     if (font == xftMainWindowFont)
 	return extents.width;
 
@@ -605,23 +593,12 @@ int StringWidth (char *str, XftFont * font)
 int FontHeight (XftFont * font)
 {
     XGlyphInfo      extents;
-    char            str1[] = "AyÖÐ";
-    char            str2[10];
-    char           *ps1, *ps2;
-    size_t          l1, l2;
+    char            str[] = "Ayä¸­";
 
     if (!font)
 	return 0;
 
-    l1 = strlen (str1);
-    l2 = 9;
-    ps2 = str2;
-    ps1 = str1;
-
-    l1 = iconv (convUTF8, (ICONV_CONST char **) &ps1, &l1, &ps2, &l2);
-    *ps2 = '\0';
-
-    XftTextExtentsUtf8 (dpy, font, (FcChar8 *) str2, strlen (str2), &extents);
+    XftTextExtentsUtf8 (dpy, font, (FcChar8 *) str, strlen (str), &extents);
 
     return extents.height;
 }
@@ -641,7 +618,7 @@ int StringWidth (char *str, XFontSet font)
 int FontHeight (XFontSet font)
 {
     XRectangle      InkBox, LogicalBox;
-    char            str[] = "AyÖÐ";
+    char            str[] = "Ayä¸­";
 
     if (!font)
 	return 0;
@@ -653,26 +630,16 @@ int FontHeight (XFontSet font)
 #endif
 
 /*
- * ÒÔÖ¸¶¨µÄÑÕÉ«ÔÚ´°¿ÚµÄÖ¸¶¨Î»ÖÃÊä³ö×Ö´®
+ * ä»¥æŒ‡å®šçš„é¢œè‰²åœ¨çª—å£çš„æŒ‡å®šä½ç½®è¾“å‡ºå­—ä¸²
  */
 #ifdef _USE_XFT
 void OutputString (Window window, XftFont * font, char *str, int x, int y, XColor color)
 {
-    char            strOutput[100] = "\0";
-    size_t          l1, l2;
-    char           *ps;
     XftColor        xftColor;
     XRenderColor    renderColor;
 
     if (!font || !str)
 	return;
-
-    //Ê¹ÓÃUTF8´®
-    l1 = strlen (str);
-    l2 = 99;
-    ps = strOutput;
-    l1 = iconv (convUTF8, (ICONV_CONST char **) &str, &l1, &ps, &l2);
-    *ps = '\0';
 
     renderColor.red = color.red;
     renderColor.green = color.green;
@@ -681,7 +648,7 @@ void OutputString (Window window, XftFont * font, char *str, int x, int y, XColo
 
     XftColorAllocValue (dpy, DefaultVisual (dpy, DefaultScreen (dpy)), DefaultColormap (dpy, DefaultScreen (dpy)), &renderColor, &xftColor);
     XftDrawChange (xftDraw, window);
-    XftDrawStringUtf8 (xftDraw, &xftColor, font, x, y, (FcChar8 *) strOutput, strlen (strOutput));
+    XftDrawStringUtf8 (xftDraw, &xftColor, font, x, y, (FcChar8 *) str, strlen (str));
 
     XftColorFree (dpy, DefaultVisual (dpy, DefaultScreen (dpy)), DefaultColormap (dpy, DefaultScreen (dpy)), &xftColor);
 }
@@ -707,9 +674,9 @@ Bool IsWindowVisible(Window window)
     return True;
 }
 
-/* *************ÏÂÁÐº¯ÊýÈ¡×ÔÓÚ rfinput-2.0 ************************ */
+/* *************ä¸‹åˆ—å‡½æ•°å–è‡ªäºŽ rfinput-2.0 ************************ */
 /*
- * ´ÓxpmÍ¼ÐÎÎÄ¼þÖÐÍ¼ÐÎÊý¾ÝÌîÈëµ½XImage±äÁ¿ÖÐ
+ * ä»Žxpmå›¾å½¢æ–‡ä»¶ä¸­å›¾å½¢æ•°æ®å¡«å…¥åˆ°XImageå˜é‡ä¸­
  */
 /*int FillImageByXPMData (XImage * pImage, char **apcData)
 {
@@ -824,38 +791,3 @@ Bool MouseClick (int *x, int *y, Window window)
     return bMoved;
 }
 
-/*void WaitButtonRelease (XPoint * point)
-{
-    XEvent          ev;
-
-    while (1) {
-	XNextEvent (dpy, &ev);
-	switch (ev.type) {
-	case ButtonRelease:
-	    point->x = ev.xbutton.x;
-	    point->y = ev.xbutton.y;
-	    return;
-	default:
-	    break;
-	}
-    }
-}
-*/
-
-/* For debug only
-void OutputAsUTF8(char *str)
-{
-    char            strOutput[300];
-    char           *ps;
-    size_t          l1, l2;
-
-    ps = strOutput;
-    l1 = strlen (str);
-    l2 = 299;
-    l1 = iconv (convUTF8, (ICONV_CONST char **) (&str), &l1, &ps, &l2);
-    *ps = '\0';
-    ps = strOutput;
-
-    puts(strOutput);
-}
-*/

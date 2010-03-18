@@ -26,9 +26,9 @@ AUTO_ENG       *AutoEng = (AUTO_ENG *) NULL;
 int             iAutoEng;
 
 /**
- * ´ÓÓÃ»§ÅäÖÃÄ¿Â¼ÖĞ¶ÁÈ¡AutoEng.dat(Èç¹û²»´æÔÚ£¬
- * Ôò´Ó /usr/local/share/fcitx/data/AutoEng.dat£©
- * ¶ÁÈ¡ĞèÒª×Ô¶¯×ª»»µ½Ó¢ÎÄÊäÈë×´Ì¬µÄÇé¿öµÄÊı¾İ¡£
+ * ä»ç”¨æˆ·é…ç½®ç›®å½•ä¸­è¯»å–AutoEng.dat(å¦‚æœä¸å­˜åœ¨ï¼Œ
+ * åˆ™ä» /usr/local/share/fcitx/data/AutoEng.datï¼‰
+ * è¯»å–éœ€è¦è‡ªåŠ¨è½¬æ¢åˆ°è‹±æ–‡è¾“å…¥çŠ¶æ€çš„æƒ…å†µçš„æ•°æ®ã€‚
  *
  * @param void
  *
@@ -69,7 +69,7 @@ void LoadAutoEng (void)
 }
 
 /**
- * ÊÍ·ÅÏà¹Ø×ÊÔ´
+ * é‡Šæ”¾ç›¸å…³èµ„æº
  *
  * @param void
  *
@@ -86,9 +86,9 @@ void FreeAutoEng (void)
 
 
 /**
- * @brief ÅĞ¶ÏÊÇ·ñĞèÒª×Ô¶¯×ªµ½Ó¢ÎÄÊäÈë×´Ì¬
+ * @brief åˆ¤æ–­æ˜¯å¦éœ€è¦è‡ªåŠ¨è½¬åˆ°è‹±æ–‡è¾“å…¥çŠ¶æ€
  * @exception <exception-object> <exception description>
- * @return TureÔòÊÇ£¿ FalseÔòÊÇ£¿
+ * @return Tureåˆ™æ˜¯ï¼Ÿ Falseåˆ™æ˜¯ï¼Ÿ
  * @note <text>
  * @remarks <remark text>
  * [@deprecated <description>]

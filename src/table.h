@@ -35,14 +35,14 @@
 #define SINGLE_HZ_COUNT 33000
 
 typedef struct _RULE_RULE {
-    unsigned char   iFlag;	// 1 --> ÕıĞò   0 --> ÄæĞò
-    unsigned char   iWhich;	//µÚ¼¸¸ö×Ö
-    unsigned char   iIndex;	//µÚ¼¸¸ö±àÂë
+    unsigned char   iFlag;	// 1 --> æ­£åº   0 --> é€†åº
+    unsigned char   iWhich;	//ç¬¬å‡ ä¸ªå­—
+    unsigned char   iIndex;	//ç¬¬å‡ ä¸ªç¼–ç 
 } RULE_RULE;
 
 typedef struct _RULE {
-    unsigned char   iWords;	//¶àÉÙ¸ö×Ö
-    unsigned char   iFlag;	//1 --> ´óÓÚµÈÓÚiWords  0 --> µÈÓÚiWords
+    unsigned char   iWords;	//å¤šå°‘ä¸ªå­—
+    unsigned char   iFlag;	//1 --> å¤§äºç­‰äºiWords  0 --> ç­‰äºiWords
     RULE_RULE      *rule;
 } RULE;
 
@@ -53,32 +53,32 @@ typedef struct _TABLE {
     char           *strInputCode;
     unsigned char   iCodeLength;
     unsigned char   iPYCodeLength;
-    char           *strEndCode;	//ÖĞÖ¹¼ü£¬°´ÏÂ¸Ã¼üÏàµ±ÓÚÊäÈë¸Ã¼üºóÔÙ°´Ò»¸ö¿Õ¸ñ
+    char           *strEndCode;	//ä¸­æ­¢é”®ï¼ŒæŒ‰ä¸‹è¯¥é”®ç›¸å½“äºè¾“å…¥è¯¥é”®åå†æŒ‰ä¸€ä¸ªç©ºæ ¼
     char           *strIgnoreChars;
     char            cMatchingKey;
     char            strSymbol[MAX_CODE_LENGTH + 1];
-    char            cPinyin;	//ÊäÈë¸Ã¼üºó£¬±íÊ¾½øÈëÁÙÊ±Æ´Òô×´Ì¬
+    char            cPinyin;	//è¾“å…¥è¯¥é”®åï¼Œè¡¨ç¤ºè¿›å…¥ä¸´æ—¶æ‹¼éŸ³çŠ¶æ€
     unsigned char   bRule;
 
-    RULE           *rule;	//×é´Ê¹æÔò
-    INT8            iIMIndex;	//¼ÇÂ¼¸ÃÂë±í¶ÔÓ¦ÓÚÊäÈë·¨µÄË³Ğò
+    RULE           *rule;	//ç»„è¯è§„åˆ™
+    INT8            iIMIndex;	//è®°å½•è¯¥ç è¡¨å¯¹åº”äºè¾“å…¥æ³•çš„é¡ºåº
     unsigned int    iRecordCount;
     ADJUSTORDER     tableOrder;
 
-    Bool            bUsePY;	//Ê¹ÓÃÆ´Òô
-    INT8            iTableAutoSendToClient;	//×Ô¶¯ÉÏÆÁ
-    INT8            iTableAutoSendToClientWhenNone;	//¿ÕÂë×Ô¶¯ÉÏÆÁ
-    Bool            bUseMatchingKey;	//ÊÇ·ñÄ£ºıÆ¥Åä
-    Bool            bAutoPhrase;	//ÊÇ·ñ×Ô¶¯Ôì´Ê
-    INT8            iSaveAutoPhraseAfter;	//Ñ¡ÔñN´Îºó±£´æ×Ô¶¯´Ê×é£¬0-²»±£´æ£¬1-Á¢¼´±£´æ
-    Bool            bAutoPhrasePhrase;	//´Ê×éÊÇ·ñ²ÎÓëÔì´Ê
-    INT8            iAutoPhrase;	//×Ô¶¯Ôì´Ê³¤¶È
-    Bool            bTableExactMatch;	//ÊÇ·ñÖ»ÏÔÊ¾¾«È·Æ¥ÅäµÄºòÑ¡×Ö/´Ê
-    Bool            bPromptTableCode;	//ÊäÈëÍê±ÏºóÊÇ·ñÌáÊ¾±àÂë
-//    int             iMaxPhraseAllowed;	//ÔÊĞíµÄ×î³¤´Ê×é×ÖÊı¡£0-²»ÏŞ
+    Bool            bUsePY;	//ä½¿ç”¨æ‹¼éŸ³
+    INT8            iTableAutoSendToClient;	//è‡ªåŠ¨ä¸Šå±
+    INT8            iTableAutoSendToClientWhenNone;	//ç©ºç è‡ªåŠ¨ä¸Šå±
+    Bool            bUseMatchingKey;	//æ˜¯å¦æ¨¡ç³ŠåŒ¹é…
+    Bool            bAutoPhrase;	//æ˜¯å¦è‡ªåŠ¨é€ è¯
+    INT8            iSaveAutoPhraseAfter;	//é€‰æ‹©Næ¬¡åä¿å­˜è‡ªåŠ¨è¯ç»„ï¼Œ0-ä¸ä¿å­˜ï¼Œ1-ç«‹å³ä¿å­˜
+    Bool            bAutoPhrasePhrase;	//è¯ç»„æ˜¯å¦å‚ä¸é€ è¯
+    INT8            iAutoPhrase;	//è‡ªåŠ¨é€ è¯é•¿åº¦
+    Bool            bTableExactMatch;	//æ˜¯å¦åªæ˜¾ç¤ºç²¾ç¡®åŒ¹é…çš„å€™é€‰å­—/è¯
+    Bool            bPromptTableCode;	//è¾“å…¥å®Œæ¯•åæ˜¯å¦æç¤ºç¼–ç 
+//    int             iMaxPhraseAllowed;	//å…è®¸çš„æœ€é•¿è¯ç»„å­—æ•°ã€‚0-ä¸é™
 
-    Bool            bHasPinyin;		//±ê¼Ç¸ÃÂë±íÖĞÊÇ·ñÓĞÆ´Òô
-    char            strChoose[11];		//ÉèÖÃÑ¡Ôñ¼ü
+    Bool            bHasPinyin;		//æ ‡è®°è¯¥ç è¡¨ä¸­æ˜¯å¦æœ‰æ‹¼éŸ³
+    char            strChoose[11];		//è®¾ç½®é€‰æ‹©é”®
 } TABLE;
 
 typedef struct _RECORD {
@@ -92,7 +92,7 @@ typedef struct _RECORD {
     unsigned int    bPinyin:1;
 } RECORD;
 
-/* ¸ù¾İ¼üÂëÉú³ÉÒ»¸ö¼òµ¥µÄË÷Òı£¬Ö¸Ïò¸Ã¼üÂëÆğÊ¼µÄµÚÒ»¸ö¼ÇÂ¼ */
+/* æ ¹æ®é”®ç ç”Ÿæˆä¸€ä¸ªç®€å•çš„ç´¢å¼•ï¼ŒæŒ‡å‘è¯¥é”®ç èµ·å§‹çš„ç¬¬ä¸€ä¸ªè®°å½• */
 typedef struct _RECORD_INDEX {
     RECORD         *record;
     char            cCode;
@@ -107,10 +107,10 @@ typedef struct _AUTOPHRASE {
     char           *strCode;
     INT8            iSelected;
     unsigned int    flag:1;
-    struct _AUTOPHRASE *next;	//¹¹ÔìÒ»¸ö¶ÓÁĞ
+    struct _AUTOPHRASE *next;	//æ„é€ ä¸€ä¸ªé˜Ÿåˆ—
 } AUTOPHRASE;
 
-//ÓÃunion¾Í»á³ö´í£¬²»ÖªµÀÊÇÉ¶Ô­Òò
+//ç”¨unionå°±ä¼šå‡ºé”™ï¼Œä¸çŸ¥é“æ˜¯å•¥åŸå› 
 typedef struct {
     AUTOPHRASE     *autoPhrase;
     RECORD         *record;
@@ -118,14 +118,14 @@ typedef struct {
 } CANDWORD;
 
 typedef struct _TABLECANDWORD {
-    unsigned int    flag:2;	//Ö¸Ê¾¸ÃºòÑ¡×Ö/´ÊÊÇ×Ô¶¯×éµÄ´Ê»¹ÊÇÕı³£µÄ×Ö/´Ê
+    unsigned int    flag:2;	//æŒ‡ç¤ºè¯¥å€™é€‰å­—/è¯æ˜¯è‡ªåŠ¨ç»„çš„è¯è¿˜æ˜¯æ­£å¸¸çš„å­—/è¯
     CANDWORD        candWord;
 } TABLECANDWORD;
 
 typedef enum {
     CT_NORMAL = 0,
     CT_AUTOPHRASE,
-    CT_PYPHRASE			//ÁÙÊ±Æ´Òô×ª»»¹ıÀ´µÄºòÑ¡×Ö/´Ê
+    CT_PYPHRASE			//ä¸´æ—¶æ‹¼éŸ³è½¬æ¢è¿‡æ¥çš„å€™é€‰å­—/è¯
 } CANDTYPE;
 
 void            LoadTableInfo (void);

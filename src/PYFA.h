@@ -33,7 +33,7 @@ typedef struct {
 } PYTABLE;
 
 int             GetMHIndex_C (char map);
-//���������ʱ�����磬���û����롰jiu's��ʱ��Ӧ�ÿ��Գ��֡����ǡ�����ʣ��������Ƿ����ģ��ƴ��
+//在输入词组时，比如，当用户输入“jiu's”时，应该可以出现“就是”这个词，而无论是否打开了模糊拼音
 int             GetMHIndex_S (char map, Bool bMode);
 Bool		IsZ_C_S (char map);
 

@@ -56,7 +56,7 @@ typedef enum {
 } PY_CAND_WORD_TYPE;
 
 typedef struct _HZ {
-    char            strHZ[MAX_PY_PHRASE_LENGTH * 2 + 1];
+    char            strHZ[MAX_PY_PHRASE_LENGTH * UTF8_MAX_LENGTH + 1];
     int             iPYFA;
     uint            iHit;
     uint            iIndex;
@@ -82,7 +82,7 @@ typedef struct PYPHRASE {
 } PyPhrase;
 
 typedef struct PYBASE {
-    char            strHZ[3];
+    char            strHZ[UTF8_MAX_LENGTH + 1];
     struct PYPHRASE *phrase;
     int             iPhrase;
     struct PYPHRASE *userPhrase;

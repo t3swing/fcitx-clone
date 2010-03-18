@@ -22,7 +22,7 @@
  * @author Yuking yuking_net@sohu.com
  * @date   2008-1-16
  * 
- * @brief  Ö÷´°¿Ú
+ * @brief  ä¸»çª—å£
  * 
  * 
  */
@@ -39,7 +39,7 @@
 #include "ime.h"
 #include "tools.h"
 
-//ÏÂÃæµÄË³Ğò²»ÄÜ¸Ä±ä
+//ä¸‹é¢çš„é¡ºåºä¸èƒ½æ”¹å˜
 #include "logo.xpm"
 #include "fullcorner.xpm"
 #include "halfcorner.xpm"
@@ -65,8 +65,8 @@ int             iMainWindowX = MAINWND_STARTX;
 int             iMainWindowY = MAINWND_STARTY;
 
 WINDOW_COLOR    mainWindowColor = { NULL, NULL, {0, 240 << 8, 255 << 8, 240 << 8} };
-MESSAGE_COLOR   mainWindowLineColor = { NULL, {0, 150 << 8, 220 << 8, 150 << 8} };	//ÏßÌõÉ«
-MESSAGE_COLOR   IMNameColor[3] = {	//ÊäÈë·¨Ãû³ÆµÄÑÕÉ«
+MESSAGE_COLOR   mainWindowLineColor = { NULL, {0, 150 << 8, 220 << 8, 150 << 8} };	//çº¿æ¡è‰²
+MESSAGE_COLOR   IMNameColor[3] = {	//è¾“å…¥æ³•åç§°çš„é¢œè‰²
     {NULL, {0, 170 << 8, 170 << 8, 170 << 8}},
     {NULL, {0, 150 << 8, 200 << 8, 150 << 8}},
     {NULL, {0, 0, 0, 255 << 8}}
@@ -97,7 +97,7 @@ Bool            bCompactMainWindow = False;
 Bool            bShowVK = False;
 Bool		bMainWindow_Hiden = False;
 
-char           *strFullCorner = "È«½ÇÄ£Ê½";
+char           *strFullCorner = "å…¨è§’æ¨¡å¼";
 
 extern Display *dpy;
 extern GC       dimGC;
@@ -282,7 +282,7 @@ void DrawMainWindow (void)
 
 	while (*p1) {
 	    p2 = strTemp;
-	    if (isprint (*p1))	//Ê¹ÓÃÖĞÎÄ×ÖÌå
+	    if (isprint (*p1))	//ä½¿ç”¨ä¸­æ–‡å­—ä½“
 		bEn = True;
 	    else {
 		*p2++ = *p1++;
