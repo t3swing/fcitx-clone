@@ -330,7 +330,6 @@ void ChangeIMState (CARD16 _connect_id)
 
 #ifdef _ENABLE_DBUS 
     if (bUseDBus) {
-	updateMessages();
 	updateProperty(&state_prop);
     }
 #endif
@@ -929,10 +928,6 @@ void ProcessKey (IMForwardEventStruct * call_data)
 	ResetInput ();
 	ResetInputWindow ();
 	CloseInputWindow();
-#ifdef _ENABLE_DBUS
-	if (bUseDBus)
-	    updateMessages();
-#endif
 
 	return;
     case IRV_DISPLAY_CANDWORDS:
@@ -996,12 +991,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 	}
 	else {
 	    ResetInput ();
-	    if (!bUseDBus)
 		CloseInputWindow();
-#ifdef _ENABLE_DBUS
-	    else
-		updateMessages();
-#endif
 	}
 
 	break;
@@ -1012,15 +1002,8 @@ void ProcessKey (IMForwardEventStruct * call_data)
 	    DoPhraseTips ();
 	iHZInputed += (int) (strlen (strStringGet) / 2);	
 
-	if (bVK || (!uMessageDown && (!bPhraseTips || (bPhraseTips && !lastIsSingleHZ)))) {
+	if (bVK || (!uMessageDown && (!bPhraseTips || (bPhraseTips && !lastIsSingleHZ))))
 		CloseInputWindow();
-		uMessageUp = 0;
-		uMessageDown = 0;
-#ifdef _ENABLE_DBUS
-		if (bUseDBus)
-			updateMessages();
-#endif
-	}
 	else {
 		DisplayInputWindow ();
 	    if (!bUseDBus) {
@@ -1293,7 +1276,6 @@ void SwitchIM (INT8 index)
 	
 	updateProperty(&logo_prop);
 	updateProperty(&state_prop);
-	updateMessages();
 	}
 #endif
 }

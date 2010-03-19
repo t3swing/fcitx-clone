@@ -973,10 +973,6 @@ INPUT_RETURN_VALUE DoTableInput (int iKey)
 	    uMessageUp = uMessageDown = 0;
 	    bTablePhraseTips = False;
 	    CloseInputWindow();
-#ifdef _ENABLE_DBUS
-	    if (bUseDBus)
-		updateMessages();
-#endif
 	}
     }
 
