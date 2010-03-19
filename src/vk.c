@@ -544,7 +544,7 @@ void SwitchVK (void)
 
 	XMoveWindow (dpy, VKWindow, x, y);
 	DisplayVKWindow ();
-	XUnmapWindow (dpy, inputWindow);
+	CloseInputWindow();
 
 	if (ConnectIDGetState (connect_id) == IS_CLOSED)
 	    SetIMState (True);

@@ -972,7 +972,7 @@ INPUT_RETURN_VALUE DoTableInput (int iKey)
 	else if (iKey != LCTRL && iKey != RCTRL && iKey != LSHIFT && iKey != RSHIFT) {
 	    uMessageUp = uMessageDown = 0;
 	    bTablePhraseTips = False;
-	    XUnmapWindow (dpy, inputWindow);
+	    CloseInputWindow();
 #ifdef _ENABLE_DBUS
 	    if (bUseDBus)
 		updateMessages();

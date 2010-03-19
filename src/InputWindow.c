@@ -207,7 +207,14 @@ void DisplayInputWindow (void)
     CalInputWindow();
     MoveInputWindow(connect_id);
     if (uMessageUp || uMessageDown)
-	XMapRaised (dpy, inputWindow);
+	{
+		if (!bUseDBus)
+			XMapRaised (dpy, inputWindow);
+#ifdef _ENABLE_DBUS
+		else
+			updateMessages();
+#endif
+	}
 }
 
 void InitInputWindowColor (void)
@@ -490,28 +497,13 @@ void DisplayMessageUp (void)
 	p1 = messageUp[i].strMsg;
 	iPos = 0;
 	while (*p1) {
+		int clen = utf8_char_len(p1);
 	    p2 = strTemp;
-	    if (isprint (*p1))	//使用中文字体
-		bEn = True;
-	    else {
-		*p2++ = *p1++;
-		*p2++ = *p1++;
-		bEn = False;
-	    }
-	    while (*p1) {
-		if (isprint (*p1)) {
-		    if (!bEn)
-			break;
-		    *p2++ = *p1++;
-		}
-		else {
-		    if (bEn)
-			break;
-		    *p2++ = *p1++;
-		    *p2++ = *p1++;
-		}
-	    }
-	    *p2 = '\0';
+		strncpy(p2, p1, clen);
+		strTemp[clen] = '\0';
+		p1 += clen;
+
+		bEn = (clen == 1);
 
 	    strGBKT = bUseGBKT ? ConvertGBKSimple2Tradition (strTemp) : strTemp;
 
@@ -547,28 +539,12 @@ void DisplayMessageUp (void)
 #ifdef _USE_XFT
 		p1 = strText;
 		while (*p1) {
-		    p2 = strTemp;
-		    if (isprint (*p1))	//使用中文字体
-			bEn = True;
-		    else {
-			*p2++ = *p1++;
-			*p2++ = *p1++;
-			bEn = False;
-		    }
-		    while (*p1) {
-			if (isprint (*p1)) {
-			    if (!bEn)
-				break;
-			    *p2++ = *p1++;
-			}
-			else {
-			    if (bEn)
-				break;
-			    *p2++ = *p1++;
-			    *p2++ = *p1++;
-			}
-		    }
-		    *p2 = '\0';
+			int clen = utf8_char_len(p1);
+			p2 = strTemp;
+			strncpy(p2, p1, clen);
+			strTemp[clen] = '\0';
+			p1 += clen;
+			bEn = (clen == 1);
 
 		    iCursorPixPos += StringWidth (strTemp, (bEn) ? xftFontEn : xftFont);
 		}
@@ -727,3 +703,17 @@ void MoveInputWindow(CARD16 connect_id)
     }
     
 }
+
+void CloseInputWindow()
+{
+	XUnmapWindow (dpy, inputWindow);
+#ifdef _ENABLE_DBUS
+	if (bUseDBus)
+	{
+		KIMShowAux(False);
+		KIMShowPreedit(False);
+		KIMShowLookupTable(False);
+	}
+#endif
+}
+

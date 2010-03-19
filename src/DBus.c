@@ -872,12 +872,13 @@ void updateMessages()
         for (i = 0; i < nLabels; i++)
             free(label[i]);
     } else {
-//      KIMUpdateLookupTable(NULL,0,NULL,0,bShowPrev,bShowNext);
+        KIMUpdateLookupTable(NULL,0,NULL,0,bShowPrev,bShowNext);
         KIMShowLookupTable(False);
     }
     
     n = uMessageUp;
     char aux[MESSAGE_MAX_LENGTH] = "";
+    char empty[MESSAGE_MAX_LENGTH] = "";
     if (n) {
         // FIXME: buffer overflow
         for (i=0;i<n;i++) {
@@ -887,11 +888,14 @@ void updateMessages()
         if (bShowCursor)
         {
             KIMUpdatePreeditText(aux);
+            KIMUpdateAux(empty);
             KIMShowPreedit(True);
             KIMUpdatePreeditCaret(calKIMCursorPos());
             KIMShowAux(False);
         }
         else {
+            KIMUpdatePreeditText(empty);
+            KIMUpdateAux(aux);
             KIMShowPreedit(False);
             KIMShowAux(True);
         }
@@ -1199,7 +1203,6 @@ int calKIMCursorPos()
 
     const char      *p1;
     const char      *pivot;
-    Bool            bEn;
 
     iChar = iCursorPos;
 
@@ -1207,27 +1210,8 @@ int calKIMCursorPos()
         if (bShowCursor && iChar) {
             p1 = pivot = messageUp[i].strMsg;
             while (*p1 && p1 < pivot + iChar) {
-                if (isprint (*p1))	//使用中文字体
-                    bEn = True;
-                else {
-                    bEn = False;
-                    p1 += 2;
-                    iCount ++;
-                }
-                while (*p1 && p1 < pivot + iChar) {
-                    if (isprint (*p1)) {
-                        if (!bEn)
-                            break;
-                        p1 ++;
-                        iCount ++;
-                    }
-                    else {
-                        if (bEn)
-                            break;
-                        p1 += 2;
-                        iCount ++;
-                    }
-                }
+                p1 = p1 + utf8_char_len(p1);
+                iCount ++;
             }
             if (strlen (messageUp[i].strMsg) > iChar) {
             iChar = 0;
