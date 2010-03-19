@@ -826,7 +826,7 @@ void updateMessages()
 
             if (messageDown[i].type == MSG_INDEX) {
                 if (nLabels) {
-                    text[nTexts++] = strdup(cmb);
+                    text[nTexts++] = bUseGBKT ? ConvertGBKSimple2Tradition(cmb) : strdup(cmb);
                 }
                 label[nLabels++] = strdup(messageDown[i].strMsg);
                 strcpy(cmb,"");
@@ -834,7 +834,7 @@ void updateMessages()
                 strcat(cmb,(messageDown[i].strMsg));
             }
         }
-        text[nTexts++] = strdup(cmb);
+        text[nTexts++] = bUseGBKT ? ConvertGBKSimple2Tradition(cmb) : strdup(cmb);
 /*        if (nLabels < nTexts) {
             nTexts = nLabels;
         }*/
@@ -880,6 +880,7 @@ void updateMessages()
     char aux[MESSAGE_MAX_LENGTH] = "";
     char empty[MESSAGE_MAX_LENGTH] = "";
     if (n) {
+        char* strGBKT;
         // FIXME: buffer overflow
         for (i=0;i<n;i++) {
             strcat(aux,messageUp[i].strMsg);
@@ -887,18 +888,22 @@ void updateMessages()
         }
         if (bShowCursor)
         {
-            KIMUpdatePreeditText(aux);
+            strGBKT = bUseGBKT ? ConvertGBKSimple2Tradition(aux) : aux;
+            KIMUpdatePreeditText(strGBKT);
             KIMUpdateAux(empty);
             KIMShowPreedit(True);
             KIMUpdatePreeditCaret(calKIMCursorPos());
             KIMShowAux(False);
         }
         else {
+            strGBKT = bUseGBKT ? ConvertGBKSimple2Tradition(aux) : aux;
             KIMUpdatePreeditText(empty);
-            KIMUpdateAux(aux);
+            KIMUpdateAux(strGBKT);
             KIMShowPreedit(False);
             KIMShowAux(True);
         }
+        if (bUseGBKT)
+            free(strGBKT);
     } else {
         KIMShowPreedit(False);
         KIMShowAux(False);

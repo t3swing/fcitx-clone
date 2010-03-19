@@ -674,11 +674,11 @@ void ProcessKey (IMForwardEventStruct * call_data)
 						if (iInCap == 2) {
 						    if (semicolonToDo == K_SEMICOLON_ENG) {
 							strcpy (messageUp[0].strMsg, "英文输入 ");
-							iCursorPos += 9;
+							iCursorPos += strlen("英文输入 ");
 						    }
 						    else {
 							strcpy (messageUp[0].strMsg, "自定义输入 ");
-							iCursorPos += 11;
+							iCursorPos += strlen("自定义输入 ");
 						    }
 
 						    if (iCodeInputCount) {
