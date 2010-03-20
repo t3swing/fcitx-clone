@@ -2558,6 +2558,7 @@ void SavePYUserPhrase (void)
 		INT8 clen;
 		fwrite (&i, sizeof (int), 1, fp);
 		clen = strlen(PYFAList[i].pyBase[j].strHZ);
+		fwrite (&clen, sizeof(INT8), 1, fp);
 		fwrite (PYFAList[i].pyBase[j].strHZ, sizeof (char) * clen, 1, fp);
 		fwrite (&iTemp, sizeof (int), 1, fp);
 		phrase = PYFAList[i].pyBase[j].userPhrase->next;
