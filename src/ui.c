@@ -606,7 +606,7 @@ int StringWidth (char *str, XFontSet font)
     if (!font || !str)
 	return 0;
 
-    XmbTextExtents (font, str, strlen (str), &InkBox, &LogicalBox);
+    Xutf8TextExtents (font, str, strlen (str), &InkBox, &LogicalBox);
 
     return LogicalBox.width;
 }
@@ -619,7 +619,7 @@ int FontHeight (XFontSet font)
     if (!font)
 	return 0;
 
-    XmbTextExtents (font, str, strlen (str), &InkBox, &LogicalBox);
+    Xutf8TextExtents (font, str, strlen (str), &InkBox, &LogicalBox);
 
     return LogicalBox.height;
 }
@@ -654,7 +654,7 @@ void OutputString (Window window, XFontSet font, char *str, int x, int y, GC gc)
     if (!font || !str)
 	return;
 
-    XmbDrawString (dpy, window, font, gc, x, y, str, strlen (str));
+    Xutf8DrawString (dpy, window, font, gc, x, y, str, strlen (str));
 }
 #endif
 

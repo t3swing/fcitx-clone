@@ -565,7 +565,7 @@ void SendHZtoClient (IMForwardEventStruct * call_data, char *strHZ)
 
 	ps = strHZ;
 
-    XmbTextListToTextProperty (dpy, (char **) &ps, 1, XCompoundTextStyle, &tp);
+    Xutf8TextListToTextProperty (dpy, (char **) &ps, 1, XCompoundTextStyle, &tp);
 
     memset (&cms, 0, sizeof (cms));
     cms.major_code = XIM_COMMIT;

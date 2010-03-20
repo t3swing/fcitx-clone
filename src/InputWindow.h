@@ -41,8 +41,9 @@
 
 /* #define INPUTWND_START_POS_UP	8 */
 #define INPUTWND_START_POS_DOWN	8
+#define MESSAGE_MAX_CHARNUM	(150)	//输入条上显示的最长字数
 
-#define MESSAGE_MAX_LENGTH	(150*UTF8_MAX_LENGTH)	//输入条上显示的最长长度，以字符计
+#define MESSAGE_MAX_LENGTH	(MESSAGE_MAX_CHARNUM*UTF8_MAX_LENGTH)	//输入条上显示的最长长度，以字符计
 
 /* 将输入条上显示的内容分为以下几类 */
 #define MESSAGE_TYPE_COUNT	7
