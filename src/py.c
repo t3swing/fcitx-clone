@@ -525,7 +525,7 @@ INPUT_RETURN_VALUE DoPYInput (int iKey)
 		val += utf8_strlen (pySelected[i].strHZ);
 
 	    if (findMap.iHZCount > (MAX_WORDS_USER_INPUT - val)) {
-		UpdateFindString ();
+		UpdateFindString (val);
 		ParsePY (strFindString, &findMap, PY_PARSE_INPUT_USER);
 	    }
 
@@ -927,13 +927,13 @@ void PYResetFlags (void)
     }
 }
 
-void UpdateFindString (void)
+void UpdateFindString (int val)
 {
     int             i;
 
     strFindString[0] = '\0';
     for (i = 0; i < findMap.iHZCount; i++) {
-	if (i >= MAX_WORDS_USER_INPUT)
+	if (i >= MAX_WORDS_USER_INPUT - val)
 	    break;
 	strcat (strFindString, findMap.strPYParsed[i]);
     }
@@ -1728,7 +1728,7 @@ void PYGetPhraseCandWords (SEARCH_MODE mode)
  */
 Bool PYAddPhraseCandWord (PYCandIndex pos, PyPhrase * phrase, SEARCH_MODE mode, Bool b)
 {
-    char            str[MAX_WORDS_USER_INPUT * 2 + 1];
+    char            str[MAX_WORDS_USER_INPUT * UTF8_MAX_LENGTH + 1];
     int             i = 0, j, iStart = 0;
 
     strcpy (str, PYFAList[pos.iPYFA].pyBase[pos.iBase].strHZ);

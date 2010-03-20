@@ -158,7 +158,7 @@ void            ResetPYStatus ();
 int             GetBaseIndex (int iPYFA, char *strBase);
 INPUT_RETURN_VALUE DoPYInput (int iKey);
 void            UpdateCodeInputPY (void);
-void            UpdateFindString (void);
+void            UpdateFindString (int val);
 void            CalculateCursorPosition (void);
 
 void            PYResetFlags (void);

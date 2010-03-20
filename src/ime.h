@@ -34,13 +34,13 @@
 #include "xim.h"
 #include "KeyList.h"
 #include "utf8.h"
+#include "fcitx.h"
 
 #define MAX_CAND_WORD	10
 #define MAX_USER_INPUT	300
 #define INPUT_METHODS	5	//标示输入法的类别数量
 
 #define HOT_KEY_COUNT	2
-#define MAX_IM_NAME	15
 #define TEMP_FILE		"FCITX_DICT_TEMP"
 
 typedef enum _INPUT_METHOD {

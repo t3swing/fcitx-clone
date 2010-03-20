@@ -32,7 +32,7 @@
 #define FH_MAX_LENGTH  10
 #define TABLE_AUTO_SAVE_AFTER 1024
 #define AUTO_PHRASE_COUNT 10000
-#define SINGLE_HZ_COUNT 33000
+#define SINGLE_HZ_COUNT 66000
 
 typedef struct _RULE_RULE {
     unsigned char   iFlag;	// 1 --> 正序   0 --> 逆序

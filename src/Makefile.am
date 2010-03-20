@@ -35,7 +35,7 @@ fcitx_SOURCES = IC.c IC.h \
 				fcitx.h extra.c extra.h \
 				internalVersion.c \
 				ImeRemote.c \
-				utf8.c utf8.h
+				utf8.c utf8.h utf8_in_gb18030.c
 		
 fcitx_LDADD = ../lib/libXimd.a
 fcitx_LDFLAGS = -lXpm -lXtst -lpthread

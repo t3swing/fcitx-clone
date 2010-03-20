@@ -588,28 +588,13 @@ void DisplayMessageDown (void)
 	p1 = messageDown[i].strMsg;
 
 	while (*p1) {
+		int clen = utf8_char_len(p1);
 	    p2 = strTemp;
-	    if (isprint (*p1))	//使用中文字体
-		bEn = True;
-	    else {
-		*p2++ = *p1++;
-		*p2++ = *p1++;
-		bEn = False;
-	    }
-	    while (*p1) {
-		if (isprint (*p1)) {
-		    if (!bEn)
-			break;
-		    *p2++ = *p1++;
-		}
-		else {
-		    if (bEn)
-			break;
-		    *p2++ = *p1++;
-		    *p2++ = *p1++;
-		}
-	    }
-	    *p2 = '\0';
+		strncpy(p2, p1, clen);
+		strTemp[clen] = '\0';
+		p1 += clen;
+
+		bEn = (clen == 1);
 
 	    strGBKT = bUseGBKT ? ConvertGBKSimple2Tradition (strTemp) : strTemp;
 

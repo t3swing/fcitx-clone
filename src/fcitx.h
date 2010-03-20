@@ -3,7 +3,7 @@
 
 #define EIM_MAX		4
 
-#define MAX_IM_NAME	15
+#define MAX_IM_NAME	(8 * UTF8_MAX_LENGTH)
 
 #define KEYM_MASK	0xff0000
 #define KEYM_CTRL	0x010000

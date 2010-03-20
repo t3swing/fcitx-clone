@@ -184,6 +184,8 @@ extern Bool	bRecording;
 extern char     strRecordingPath[];
 #endif
 
+extern int utf8_in_gb18030[];
+
 pthread_rwlock_t plock;
 
 #define FCITX_CONFIG_DIR "/fcitx-utf8/"
@@ -1941,9 +1943,45 @@ char           *ConvertGBKSimple2Tradition (char *strHZ)
     return ret;
 }
 
+static int cmpi(const void * a, const void *b)
+{
+	return (*((int*)a)) - (*((int*)b));
+}
+
 int CalHZIndex (char *strHZ)
 {
-    return (strHZ[0] + 127) * 255 + strHZ[1] + 128;
+	unsigned int iutf = 0;
+	int l = utf8_char_len(strHZ);
+	unsigned char* utf = (unsigned char*) strHZ;
+	int *res;
+	int idx;
+	
+	if (l == 2)
+	{
+		iutf = *utf++ << 8;
+		iutf |= *utf++;
+	}
+	else if (l == 3)
+	{
+		iutf = *utf++ << 16;
+		iutf |= *utf++ << 8;
+		iutf |= *utf++;
+	}
+	else if (l == 4)
+	{
+		iutf = *utf++ << 24;
+		
+		iutf |= *utf++ << 16;
+		iutf |= *utf++ << 8;
+		iutf |= *utf++;
+	}
+
+	res = bsearch(&iutf, utf8_in_gb18030, 63360, sizeof(int), cmpi);
+	if (res)
+		idx = res - utf8_in_gb18030;
+	else
+		idx = 63361;
+    return idx;
 }
 
 /**

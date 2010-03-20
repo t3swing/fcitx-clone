@@ -396,7 +396,7 @@ void LoadTableInfo (void)
 Bool LoadTableDict (void)
 {
     char            strCode[MAX_CODE_LENGTH + 1];
-    char            strHZ[PHRASE_MAX_LENGTH * 2 + 1];
+    char            strHZ[PHRASE_MAX_LENGTH * UTF8_MAX_LENGTH + 1];
     FILE           *fpDict;
     RECORD         *recTemp;
     char            strPath[PATH_MAX];
@@ -528,7 +528,7 @@ Bool LoadTableDict (void)
 	}
 	/* **************************************************************** */
 	/** 为单字生成一个表   */
-	if (strlen (recTemp->strHZ) == 2 && !IsIgnoreChar (strCode[0]) && !recTemp->bPinyin) {
+	if (utf8_strlen (recTemp->strHZ) == 1 && !IsIgnoreChar (strCode[0]) && !recTemp->bPinyin) {
 	    iTemp = CalHZIndex (recTemp->strHZ);
 	    if (iTemp >= 0 && iTemp < SINGLE_HZ_COUNT) {
 		if (tableSingleHZ[iTemp]) {
@@ -609,9 +609,9 @@ Bool LoadTableDict (void)
 
 	    for (; i < iAutoPhrase; i++) {
 		autoPhrase[i].strCode = (char *) malloc (sizeof (char) * (table[iTableIMIndex].iCodeLength + 1));
-		autoPhrase[i].strHZ = (char *) malloc (sizeof (char) * (PHRASE_MAX_LENGTH * 2 + 1));
+		autoPhrase[i].strHZ = (char *) malloc (sizeof (char) * (PHRASE_MAX_LENGTH * UTF8_MAX_LENGTH + 1));
 		fread (autoPhrase[i].strCode, table[iTableIMIndex].iCodeLength + 1, 1, fpDict);
-		fread (autoPhrase[i].strHZ, PHRASE_MAX_LENGTH * 2 + 1, 1, fpDict);
+		fread (autoPhrase[i].strHZ, PHRASE_MAX_LENGTH * UTF8_MAX_LENGTH + 1, 1, fpDict);
 		fread (&iTempCount, sizeof (unsigned int), 1, fpDict);
 		autoPhrase[i].iSelected = iTempCount;
 		if (i == AUTO_PHRASE_COUNT - 1)
@@ -624,7 +624,7 @@ Bool LoadTableDict (void)
 
 	for (; i < AUTO_PHRASE_COUNT; i++) {
 	    autoPhrase[i].strCode = (char *) malloc (sizeof (char) * (table[iTableIMIndex].iCodeLength + 1));
-	    autoPhrase[i].strHZ = (char *) malloc (sizeof (char) * (PHRASE_MAX_LENGTH * 2 + 1));
+	    autoPhrase[i].strHZ = (char *) malloc (sizeof (char) * (PHRASE_MAX_LENGTH * UTF8_MAX_LENGTH + 1));
 	    autoPhrase[i].iSelected = 0;
 	    if (i == AUTO_PHRASE_COUNT - 1)
 		autoPhrase[i].next = &autoPhrase[0];
@@ -872,7 +872,7 @@ void SaveTableDict (void)
 	    fwrite (&iAutoPhrase, sizeof (int), 1, fpDict);
 	    for (i = 0; i < iAutoPhrase; i++) {
 		fwrite (autoPhrase[i].strCode, table[iTableIMIndex].iCodeLength + 1, 1, fpDict);
-		fwrite (autoPhrase[i].strHZ, PHRASE_MAX_LENGTH * 2 + 1, 1, fpDict);
+		fwrite (autoPhrase[i].strHZ, PHRASE_MAX_LENGTH * UTF8_MAX_LENGTH + 1, 1, fpDict);
 		iTemp = autoPhrase[i].iSelected;
 		fwrite (&iTemp, sizeof (unsigned int), 1, fpDict);
 	    }
@@ -1158,7 +1158,7 @@ INPUT_RETURN_VALUE DoTableInput (int iKey)
 		LoadPYBaseDict ();
 
 	    //如果刚刚输入的是个词组，刚不查拼音
-	    if (strlen (strStringGet) != 2)
+	    if (utf8_strlen (strStringGet) != 1)
 		return IRV_DO_NOTHING;
 
 	    iCodeInputCount = 0;
@@ -1322,7 +1322,7 @@ char           *TableGetCandWord (int iIndex)
     
     str=_TableGetCandWord(iIndex, True);
     if (str) {
-    	if (table[iTableIMIndex].bAutoPhrase && (strlen (str) == 2 || (strlen (str) > 2 && table[iTableIMIndex].bAutoPhrasePhrase)))
+    	if (table[iTableIMIndex].bAutoPhrase && (utf8_strlen (str) == 1 || (utf8_strlen (str) > 1 && table[iTableIMIndex].bAutoPhrasePhrase)))
     	    UpdateHZLastInput (str);
 	    
 	if ( pCurCandRecord )
@@ -1415,7 +1415,7 @@ char           *_TableGetCandWord (int iIndex, Bool _bLegend)
 	}
     }
 
-    if (strlen (pCandWord) == 2)
+    if (utf8_strlen (pCandWord) == 1)
 	lastIsSingleHZ = 1;
     else
 	lastIsSingleHZ = 0;
@@ -1711,7 +1711,7 @@ INPUT_RETURN_VALUE TableGetCandWords (SEARCH_MODE mode)
 	    messageDown[uMessageDown++].type = ((i == 0) ? MSG_FIRSTCAND : MSG_OTHER);
 
 	if (tableCandWord[i].flag == CT_PYPHRASE) {
-	    if (strlen (tableCandWord[i].candWord.strPYPhrase) == 2) {
+	    if (utf8_strlen (tableCandWord[i].candWord.strPYPhrase) == 1) {
 		recTemp = tableSingleHZ[CalHZIndex (tableCandWord[i].candWord.strPYPhrase)];
 
 		if (!recTemp)
@@ -1723,7 +1723,7 @@ INPUT_RETURN_VALUE TableGetCandWords (SEARCH_MODE mode)
 		pstr = (char *) NULL;
 	}
 	else if ((tableCandWord[i].flag == CT_NORMAL) && (tableCandWord[i].candWord.record->bPinyin)) {
-	    if (strlen (tableCandWord[i].candWord.record->strHZ) == 2) {
+	    if (utf8_strlen (tableCandWord[i].candWord.record->strHZ) == 1) {
 		recTemp = tableSingleHZ[CalHZIndex (tableCandWord[i].candWord.record->strHZ)];
 		if (!recTemp)
 		    pstr = (char *) NULL;
@@ -2053,7 +2053,7 @@ void TableDelPhraseByIndex (int iIndex)
     if (tableCandWord[iIndex - 1].flag != CT_NORMAL)
 	return;
 
-    if (strlen (tableCandWord[iIndex - 1].candWord.record->strHZ) <= 2)
+    if (utf8_strlen (tableCandWord[iIndex - 1].candWord.record->strHZ) <= 1)
 	return;
 
     TableDelPhrase (tableCandWord[iIndex - 1].candWord.record);
@@ -2117,13 +2117,12 @@ RECORD         *TableHasPhrase (char *strCode, char *strHZ)
 RECORD         *TableFindPhrase (char *strHZ)
 {
     RECORD         *recTemp;
-    char            strTemp[3];
+    char            strTemp[UTF8_MAX_LENGTH + 1];
     int             i;
 
     //首先，先查找第一个汉字的编码
-    strTemp[0] = strHZ[0];
-    strTemp[1] = strHZ[1];
-    strTemp[2] = '\0';
+    strncpy(strTemp, strHZ, utf8_char_len(strHZ));
+    strTemp[utf8_char_len(strHZ)] = '\0';
 
     recTemp = tableSingleHZ[CalHZIndex (strTemp)];
     if (!recTemp)
@@ -2195,12 +2194,11 @@ void TableCreatePhraseCode (char *strHZ)
     unsigned char   i;
     unsigned char   i1, i2;
     size_t          iLen;
-    char            strTemp[3];
+    char            strTemp[UTF8_MAX_LENGTH + 1] = {'\0', };
     RECORD         *recTemp;
 
-    strTemp[2] = '\0';
     bCanntFindCode = False;
-    iLen = strlen (strHZ) / 2;
+    iLen = utf8_strlen (strHZ);
     if (iLen >= table[iTableIMIndex].iCodeLength) {
 	i2 = table[iTableIMIndex].iCodeLength;
 	i1 = 1;
@@ -2216,13 +2214,14 @@ void TableCreatePhraseCode (char *strHZ)
     }
 
     for (i1 = 0; i1 < table[iTableIMIndex].iCodeLength; i1++) {
+	int clen;
 	if (table[iTableIMIndex].rule[i].rule[i1].iFlag) {
-	    strTemp[0] = strHZ[(table[iTableIMIndex].rule[i].rule[i1].iWhich - 1) * 2];
-	    strTemp[1] = strHZ[(table[iTableIMIndex].rule[i].rule[i1].iWhich - 1) * 2 + 1];
+		clen = utf8_char_len(&strHZ[(table[iTableIMIndex].rule[i].rule[i1].iWhich - 1) * 2]);
+		strncpy(strTemp, &strHZ[(table[iTableIMIndex].rule[i].rule[i1].iWhich - 1) * 2], clen);
 	}
 	else {
-	    strTemp[0] = strHZ[(iLen - table[iTableIMIndex].rule[i].rule[i1].iWhich) * 2];
-	    strTemp[1] = strHZ[(iLen - table[iTableIMIndex].rule[i].rule[i1].iWhich) * 2 + 1];
+		clen = utf8_char_len(&strHZ[(iLen - table[iTableIMIndex].rule[i].rule[i1].iWhich) * 2]);
+		strncpy(strTemp, &strHZ[(iLen - table[iTableIMIndex].rule[i].rule[i1].iWhich) * 2], clen);
 	}
 
 	recTemp = tableSingleHZ[CalHZIndex (strTemp)];
@@ -2473,7 +2472,7 @@ char           *TableGetFHCandWord (int iIndex)
 Bool TablePhraseTips (void)
 {
     RECORD         *recTemp = NULL;
-    char            strTemp[PHRASE_MAX_LENGTH * 2 + 1] = "\0";
+    char            strTemp[PHRASE_MAX_LENGTH * UTF8_MAX_LENGTH + 1] = "\0", *ps;
     INT16           i, j;
 
     if (!recordHead)
@@ -2487,16 +2486,17 @@ Bool TablePhraseTips (void)
     for (i = j; i < iHZLastInputCount; i++)
 	strcat (strTemp, hzLastInput[i].strHZ);
     //如果只有一个汉字，这个工作也不需要了
-    if (strlen (strTemp) < 4)
+    if (utf8_strlen (strTemp) < 2)
 	return False;
 
     //首先要判断是不是已经在词库中
+	ps = strTemp;
     for (i = 0; i < (iHZLastInputCount - j - 1); i++) {
-	recTemp = TableFindPhrase (strTemp + i * 2);
+	recTemp = TableFindPhrase (ps);
 	if (recTemp) {
 	    strcpy (messageUp[0].strMsg, "词库中有词组 ");
 	    messageUp[0].type = MSG_TIPS;
-	    strcpy (messageUp[1].strMsg, strTemp + i * 2);
+	    strcpy (messageUp[1].strMsg, ps);
 	    messageUp[1].type = MSG_INPUT;
 	    uMessageUp = 2;
 
@@ -2512,6 +2512,7 @@ Bool TablePhraseTips (void)
 
 	    return True;
 	}
+	ps = ps + utf8_char_len(ps);
     }
 
     return False;
@@ -2525,7 +2526,7 @@ void TableCreateAutoPhrase (INT8 iCount)
     if (!autoPhrase)
 	return;
 
-    strHZ=(char *)malloc((table[iTableIMIndex].iAutoPhrase * 2 + 1)*sizeof(char));
+    strHZ=(char *)malloc((table[iTableIMIndex].iAutoPhrase * UTF8_MAX_LENGTH + 1)*sizeof(char));
     /*
      * 为了提高效率，此处只重新生成新录入字构成的词组
      */
@@ -2579,21 +2580,23 @@ void TableCreateAutoPhrase (INT8 iCount)
 void UpdateHZLastInput (char *str)
 {
     int             i, j;
+	char           *pstr;
 
-    for (i = 0; i < strlen (str) / 2; i++) {
+	pstr = str;
+
+    for (i = 0; i < utf8_strlen (str) ; i++) {
 	if (iHZLastInputCount < PHRASE_MAX_LENGTH)
 	    iHZLastInputCount++;
 	else {
 	    for (j = 0; j < (iHZLastInputCount - 1); j++) {
-		hzLastInput[j].strHZ[0] = hzLastInput[j + 1].strHZ[0];
-		hzLastInput[j].strHZ[1] = hzLastInput[j + 1].strHZ[1];
+		strncpy(hzLastInput[j].strHZ, hzLastInput[j + 1].strHZ, utf8_char_len(hzLastInput[j + 1].strHZ));
 	    }
 	}
-	hzLastInput[iHZLastInputCount - 1].strHZ[0] = str[2 * i];
-	hzLastInput[iHZLastInputCount - 1].strHZ[1] = str[2 * i + 1];
-	hzLastInput[iHZLastInputCount - 1].strHZ[2] = '\0';
+	strncpy(hzLastInput[iHZLastInputCount - 1].strHZ, pstr, utf8_char_len(pstr));
+	hzLastInput[iHZLastInputCount - 1].strHZ[utf8_char_len(pstr)] = '\0';
+	pstr = pstr + utf8_char_len(pstr);
     }
 
     if (table[iTableIMIndex].bRule && table[iTableIMIndex].bAutoPhrase)
-	TableCreateAutoPhrase ((INT8) (strlen (str) / 2));
+	TableCreateAutoPhrase ((INT8) (utf8_strlen (str)));
 }
