@@ -32,7 +32,7 @@
 
 typedef struct {
      char            strSymbol[VK_NUMBERS][2][UTF8_MAX_LENGTH + 1];	//相应的符号
-     char            strName[13];
+     char            strName[UTF8_MAX_LENGTH * 6 + 1];
 } VKS;
 
 Bool            CreateVKWindow (void);
