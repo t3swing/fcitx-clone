@@ -2215,13 +2215,16 @@ void TableCreatePhraseCode (char *strHZ)
 
     for (i1 = 0; i1 < table[iTableIMIndex].iCodeLength; i1++) {
 	int clen;
+    char* ps;
 	if (table[iTableIMIndex].rule[i].rule[i1].iFlag) {
-		clen = utf8_char_len(&strHZ[(table[iTableIMIndex].rule[i].rule[i1].iWhich - 1) * 2]);
-		strncpy(strTemp, &strHZ[(table[iTableIMIndex].rule[i].rule[i1].iWhich - 1) * 2], clen);
+        ps = utf8_get_nth_char(strHZ, table[iTableIMIndex].rule[i].rule[i1].iWhich - 1);
+		clen = utf8_char_len(ps);
+		strncpy(strTemp, ps, clen);
 	}
 	else {
-		clen = utf8_char_len(&strHZ[(iLen - table[iTableIMIndex].rule[i].rule[i1].iWhich) * 2]);
-		strncpy(strTemp, &strHZ[(iLen - table[iTableIMIndex].rule[i].rule[i1].iWhich) * 2], clen);
+		ps = utf8_get_nth_char(strHZ, iLen - table[iTableIMIndex].rule[i].rule[i1].iWhich);
+		clen = utf8_char_len(ps);
+		strncpy(strTemp, ps, clen);
 	}
 
 	recTemp = tableSingleHZ[CalHZIndex (strTemp)];

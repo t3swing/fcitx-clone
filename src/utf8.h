@@ -11,6 +11,7 @@ extern size_t utf8_strlen(const char *s);
 extern char* utf8_get_char(const char *in, int *chr);
 extern int utf8_strncmp(const char *s1, const char *s2, int n);
 extern int utf8_char_len(const char *in);
+extern char* utf8_get_nth_char(char* s, unsigned int n);
 
 #endif /* ifndef UTF8_H */
 

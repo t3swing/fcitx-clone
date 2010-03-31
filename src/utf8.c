@@ -110,6 +110,20 @@ int utf8_strncmp(const char *s1, const char *s2, int n) {
     return 0;
 }
 
+char* utf8_get_nth_char(char* s, unsigned int n)
+{
+    unsigned int l = 0;
+    
+    while(*s && l < n)
+    {
+        int chr;
+        
+        s = utf8_get_char(s, &chr);
+        l++;
+    }
+
+    return s;
+}
 
 /* Modeline for ViM {{{
  * vim: ts=4 et sw=4
