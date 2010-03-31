@@ -1164,11 +1164,11 @@ void PYCreateAuto (void)
     if (findMap.iHZCount == 1)
 	return;
 
-    while (strlen (strPYAuto) != findMap.iHZCount * 2) {
+    while (utf8_strlen (strPYAuto) < findMap.iHZCount) {
 	phraseSelected = NULL;
 	baseSelected = NULL;
 
-	iCount = strlen (strPYAuto) / 2;
+	iCount = utf8_strlen (strPYAuto);
 	str[0] = findMap.strMap[iCount][0];
 	str[1] = findMap.strMap[iCount][1];
 
