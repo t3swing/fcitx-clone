@@ -110,6 +110,17 @@ SP_FROM         iSPFrom = SP_FROM_USER;	//从何处读取的双拼方案，0：�
 
 //extern Bool     bSingleHZMode;
 
+#define STR_SPCONF_DEFAULT 0
+#define STR_SPCONF_NAME 1
+
+#define cstr(b) (strConstSPConf[STR_SPCONF_##b])
+#define cstrlen(b) (strlen(cstr(b)))
+
+char* strConstSPConf[] = {
+    "默认方案=",
+    "方案名称="
+};
+
 void SPInit (void)
 {
     bSP = True;
@@ -165,9 +176,9 @@ void LoadSPData (void)
 	if (!strlen (pstr) || pstr[0] == '#')
 	    continue;
 
-	if (!strncmp (pstr, "默认方案=", 9)) {
+	if (!strncmp (pstr, cstr(DEFAULT), cstrlen(DEFAULT))) {
 	    if (iSPFrom != SP_FROM_SYSTEM_CONFIG) {
-		pstr += 9;
+		pstr += cstrlen(DEFAULT);
 		if (*pstr == ' ' || *pstr == '\t')
 		    pstr++;
 		strcpy (strDefaultSP, pstr);
@@ -175,8 +186,8 @@ void LoadSPData (void)
 	    continue;
 	}
 
-	if (!strncmp (pstr, "方案名称=", 9)) {
-	    pstr += 9;
+	if (!strncmp (pstr, cstr(NAME), cstrlen(NAME))) {
+	    pstr += cstrlen(NAME);
 	    if (*pstr == ' ' || *pstr == '\t')
 		pstr++;
 	    bIsDefault = !(strcmp (strDefaultSP, pstr));
