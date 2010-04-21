@@ -1,3 +1,7 @@
+
+2010-04-05: CSSlayer <wengxt@gmail.com>
+	* createPYMB加入对gbkpy.org的简单错误检测
+
 2010-04-05: CSSlayer <wengxt@gmail.com>
 	* 修复自定义双拼配置无效问题
 

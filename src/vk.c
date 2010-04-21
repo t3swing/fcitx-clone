@@ -341,7 +341,7 @@ Bool VKMouseKey (int x, int y)
 	    forwardEvent.connect_id = connect_id;
 	    forwardEvent.icid = CurrentIC->id;
 	    SendHZtoClient (&forwardEvent, pstr);
-	    iHZInputed += (int) (strlen (pstr) / 2);	//粗略统计字数
+	    iHZInputed += (int) (utf8_strlen (pstr));	//粗略统计字数
 	}
     }
 

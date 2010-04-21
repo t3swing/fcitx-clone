@@ -612,7 +612,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 						SendHZtoClient (call_data, pstr);
 						strcpy (strStringGet, pstr);
 						//粗略统计字数
-						iHZInputed += (int) (strlen (strStringGet) / 2);
+						iHZInputed += (int) (utf8_strlen (strStringGet));
 						iCodeInputCount = 0;
 					    }
 					}
@@ -975,7 +975,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 	break;
     case IRV_GET_LEGEND:
 	SendHZtoClient (call_data, strStringGet);
-	iHZInputed += (int) (strlen (strStringGet) / 2);	//粗略统计字数
+	iHZInputed += (int) (utf8_strlen (strStringGet));	//粗略统计字数
 	if (iLegendCandWordCount) {
 	    bShowNext = bShowPrev = False;
 	    if (iCurrentLegendCandPage > 0)
@@ -1000,7 +1000,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 	bLastIsNumber = False;
 	if (bPhraseTips && im[iIMIndex].PhraseTips && !bVK)
 	    DoPhraseTips ();
-	iHZInputed += (int) (strlen (strStringGet) / 2);	
+	iHZInputed += (int) (utf8_strlen (strStringGet));	
 
 	if (bVK || (!uMessageDown && (!bPhraseTips || (bPhraseTips && !lastIsSingleHZ))))
 		CloseInputWindow();
@@ -1019,7 +1019,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 	if (bChnPunc && bConvertPunc)
 	    ConvertPunc ();
     case IRV_PUNC:
-	iHZInputed += (int) (strlen (strStringGet) / 2);	//粗略统计字数
+	iHZInputed += (int) (utf8_strlen (strStringGet));	//粗略统计字数
 	ResetInput ();
 	if (!uMessageDown)
 	    CloseInputWindow();
@@ -1029,7 +1029,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 	lastIsSingleHZ = 0;
 
 	if (retVal == IRV_GET_CANDWORDS_NEXT || lastIsSingleHZ == -1) {
-	    iHZInputed += (int) (strlen (strStringGet) / 2);	//粗略统计字数
+	    iHZInputed += (int) (utf8_strlen (strStringGet));	//粗略统计字数
 		DisplayInputWindow ();
 	}
 
