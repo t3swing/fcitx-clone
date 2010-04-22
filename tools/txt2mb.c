@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #endif
 
-#include "../src/internalVersion.c"
+#include "../src/core/internalVersion.c"
 
 typedef int     Bool;
 

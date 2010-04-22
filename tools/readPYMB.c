@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "py.h"
+#include "im/pinyin/py.h"
 #include "pyTools.h"
 
 void usage();

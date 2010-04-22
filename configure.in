@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_INIT
-AC_CONFIG_SRCDIR([src/main.c])
+AC_CONFIG_SRCDIR([src/core/main.c])
 AM_INIT_AUTOMAKE(fcitx, "20100421")
 
 dnl Find out what type of system we are
@@ -205,9 +205,20 @@ AC_CONFIG_FILES([
            doc/Makefile
            data/Makefile
            xpm/Makefile
+           png/Makefile
            lib/Makefile
            src/version.h
            src/Makefile
+           src/core/Makefile
+           src/im/Makefile
+           src/im/pinyin/Makefile
+           src/im/qw/Makefile
+           src/im/special/Makefile
+           src/im/extra/Makefile
+           src/im/table/Makefile
+           src/interface/Makefile
+           src/ui/Makefile
+           src/tools/Makefile
            tools/Makefile
 ])
 AC_OUTPUT

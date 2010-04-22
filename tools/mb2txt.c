@@ -21,7 +21,7 @@
 #include <config.h>
 #endif
 
-#include "../src/internalVersion.c"
+#include "../src/core/internalVersion.c"
 
 #include <stdio.h>
 #include <string.h>

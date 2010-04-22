@@ -10,6 +10,6 @@ readPYMB_SOURCES = pyTools.c pyTools.h readPYMB.c
 readPYBase_SOURCES = pyTools.c pyTools.h readPYBase.c
 fcitx_remote_SOURCES = client-test.c
 
-createPYMB_LDADD = ../src/pyParser.o ../src/pyMapTable.o ../src/PYFA.o ../src/sp.o ../src/utf8.o
-pyjj2fcitx_LDADD = ../src/pyParser.o ../src/pyMapTable.o ../src/PYFA.o ../src/sp.o
-mb2org_LDADD = ../src/pyParser.o ../src/pyMapTable.o ../src/PYFA.o ../src/sp.o pyTools.o
+createPYMB_LDADD = ../src/im/pinyin/pyParser.o ../src/im/pinyin/pyMapTable.o ../src/im/pinyin/PYFA.o ../src/im/pinyin/sp.o ../src/tools/utf8.o
+pyjj2fcitx_LDADD = ../src/im/pinyin/pyParser.o ../src/im/pinyin/pyMapTable.o ../src/im/pinyin/PYFA.o ../src/im/pinyin/sp.o
+mb2org_LDADD = ../src/im/pinyin/pyParser.o ../src/im/pinyin/pyMapTable.o ../src/im/pinyin/PYFA.o ../src/im/pinyin/sp.o pyTools.o

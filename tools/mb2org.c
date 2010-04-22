@@ -2,10 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "pyParser.h"
-#include "pyMapTable.h"
-#include "PYFA.h"
-#include "sp.h"
+#include "im/pinyin/pyParser.h"
+#include "im/pinyin/pyMapTable.h"
+#include "im/pinyin/PYFA.h"
+#include "im/pinyin/sp.h"
 #include "pyTools.h"
 
 /* Bad programming practice :( */

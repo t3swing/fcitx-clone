@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "py.h"
+#include "im/pinyin/py.h"
 #include "pyTools.h"
 
 void usage();

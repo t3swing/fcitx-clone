@@ -22,10 +22,10 @@
 
 #define PARSE_INPUT_SYSTEM ' '
 
-#include "pyParser.h"
-#include "pyMapTable.h"
-#include "PYFA.h"
-#include "utf8.h"
+#include "im/pinyin/pyParser.h"
+#include "im/pinyin/pyMapTable.h"
+#include "im/pinyin/PYFA.h"
+#include "tools/utf8.h"
 
 extern PYTABLE  PYTable[];
 
