@@ -1,5 +1,8 @@
 
 2010-04-22: CSSlayer <wengxt@gmail.com>
+	* 修复overflow，常用字表，无法以词定第二个字，以及一个不保存用户词组的问题
+
+2010-04-22: CSSlayer <wengxt@gmail.com>
 	* 调整代码结构, 修改图标文件路径
 
 2010-04-21: CSSlayer <wengxt@gmail.com>

@@ -358,7 +358,7 @@ Bool LoadPYOtherDict (void)
 		HZTemp = (HZ *) malloc (sizeof (HZ));
 		fread (&slen, sizeof (INT8), 1, fp);
 		fread (HZTemp->strHZ, sizeof (char) * slen, 1, fp);
-		HZTemp->strHZ[2] = '\0';
+		HZTemp->strHZ[slen] = '\0';
 		fread (&j, sizeof (int), 1, fp);
 		HZTemp->iPYFA = j;
 		fread (&j, sizeof (int), 1, fp);
@@ -780,8 +780,10 @@ INPUT_RETURN_VALUE DoPYInput (int iKey)
 			if (iKey == cPYYCDZ[0])
 			    strcpy (strStringGet, pBase);
 			else {
-			    strncpy (strStringGet, pPhrase, 2);
-			    strStringGet[2] = '\0';
+			    INT8 clen;
+			    clen = utf8_char_len(pPhrase);
+			    strncpy (strStringGet, pPhrase, clen);
+			    strStringGet[clen] = '\0';
 			}
 			uMessageDown = 0;
 			return IRV_GET_CANDWORDS;
@@ -1293,144 +1295,6 @@ void PYCreateAuto (void)
     }
 }
 
-/*
- * ** 从后往前查找
- */
-/*void PYCreateAuto (void)
-{
-    PYCandIndex     candPos;
-    char            str[3];
-    PyPhrase       *phrase;
-    PyPhrase       *phraseSelected = NULL;
-    PyBase         *baseSelected = NULL;
-    PYFA           *pPYFA = NULL;
-    char            strMap[MAX_WORDS_USER_INPUT * 2 + 1];
-    char strAutoTemp[MAX_WORDS_USER_INPUT * 2 + 1];
-    char strAutoMapTemp[MAX_WORDS_USER_INPUT * 2 + 1];
-
-
-    int             iStart,iEnd;
-    int             val;
-    int             iMatchedLength;
-
-    if (findMap.iHZCount == 1)
-	return;
-
-    strPYAuto[0] = '\0';
-    strPYAutoMap[0] = '\0';
-    str[2] = '\0';
-
-    while (strlen (strPYAuto) != findMap.iHZCount * 2) {
-	phraseSelected = NULL;
-	baseSelected = NULL;
-	iStart = 0;
-	while (!baseSelected ) {
-	    str[0] = findMap.strMap[iStart][0];
-	    str[1] = findMap.strMap[iStart][1];
-	    strMap[0] = '\0';
-
-	    iEnd = (findMap.iHZCount-strlen (strPYAuto)/2);
-	    candPos.iPYFA = 0;
-	    candPos.iBase = 0;
-	    if ((iEnd - iStart) > 1) {
-		for (val = iStart + 1; val < (findMap.iHZCount-strlen (strPYAuto)/2); val++)
-		    strcat (strMap, findMap.strMap[val]);
-
-		candPos.iPhrase = 0;
-
-		for (candPos.iPYFA = 0; candPos.iPYFA < iPYFACount; candPos.iPYFA++) {
-		    if (!Cmp2Map (PYFAList[candPos.iPYFA].strMap, str)) {
-			for (candPos.iBase = 0; candPos.iBase < PYFAList[candPos.iPYFA].iBase; candPos.iBase++) {
-			    phrase = PYFAList[candPos.iPYFA].pyBase[candPos.iBase].userPhrase->next;
-			    for (candPos.iPhrase = 0; candPos.iPhrase < PYFAList[candPos.iPYFA].pyBase[candPos.iBase].iUserPhrase; candPos.iPhrase++) {
-				val = CmpMap (phrase->strMap, strMap, &iMatchedLength);
-				if (!val) {
-				    if ( iMatchedLength == (findMap.iHZCount - 1) * 2) //查找成功，表示词库中已经有这个拼音组合了，此处不处理这种情况
-					return;
-				    if ( !phraseSelected || phraseSelected->iHit<phrase->iHit) {
-					baseSelected=&(PYFAList[candPos.iPYFA].pyBase[candPos.iBase]);
-					phraseSelected=phrase;
-					pPYFA=&(PYFAList[candPos.iPYFA]);
-				    }
-				}
-				phrase=phrase->next;
-			    }
-			}
-		    }
-		}
-
-		for (candPos.iPYFA = 0; candPos.iPYFA < iPYFACount; candPos.iPYFA++) {
-		    if (!Cmp2Map (PYFAList[candPos.iPYFA].strMap, str)) {
-			for (candPos.iBase = 0; candPos.iBase < PYFAList[candPos.iPYFA].iBase; candPos.iBase++) {
-			    for (candPos.iPhrase = 0; candPos.iPhrase < PYFAList[candPos.iPYFA].pyBase[candPos.iBase].iPhrase; candPos.iPhrase++) {
-				if (CheckHZCharset (PYFAList[candPos.iPYFA].pyBase[candPos.iBase].phrase[candPos.iPhrase].strPhrase) && CheckHZCharset (PYFAList[candPos.iPYFA].pyBase[candPos.iBase].strHZ)) {
-				    val = CmpMap (PYFAList[candPos.iPYFA].pyBase[candPos.iBase].phrase[candPos.iPhrase].strMap, strMap, &iMatchedLength);
-				    if (!val) {
-					if (iMatchedLength == (findMap.iHZCount - 1) * 2)  //查找成功，表示词库中已经有这个拼音组合了，此处不处理这种情况
-					    return;
-					if ( !phraseSelected || phraseSelected->iHit<PYFAList[candPos.iPYFA].pyBase[candPos.iBase].phrase[candPos.iPhrase].iHit) {
-					    baseSelected=&(PYFAList[candPos.iPYFA].pyBase[candPos.iBase]);
-					    phraseSelected=&(PYFAList[candPos.iPYFA].pyBase[candPos.iBase].phrase[candPos.iPhrase]);
-					    pPYFA=&(PYFAList[candPos.iPYFA]);
-					}
-				    }
-				}
-			    }
-			}
-		    }
-		}
-
-		if (baseSelected) {   //因为是逆序查找的，因此需要倒过来
-		    strcpy (strAutoTemp, baseSelected->strHZ);
-		    strcat (strAutoTemp, phraseSelected->strPhrase);
-		    strcat (strAutoTemp, strPYAuto);
-		    strcpy (strPYAuto, strAutoTemp);
-
-		    strcpy (strAutoMapTemp, pPYFA->strMap);
-		    strcat (strAutoMapTemp, phraseSelected->strMap);
-		    strcat (strAutoMapTemp, strPYAutoMap);
-		    strcpy (strPYAutoMap, strAutoMapTemp);
-		}
-	    }
-
-	    if (!baseSelected) {
-		if ( (iEnd-iStart)>1 )
-		    iStart++;
-		else {
-		    val = -1;
-		    for (candPos.iPYFA = 0; candPos.iPYFA < iPYFACount; candPos.iPYFA++) {
-			if (!Cmp2Map (PYFAList[candPos.iPYFA].strMap, str)) {
-			    for (candPos.iBase = 0; candPos.iBase < PYFAList[candPos.iPYFA].iBase; candPos.iBase++) {
-				if (CheckHZCharset (PYFAList[candPos.iPYFA].pyBase[candPos.iBase].strHZ)) {
-				    if ((int)(PYFAList[candPos.iPYFA].pyBase[candPos.iBase].iHit) > val) {
-					val = PYFAList[candPos.iPYFA].pyBase[candPos.iBase].iHit;
-					baseSelected = &(PYFAList[candPos.iPYFA].pyBase[candPos.iBase]);
-					pPYFA = &PYFAList[candPos.iPYFA];
-				    }
-				}
-			    }
-			}
-		    }
-
-		    if (baseSelected) {   //因为是逆序查找的，因此需要倒过来
-			strcpy (strAutoTemp, baseSelected->strHZ);
-			strcat (strAutoTemp, strPYAuto);
-			strcpy (strPYAuto, strAutoTemp);
-
-			strcpy (strAutoMapTemp, pPYFA->strMap);
-			strcat (strAutoMapTemp, strPYAutoMap);
-			strcpy (strPYAutoMap, strAutoMapTemp);
-		    }
-		    else {		//出错了
-			strPYAuto[0] = '\0';
-			return;
-		    }
-		}
-	    }
-	}
-    }
-}*/
-
 char           *PYGetCandWord (int iIndex)
 {
     char           *pBase = NULL, *pPhrase = NULL;
@@ -1512,7 +1376,7 @@ char           *PYGetCandWord (int iIndex)
 	    strcat (strHZString, pBaseMap);
 	if (pPhraseMap)
 	    strcat (strHZString, pPhraseMap);
-	if (bAddNewPhrase && (strlen (strPYAuto) <= (MAX_PY_PHRASE_LENGTH * 2)))
+	if (bAddNewPhrase && (utf8_strlen (strPYAuto) <= (MAX_PY_PHRASE_LENGTH)))
 	    PYAddUserPhrase (strPYAuto, strHZString);
 	uMessageDown = 0;
 	uMessageUp = 0;

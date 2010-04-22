@@ -1151,7 +1151,7 @@ void fixProperty(Property *prop)
         prop->icon = "";
     }
     if (strcmp(prop->label,"五笔字型") == 0) {
-        prop->icon = "fcitx-wubig";
+        prop->icon = "fcitx-wubi";
     }
     if (strcmp(prop->label,"五笔拼音") == 0) {
         prop->icon = "fcitx-wubi";
