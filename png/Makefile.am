@@ -1,6 +1,22 @@
-pngdir = $(pkgdatadir)/png
-png_DATA = full-letter.png half-letter.png full-punct.png half-punct.png \
-		   Ziranma.png PinYin.png Wubi.png Erbi.png CangJie.png \
-		   Logo.png \
-		   Jian.png Fan.png Zhong.png Ying.png Lian.png WuLian.png gbk.png gb.png 
+pngdir = $(datadir)/pixmaps
+png_DATA = \
+		   fcitx-cangjie.png \
+		   fcitx-chn.png \
+		   fcitx-eng.png \
+		   fcitx-erbi.png \
+		   fcitx-full-letter.png \
+		   fcitx-full-punct.png \
+		   fcitx-gbk.png \
+		   fcitx-gb.png \
+		   fcitx-half-letter.png \
+		   fcitx-half-punct.png \
+		   fcitx-legend.png \
+		   fcitx-logo.png \
+		   fcitx-nolegend.png \
+		   fcitx-pinyin.png \
+		   fcitx-simp.png \
+		   fcitx-trad.png \
+		   fcitx-wubi.png \
+		   fcitx-ziranma.png
+
 EXTRA_DIST = $(png_DATA)

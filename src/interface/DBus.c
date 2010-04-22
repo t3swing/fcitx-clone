@@ -923,13 +923,13 @@ void registerProperties()
 
     logo_prop.key = "/Fcitx/Logo";
     strcpy(logo_prop.label, "Fcitx");
-    logo_prop.icon = PKGDATADIR "/png/" "Logo.png";
+    logo_prop.icon = "fcitx-logo";
     logo_prop.tip = "小企鹅输入法";
     props[0] = property2string(&logo_prop);
 
     state_prop.key = "/Fcitx/State";
     state_prop.label = TOOLTIP_STATE_ENG;
-    state_prop.icon = PKGDATADIR "/png/" "Ying.png";
+    state_prop.icon = "fcitx-eng";
     state_prop.tip = "小企鹅输入法";
     props[1] = property2string(&state_prop);
 
@@ -937,9 +937,9 @@ void registerProperties()
     punc_prop.label = bChnPunc ? TOOLTIP_PUNK_CHN : TOOLTIP_PUNK_ENG;
 
     if (bChnPunc) {
-        punc_prop.icon = PKGDATADIR "/png/" "full-punct.png";
+        punc_prop.icon = "fcitx-full-punct";
     } else {
-        punc_prop.icon = PKGDATADIR "/png/" "half-punct.png";
+        punc_prop.icon = "fcitx-half-punct";
     }
     punc_prop.tip = "中英文标点切换";
     props[2] = property2string(&punc_prop);
@@ -947,9 +947,9 @@ void registerProperties()
     corner_prop.key = "/Fcitx/Corner";
     corner_prop.label = bCorner ? TOOLTIP_CORNER_ENABLE : TOOLTIP_CORNER_DISABLE;
     if (bCorner) {
-        corner_prop.icon = PKGDATADIR "/png/" "full-letter.png";
+        corner_prop.icon = "fcitx-full-letter";
     } else {
-        corner_prop.icon = PKGDATADIR "/png/" "half-letter.png";
+        corner_prop.icon = "fcitx-half-letter";
     }
     corner_prop.tip = "全半角切换";
     props[3] = property2string(&corner_prop);
@@ -957,9 +957,9 @@ void registerProperties()
     gbk_prop.key = "/Fcitx/GBK";
     gbk_prop.label = bUseGBK ? TOOLTIP_GBK_ENABLE : TOOLTIP_GBK_DISABLE;
     if (bUseGBK) {
-        gbk_prop.icon = PKGDATADIR "/png/" "gbk.png";
+        gbk_prop.icon = "fcitx-gbk";
     } else {
-        gbk_prop.icon = PKGDATADIR "/png/" "gb.png";
+        gbk_prop.icon = "fcitx-gb";
     }
     gbk_prop.tip = bUseGBK ? "标准GB字符集" : "扩展GBK字符集";
     props[4] = property2string(&gbk_prop);
@@ -967,9 +967,9 @@ void registerProperties()
     gbkt_prop.key = "/Fcitx/GBKT";
     gbkt_prop.label = bUseGBKT ? TOOLTIP_GBKT_ENABLE : TOOLTIP_GBKT_DISABLE;
     if (bUseGBKT) {
-        gbkt_prop.icon = PKGDATADIR "/png/" "Fan.png";
+        gbkt_prop.icon = "fcitx-trad";
     } else {
-        gbkt_prop.icon = PKGDATADIR "/png/" "Jian.png";
+        gbkt_prop.icon = "fcitx-simp";
     }
     gbkt_prop.tip = "简繁体转换";
     props[5] = property2string(&gbkt_prop);
@@ -977,9 +977,9 @@ void registerProperties()
     legend_prop.key = "/Fcitx/Legend";
     legend_prop.label = bUseLegend ? TOOLTIP_LEGEND_ENABLE : TOOLTIP_LEGEND_DISABLE;
     if (bUseLegend) {
-        legend_prop.icon = PKGDATADIR "/png/" "Lian.png";
+        legend_prop.icon = "fcitx-legend";
     } else {
-        legend_prop.icon = PKGDATADIR "/png/" "WuLian.png";
+        legend_prop.icon = "fcitx-nolegend";
     }
     legend_prop.tip = "启用联想支持";
     props[6] = property2string(&legend_prop);
@@ -1002,49 +1002,49 @@ void updateProperty(Property *prop)
     if (prop == &state_prop) {
         prop->label = (ConnectIDGetState(connect_id) == IS_CHN) ? TOOLTIP_STATE_CHN: TOOLTIP_STATE_ENG;
         if (ConnectIDGetState(connect_id) == IS_CHN) {
-            prop->icon = PKGDATADIR "/png/" "Zhong.png";
+            prop->icon = "fcitx-chn";
         } else {
-            prop->icon = PKGDATADIR "/png/" "Ying.png";
+            prop->icon = "fcitx-eng";
         }
     }
     if (prop == &punc_prop) {
         prop->label = bChnPunc ? TOOLTIP_PUNK_CHN : TOOLTIP_PUNK_ENG;
         if (bChnPunc) {
-            prop->icon = PKGDATADIR "/png/" "full-punct.png";
+            prop->icon = "fcitx-full-punct";
         } else {
-            prop->icon = PKGDATADIR "/png/" "half-punct.png";
+            prop->icon = "fcitx-half-punct";
         }
     }
     if (prop == &corner_prop) {
         prop->label = bCorner ? TOOLTIP_CORNER_ENABLE : TOOLTIP_CORNER_DISABLE;
         if (bCorner) {
-            prop->icon = PKGDATADIR "/png/" "full-letter.png";
+            prop->icon = "fcitx-full-letter";
         } else {
-            prop->icon = PKGDATADIR "/png/" "half-letter.png";
+            prop->icon = "fcitx-half-letter";
         }
     }
     if (prop == &gbk_prop) {
         prop->label = bUseGBK ? TOOLTIP_GBK_ENABLE : TOOLTIP_GBK_DISABLE;
         if (bUseGBK) {
-            prop->icon = PKGDATADIR "/png/" "gbk.png";
+            prop->icon = "fcitx-gbk";
         } else {
-            prop->icon = PKGDATADIR "/png/" "gb.png";
+            prop->icon = "fcitx-gb";
         }
     }
     if (prop == &gbkt_prop) {
         prop->label = bUseGBKT ? TOOLTIP_GBKT_ENABLE : TOOLTIP_GBKT_DISABLE;
         if (bUseGBKT) {
-            prop->icon = PKGDATADIR "/png/" "Fan.png";
+            prop->icon = "fcitx-trad";
         } else {
-            prop->icon = PKGDATADIR "/png/" "Jian.png";
+            prop->icon = "fcitx-simp";
         }
     }
     if (prop == &legend_prop) {
         prop->label = bUseLegend ? TOOLTIP_LEGEND_ENABLE : TOOLTIP_LEGEND_DISABLE;
         if (bUseLegend) {
-            prop->icon = PKGDATADIR "/png/" "Lian.png";
+            prop->icon = "fcitx-legend";
         } else {
-            prop->icon = PKGDATADIR "/png/" "WuLian.png";
+            prop->icon = "fcitx-nolegend";
         }
     }
     char* need_free;
@@ -1139,10 +1139,10 @@ char* property2string(Property *prop)
 void fixProperty(Property *prop)
 {
     if (strcmp(prop->label,"Fcitx") == 0) {
-        prop->icon = PKGDATADIR "/png/" "Logo.png";
+        prop->icon = "fcitx";
     }
     if (strcmp(prop->label,"智能拼音") == 0) {
-        prop->icon = PKGDATADIR "/png/" "PinYin.png";
+        prop->icon = "fcitx-pinyin";
     }
     if (strcmp(prop->label,"智能双拼") == 0) {
         prop->icon = "";
@@ -1151,16 +1151,16 @@ void fixProperty(Property *prop)
         prop->icon = "";
     }
     if (strcmp(prop->label,"五笔字型") == 0) {
-        prop->icon = PKGDATADIR "/png/" "Wubi.png";
+        prop->icon = "fcitx-wubig";
     }
     if (strcmp(prop->label,"五笔拼音") == 0) {
-        prop->icon = PKGDATADIR "/png/" "Wubi.png";
+        prop->icon = "fcitx-wubi";
     }
     if (strcmp(prop->label,"二笔") == 0) {
-        prop->icon = PKGDATADIR "/png/" "Erbi.png";
+        prop->icon = "fcitx-erbi";
     }
     if (strcmp(prop->label,"仓颉") == 0) {
-        prop->icon = PKGDATADIR "/png/" "CangJie.png";
+        prop->icon = "fcitx-cangjie";
     }
     if (strcmp(prop->label,"晚风") == 0) {
         prop->icon = "";
@@ -1169,7 +1169,7 @@ void fixProperty(Property *prop)
         prop->icon = "";
     }
     if (strcmp(prop->label,"自然码") == 0) {
-        prop->icon = PKGDATADIR "/png/" "Ziranma.png";
+        prop->icon = "fcitx-ziranma";
     }
     if (strcmp(prop->label,"电报码") == 0) {
         prop->icon = "";
