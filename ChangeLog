@@ -1,5 +1,8 @@
 
-2010-04-05: CSSlayer <wengxt@gmail.com>
+2010-04-22: CSSlayer <wengxt@gmail.com>
+	* 调整代码结构, 修改图标文件路径
+
+2010-04-21: CSSlayer <wengxt@gmail.com>
 	* createPYMB加入对gbkpy.org的简单错误检测
 
 2010-04-05: CSSlayer <wengxt@gmail.com>
