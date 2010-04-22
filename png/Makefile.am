@@ -1,5 +1,6 @@
 pngdir = $(datadir)/pixmaps
 png_DATA = \
+		   fcitx.png \
 		   fcitx-cangjie.png \
 		   fcitx-chn.png \
 		   fcitx-eng.png \
@@ -11,7 +12,6 @@ png_DATA = \
 		   fcitx-half-letter.png \
 		   fcitx-half-punct.png \
 		   fcitx-legend.png \
-		   fcitx-logo.png \
 		   fcitx-nolegend.png \
 		   fcitx-pinyin.png \
 		   fcitx-simp.png \

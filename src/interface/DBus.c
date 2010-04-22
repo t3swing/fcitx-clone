@@ -923,7 +923,7 @@ void registerProperties()
 
     logo_prop.key = "/Fcitx/Logo";
     strcpy(logo_prop.label, "Fcitx");
-    logo_prop.icon = "fcitx-logo";
+    logo_prop.icon = "fcitx";
     logo_prop.tip = "小企鹅输入法";
     props[0] = property2string(&logo_prop);
 
