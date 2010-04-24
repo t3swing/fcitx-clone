@@ -253,7 +253,6 @@ void ResetInput (void)
     iCurrentLegendCandPage = 0;
     iLegendCandPageCount = 0;
     iCursorPos = 0;
-    uMessageUp = uMessageDown = 0;
 
     strCodeInput[0] = '\0';
     iCodeInputCount = 0;
@@ -1012,7 +1011,7 @@ void ProcessKey (IMForwardEventStruct * call_data)
 	}
 
 	ResetInput ();
-        lastIsSingleHZ = 0;
+    lastIsSingleHZ = 0;
 	break;
     case IRV_ENG:
 	//如果处于中文标点模式，应该将其中的标点转换为全角
@@ -1276,7 +1275,7 @@ void SwitchIM (INT8 index)
 	
 	updateProperty(&logo_prop);
 	updateProperty(&state_prop);
-	}
+    }
 #endif
 }
 

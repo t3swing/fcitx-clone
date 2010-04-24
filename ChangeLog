@@ -1,4 +1,9 @@
 
+2010-04-24: CSSlayer <wengxt@gmail.com>
+	* src/ImeRemote.c: 修正fcitx远程调用socket文件名问题
+	* tools/client-test.c: fcitx-remote添加帮助信息
+	* src/ime.c: 修复Issue 190
+
 2010-04-22: CSSlayer <wengxt@gmail.com>
 	* 修复overflow，常用字表，无法以词定第二个字，以及一个不保存用户词组的问题
 
