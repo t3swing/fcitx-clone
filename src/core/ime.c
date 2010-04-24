@@ -81,7 +81,6 @@ ENTER_TO_DO     enterToDo = K_ENTER_SEND;
 
 Bool            bCorner = False;	//全半角切换
 Bool            bChnPunc = True;	//中英文标点切换
-Bool            bUseGBK = False;	//是否支持GBK
 Bool            bIsDoInputOnly = False;	//表明是否只由输入法来处理键盘
 Bool            bLastIsNumber = False;	//上一次输入是不是阿拉伯数字
 char		cLastIsAutoConvert = 0;	//上一次输入是不是符合数字后自动转换的符号，如'.'/','，0表示不是这样的符号
@@ -114,7 +113,6 @@ KEY_CODE        switchKey = L_CTRL;
 
 //热键定义
 HOTKEYS         hkTrigger[HOT_KEY_COUNT] = { CTRL_SPACE, 0 };
-HOTKEYS         hkGBK[HOT_KEY_COUNT] = { CTRL_M, 0 };
 HOTKEYS         hkLegend[HOT_KEY_COUNT] = { CTRL_L, 0 };
 HOTKEYS         hkCorner[HOT_KEY_COUNT] = { SHIFT_SPACE, 0 };	//全半角切换
 HOTKEYS         hkPunc[HOT_KEY_COUNT] = { ALT_SPACE, 0 };	//中文标点
@@ -212,7 +210,6 @@ extern Property logo_prop;
 extern Property state_prop;
 extern Property punc_prop;
 extern Property corner_prop;
-extern Property gbk_prop;
 extern Property gbkt_prop;
 extern Property legend_prop;
 #endif
@@ -276,7 +273,6 @@ void CloseIM (IMForwardEventStruct * call_data)
 {
     CloseInputWindow();
     
-    if (!bUseDBus)
 	XUnmapWindow (dpy, VKWindow);
 
     IMPreeditEnd (ims, (XPointer) call_data);
@@ -305,7 +301,6 @@ void ChangeIMState (CARD16 _connect_id)
 	iState = IS_CHN;
 
     if (bVK) {
-		if (!bUseDBus)
 		DisplayVKWindow ();
 	}
     else
@@ -318,9 +313,8 @@ void ChangeIMState (CARD16 _connect_id)
 	ResetInputWindow ();
 
 	CloseInputWindow();
-	if (!bUseDBus)
-	    XUnmapWindow (dpy, VKWindow);
-    }
+	}
+	XUnmapWindow (dpy, VKWindow);
     
     if (!bUseDBus) {
 	if (hideMainWindow != HM_HIDE)
@@ -868,8 +862,6 @@ void ProcessKey (IMForwardEventStruct * call_data)
 			retVal = ChangeCorner ();
 		    else if (IsHotKey (iKey, hkPunc))
 			retVal = ChangePunc ();
-		    else if (IsHotKey (iKey, hkGBK))
-			retVal = ChangeGBK ();
 		    else if (IsHotKey (iKey, hkLegend))
 			retVal = ChangeLegend ();
 		    else if (IsHotKey (iKey, hkTrack))
@@ -1091,26 +1083,6 @@ INPUT_RETURN_VALUE ChangePunc (void)
 #endif
 
     return IRV_DO_NOTHING;
-}
-
-INPUT_RETURN_VALUE ChangeGBK (void)
-{
-    bUseGBK = !bUseGBK;
-    ResetInput ();
-    ResetInputWindow ();
-
-    if (!bUseDBus)
-	DrawMainWindow ();
-    CloseInputWindow();
-
-    SaveProfile ();
-
-#ifdef _ENABLE_DBUS
-    if (bUseDBus)
-	updateProperty(&gbk_prop);
-#endif
-
-    return IRV_CLEAN;
 }
 
 INPUT_RETURN_VALUE ChangeGBKT (void)

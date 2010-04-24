@@ -45,8 +45,6 @@
 #include "halfcorner.xpm"
 #include "chnPunc.xpm"
 #include "engPunc.xpm"
-#include "gbk-0.xpm"
-#include "gbk-1.xpm"
 #include "lx-0.xpm"
 #include "lx-1.xpm"
 #include "lock-0.xpm"
@@ -79,8 +77,6 @@ XImage         *pCorner[2] = { NULL, NULL };
 char          **CornerLogo[2] = { halfcorner_xpm, fullcorner_xpm };
 XImage         *pPunc[2] = { NULL, NULL };
 char          **PuncLogo[2] = { engPunc_xpm, chnPunc_xpm };
-XImage         *pGBK[2] = { NULL, NULL };
-char          **GBKLogo[2] = { gbk_0_xpm, gbk_1_xpm };
 XImage         *pLX[2] = { NULL, NULL };
 char          **LXLogo[2] = { lx_0_xpm, lx_1_xpm };
 XImage         *pLock[2] = { NULL, NULL };
@@ -106,7 +102,6 @@ extern Bool     bCorner;
 extern Bool     bLocked;
 extern Bool     bChnPunc;
 extern INT8     iIMIndex;
-extern Bool     bUseGBK;
 extern Bool     bSP;
 extern Bool     bUseLegend;
 extern IM      *im;
@@ -229,15 +224,7 @@ void DrawMainWindow (void)
 	    }
 	    XPutImage (dpy, mainWindow, mainWindowColor.backGC, pCorner[bCorner], 0, 0, iPos, 2, 15, 16);
 	    iPos += 18;
-
-	    if (!pGBK[bUseGBK]) {
-		rv = XpmCreateImageFromData (dpy, GBKLogo[bUseGBK], &pGBK[bUseGBK], &mask, &attrib);
-		if (rv != XpmSuccess)
-		    fprintf (stderr, "Failed to read xpm file: GBKLogo\n");
-	    }
-	    XPutImage (dpy, mainWindow, mainWindowColor.backGC, pGBK[bUseGBK], 0, 0, iPos, 2, 15, 16);
-	    iPos += 18;
-
+	    
 	    if (!pLX[bUseLegend]) {
 		rv = XpmCreateImageFromData (dpy, LXLogo[bUseLegend], &pLX[bUseLegend], &mask, &attrib);
 		if (rv != XpmSuccess)
@@ -326,9 +313,8 @@ void DrawMainWindow (void)
 		Draw3DEffect (mainWindow, 37, 1, 18, 18, _3D_UPPER);
 		Draw3DEffect (mainWindow, 55, 1, 18, 18, _3D_UPPER);
 		Draw3DEffect (mainWindow, 73, 1, 18, 18, _3D_UPPER);
-		Draw3DEffect (mainWindow, 91, 1, 18, 18, _3D_UPPER);
-		Draw3DEffect (mainWindow, 109, 1, 11, 18, _3D_UPPER);
-		Draw3DEffect (mainWindow, 120, 1, 22, 18, _3D_UPPER);
+		Draw3DEffect (mainWindow, 91, 1, 11, 18, _3D_UPPER);
+		Draw3DEffect (mainWindow, 102, 1, 22, 18, _3D_UPPER);
 	    }
 	}
 	else {
@@ -339,8 +325,7 @@ void DrawMainWindow (void)
 		XDrawLine (dpy, mainWindow, mainWindowLineColor.gc, 54, 4, 54, MAINWND_HEIGHT - 4);
 		XDrawLine (dpy, mainWindow, mainWindowLineColor.gc, 72, 4, 72, MAINWND_HEIGHT - 4);
 		XDrawLine (dpy, mainWindow, mainWindowLineColor.gc, 89, 4, 89, MAINWND_HEIGHT - 4);
-		XDrawLine (dpy, mainWindow, mainWindowLineColor.gc, 107, 4, 107, MAINWND_HEIGHT - 4);
-		iPos = 108;
+		iPos = 90;
 	    }
 	    iPos += 11;
 	    if (bShowVK || !bCompactMainWindow) {

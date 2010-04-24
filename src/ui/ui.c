@@ -480,13 +480,11 @@ void MyXEventHandler (XEvent * event)
             else if (IsInBox (event->xbutton.x, event->xbutton.y, 38, 1, 55, 19))
             ChangeCorner ();
             else if (IsInBox (event->xbutton.x, event->xbutton.y, 56, 1, 73, 19))
-            ChangeGBK ();
-            else if (IsInBox (event->xbutton.x, event->xbutton.y, 74, 1, 91, 19))
             ChangeLegend ();
-            else if (IsInBox (event->xbutton.x, event->xbutton.y, 92, 1, 109, 19))
+            else if (IsInBox (event->xbutton.x, event->xbutton.y, 74, 1, 91, 19))
             ChangeGBKT ();
 
-            iPos = 110;
+            iPos = 92;
         }
         if (IsInBox (event->xbutton.x, event->xbutton.y, iPos, 1, iPos + 10, 19))
             ChangeLock ();

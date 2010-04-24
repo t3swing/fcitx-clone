@@ -126,7 +126,6 @@ void            ChangeIMState (CARD16 _connect_id);
 Bool            IsHotKey (int iKey, HOTKEYS * hotkey);
 INPUT_RETURN_VALUE ChangeCorner (void);
 INPUT_RETURN_VALUE ChangePunc (void);
-INPUT_RETURN_VALUE ChangeGBK (void);
 INPUT_RETURN_VALUE ChangeLegend (void);
 INPUT_RETURN_VALUE ChangeTrack (void);
 INPUT_RETURN_VALUE ChangeGBKT (void);

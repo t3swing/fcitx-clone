@@ -7,8 +7,8 @@ png_DATA = \
 		   fcitx-erbi.png \
 		   fcitx-full-letter.png \
 		   fcitx-full-punct.png \
-		   fcitx-gbk.png \
-		   fcitx-gb.png \
+		   fcitx-vkon.png \
+		   fcitx-vkoff.png \
 		   fcitx-half-letter.png \
 		   fcitx-half-punct.png \
 		   fcitx-legend.png \

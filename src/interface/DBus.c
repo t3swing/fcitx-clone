@@ -5,9 +5,11 @@
 #include <string.h>
 #include <strings.h> // bzero()
 #include <ctype.h>
+#include <limits.h>
 
 #include "core/main.h"
 #include "ui/InputWindow.h"
+#include "im/special/vk.h"
 #include "core/ime.h"
 #include "tools/tools.h"
 #include "core/xim.h"
@@ -25,9 +27,11 @@ Property logo_prop;
 Property state_prop;
 Property punc_prop;
 Property corner_prop;
-Property gbk_prop;
+Property vk_prop;
 Property gbkt_prop;
 Property legend_prop;
+
+char sVKmsg[PATH_MAX] = "";
 
 #define TOOLTIP_STATE_ENG "英语"
 #define TOOLTIP_STATE_CHN "中文"
@@ -35,8 +39,8 @@ Property legend_prop;
 #define TOOLTIP_PUNK_ENG "NP"
 #define TOOLTIP_CORNER_ENABLE "全角"
 #define TOOLTIP_CORNER_DISABLE "半角"
-#define TOOLTIP_GBK_ENABLE "GBK"
-#define TOOLTIP_GBK_DISABLE "GB"
+#define TOOLTIP_VK_ENABLE "VK-ON"
+#define TOOLTIP_VK_DISABLE "VK-OFF"
 #define TOOLTIP_GBKT_ENABLE "繁体"
 #define TOOLTIP_GBKT_DISABLE "简体"
 #define TOOLTIP_LEGEND_ENABLE "联想"
@@ -57,10 +61,10 @@ extern int iCandPageCount;
 extern int iLegendCandPageCount;
 extern int iCursorPos;
 extern Bool bShowCursor;
+extern char *sVKHotkey;
 
 void fixProperty(Property *prop);
 char* convertMessage(char* in);
-static void MyDBusEventHandler();
 int calKIMCursorPos();
 
 char sLogoLabel[MAX_IM_NAME * 2 + 1];
@@ -131,7 +135,7 @@ void DBusLoop(void *val)
     MyDBusEventHandler();
 }
 
-static void MyDBusEventHandler()
+void MyDBusEventHandler()
 {
     DBusMessage *msg;
     DBusMessageIter args;
@@ -954,15 +958,16 @@ void registerProperties()
     corner_prop.tip = "全半角切换";
     props[3] = property2string(&corner_prop);
 
-    gbk_prop.key = "/Fcitx/GBK";
-    gbk_prop.label = bUseGBK ? TOOLTIP_GBK_ENABLE : TOOLTIP_GBK_DISABLE;
-    if (bUseGBK) {
-        gbk_prop.icon = "fcitx-gbk";
+    vk_prop.key = "/Fcitx/VK";
+    vk_prop.label = bVK ? TOOLTIP_VK_ENABLE : TOOLTIP_VK_DISABLE;
+    if (bVK) {
+        vk_prop.icon = "fcitx-vkon";
     } else {
-        gbk_prop.icon = "fcitx-gb";
+        vk_prop.icon = "fcitx-vkoff";
     }
-    gbk_prop.tip = bUseGBK ? "标准GB字符集" : "扩展GBK字符集";
-    props[4] = property2string(&gbk_prop);
+    sprintf(sVKmsg,  "虚拟键盘切换：%s", sVKHotkey);
+    vk_prop.tip = sVKmsg;
+    props[4] = property2string(&vk_prop);
 
     gbkt_prop.key = "/Fcitx/GBKT";
     gbkt_prop.label = bUseGBKT ? TOOLTIP_GBKT_ENABLE : TOOLTIP_GBKT_DISABLE;
@@ -1023,12 +1028,12 @@ void updateProperty(Property *prop)
             prop->icon = "fcitx-half-letter";
         }
     }
-    if (prop == &gbk_prop) {
-        prop->label = bUseGBK ? TOOLTIP_GBK_ENABLE : TOOLTIP_GBK_DISABLE;
-        if (bUseGBK) {
-            prop->icon = "fcitx-gbk";
+    if (prop == &vk_prop) {
+        prop->label = bVK ? TOOLTIP_VK_ENABLE : TOOLTIP_VK_DISABLE;
+        if (bVK) {
+            prop->icon = "fcitx-vkon";
         } else {
-            prop->icon = "fcitx-gb";
+            prop->icon = "fcitx-vkoff";
         }
     }
     if (prop == &gbkt_prop) {
@@ -1102,8 +1107,8 @@ void triggerProperty(char *propKey)
     if (strcmp(propKey,corner_prop.key) == 0) {
         ChangeCorner();
     }
-    if (strcmp(propKey,gbk_prop.key) == 0) {
-        ChangeGBK();
+    if (strcmp(propKey,vk_prop.key) == 0) {
+//        SwitchVK();
     }
     if (strcmp(propKey,gbkt_prop.key) == 0) {
         ChangeGBKT();

@@ -17,7 +17,7 @@ extern uint     uMessageDown;
 extern INT8 iState;
 extern Bool bChnPunc;
 extern Bool bCorner;
-extern Bool bUseGBK;
+extern Bool bVK;
 extern Bool bUseGBKT;
 extern Bool bUseLegend;
 extern Bool bUseTable;
@@ -66,5 +66,6 @@ char* property2string(Property *prop);
 void updatePropertyByConnectID(CARD16 connect_id);
 
 void DBusLoop(void *val);
+void MyDBusEventHandler();
 
 #endif 

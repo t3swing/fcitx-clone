@@ -39,6 +39,7 @@
 #include "core/IC.h"
 #include "core/xim.h"
 #include "tools/tools.h"
+#include "interface/DBus.h"
 
 Window          VKWindow;
 WINDOW_COLOR    VKWindowColor = { NULL, NULL, {0, 220 << 8, 220 << 8, 220 << 8}
@@ -86,6 +87,12 @@ extern XIMS     ims;
 
 extern uint     iHZInputed;
 extern Bool	bUseDBus;
+
+#ifdef _ENABLE_DBUS
+extern Property vk_prop;
+#endif
+
+char* sVKHotkey = NULL;
 
 Bool CreateVKWindow (void)
 {
@@ -530,13 +537,19 @@ void SwitchVK (void)
     if (bVK) {
 	int             x, y;
 
-	x = iMainWindowX;
+	if (bUseDBus)
+		x = DisplayWidth (dpy, iScreen) / 2 - VK_WINDOW_WIDTH / 2;
+	else
+		x = iMainWindowX;
 	if ((x + VK_WINDOW_WIDTH) >= DisplayWidth (dpy, iScreen))
 	    x = DisplayWidth (dpy, iScreen) - VK_WINDOW_WIDTH - 1;
 	if (x < 0)
 	    x = 0;
 
-	y = iMainWindowY + MAINWND_HEIGHT + 2;
+	if (bUseDBus)
+		y = 0;
+	else
+		y = iMainWindowY + MAINWND_HEIGHT + 2;
 	if ((y + VK_WINDOW_HEIGHT) >= DisplayHeight (dpy, iScreen))
 	    y = iMainWindowY - VK_WINDOW_HEIGHT - 2;
 	if (y < 0)
@@ -556,4 +569,8 @@ void SwitchVK (void)
 
     if ( !bUseDBus )
 	DrawMainWindow ();
+#ifdef _ENABLE_DBUS
+	else
+	updateProperty(&vk_prop);
+#endif
 }

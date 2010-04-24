@@ -1,5 +1,9 @@
 
 2010-04-24: CSSlayer <wengxt@gmail.com>
+	* utf8版本去除GBK字符集选项，kimpanel添加显示虚拟键盘状态的按钮
+	* 这个按钮提示信息中有快捷键，不能直接按
+
+2010-04-24: CSSlayer <wengxt@gmail.com>
 	* src/ImeRemote.c: 修正fcitx远程调用socket文件名问题
 	* tools/client-test.c: fcitx-remote添加帮助信息
 	* src/ime.c: 修复Issue 190

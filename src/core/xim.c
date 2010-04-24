@@ -207,8 +207,7 @@ Bool MySetFocusHandler (IMChangeFocusStruct * call_data)
 	}
 	else {
 	    CloseInputWindow();
-	    if (!bUseDBus)
-	    	XUnmapWindow (dpy, VKWindow);
+	    XUnmapWindow (dpy, VKWindow);
 	}
     }
     else {
@@ -216,9 +215,9 @@ Bool MySetFocusHandler (IMChangeFocusStruct * call_data)
 	    IMPreeditEnd (ims, (XPointer) call_data);
 
 	CloseInputWindow();
-	if (!bUseDBus) {
-	    XUnmapWindow (dpy, VKWindow);
+	XUnmapWindow (dpy, VKWindow);
 
+    if (!bUseDBus) {
 #ifdef _ENABLE_TRAY
 	    DrawTrayWindow (INACTIVE_ICON, 0, 0, TRAY_ICON_WIDTH, TRAY_ICON_HEIGHT);
 #endif
@@ -230,7 +229,7 @@ Bool MySetFocusHandler (IMChangeFocusStruct * call_data)
 		XUnmapWindow (dpy, mainWindow);
 	}
 #ifdef _ENABLE_DBUS
-	else
+	if (bUseDBus)
 	    updatePropertyByConnectID(connect_id);
 #endif
 
@@ -268,8 +267,7 @@ Bool MyUnsetFocusHandler (IMChangeICStruct * call_data)
 {
     if (call_data->connect_id==connect_id) {
 	CloseInputWindow();
-	if (!bUseDBus)
-	    XUnmapWindow (dpy, VKWindow);
+	XUnmapWindow (dpy, VKWindow);
     }
     
     return True;
@@ -279,8 +277,7 @@ Bool MyCloseHandler (IMOpenStruct * call_data)
 {
     CloseInputWindow();
     
-    if (!bUseDBus)
-    	XUnmapWindow (dpy, VKWindow);
+    XUnmapWindow (dpy, VKWindow);
 
     DestroyConnectID (call_data->connect_id);
 
@@ -318,8 +315,7 @@ Bool MyDestroyICHandler (IMChangeICStruct * call_data)
 {
     if (CurrentIC == (IC *) FindIC (call_data->icid)) {
 	CloseInputWindow();
-	if (!bUseDBus)
-	    XUnmapWindow (dpy, VKWindow);
+	XUnmapWindow (dpy, VKWindow);
     }
 
     DestroyIC (call_data);

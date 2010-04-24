@@ -72,7 +72,6 @@ extern MESSAGE_COLOR VKWindowAlphaColor;
 extern ENTER_TO_DO enterToDo;
 
 extern HOTKEYS  hkTrigger[];
-extern HOTKEYS  hkGBK[];
 extern HOTKEYS  hkCorner[];
 extern HOTKEYS  hkPunc[];
 extern HOTKEYS  hkPrevPage[];
@@ -95,7 +94,6 @@ extern KEY_CODE switchKey;
 extern XIMTriggerKey *Trigger_Keys;
 extern INT8     iTriggerKeyCount;
 
-extern Bool     bUseGBK;
 extern Bool     bEngPuncAfterNumber;
 
 //extern Bool     bAutoHideInputWindow;
@@ -183,6 +181,7 @@ extern Bool	bRecording;
 extern char     strRecordingPath[];
 #endif
 
+extern char *sVKHotkey; 
 extern int utf8_in_gb18030[];
 
 pthread_rwlock_t plock;
@@ -455,21 +454,12 @@ inline static int hide_main_window(Configure *c, void *a, int isread)
 /* 切换虚拟键盘 */
 inline static int switch_vk(Configure *c, void *a, int isread)
 {
-    if(isread)
+    if(isread) {
+		sVKHotkey = strdup((char*)a);
         SetHotKey((char *)a, hkVK);
+	}
     else
         fprintf((FILE *)a, "%s=%s\n", c->name, "CTRL_ALT_K");
-
-    return 0;
-}
-
-/* GBK支持 */
-inline static int gbk_support(Configure *c, void *a, int isread)
-{
-    if(isread)
-        SetHotKey((char *)a, hkGBK);
-    else
-        fprintf((FILE *)a, "%s=%s\n", c->name, "CTRL_M");
 
     return 0;
 }
@@ -991,11 +981,6 @@ Configure hotkey_config[] = {
         .name = "切换虚拟键盘",
         .value_type = CONFIG_HOTKEY,
         .config_rw = switch_vk,
-    },
-    {
-        .name = "GBK支持",
-        .value_type = CONFIG_HOTKEY,
-        .config_rw = gbk_support,
     },
     {
         .name = "GBK繁体切换键",
@@ -1528,11 +1513,6 @@ Configure profiles[] = {
         .name = "中文标点",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bChnPunc,
-    },
-    {
-        .name = "GBK",
-        .value_type = CONFIG_INTEGER,
-        .value.integer = &bUseGBK,
     },
     {
         .name = "光标跟随",
