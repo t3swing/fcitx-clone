@@ -1,9 +1,7 @@
 tabledir = $(pkgdatadir)/data
 table_DATA = cj.mb erbi.mb punc.mb pybase.mb pyphrase.mb pySym.mb sp.dat \
 	     wbx.mb wanfeng.mb wbpy.mb qxm.mb zrm.mb db.mb \
-	     tables.conf vk.conf gbks2t.tab config AutoEng.dat \
-             pyPhrase.org qxm.txt zrm.txt erbi.txt wbpy.txt gbkpy.org db.txt \
-             wanfeng.txt cj.txt wbx.txt
+	     tables.conf vk.conf gbks2t.tab config AutoEng.dat
 EXTRA_DIST = $(table_DATA)
 
 mb_data = cj.mb erbi.mb wanfeng.mb wbpy.mb qxm.mb db.mb wbx.mb zrm.mb
