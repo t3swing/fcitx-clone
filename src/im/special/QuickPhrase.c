@@ -23,19 +23,43 @@
 #include "im/special/QuickPhrase.h"
 #include "ui/InputWindow.h"
 #include "tools/tools.h"
+#include "tools/array.h"
 
 uint uQuickPhraseCount;
-QUICK_PHRASE *quickPhraseHead = NULL;
-QUICK_PHRASE *currentQuickPhrase;
+ARRAY *quickPhrases = NULL;
+int iFirstQuickPhrase = -1;
+int iLastQuickPhrase;
 QUICK_PHRASE *quickPhraseCandWords[MAX_CAND_WORD];
+
+#define MIN(a,b) ((a) < (b)?(a) : (b))
 
 extern int iCandPageCount;
 extern int iCandWordCount;
 extern int iCurrentCandPage;
+extern int iMaxCandWord;
 extern char strCodeInput[];
 extern uint uMessageDown;
 extern MESSAGE         messageDown[];
 extern char strStringGet[];
+
+int PhraseCmp(const void* a, const void* b)
+{
+    return strcmp(((QUICK_PHRASE**)a)[0]->strCode, ((QUICK_PHRASE**)b)[0]->strCode);
+}
+
+int PhraseCmpA(const void* a, const void* b)
+{
+    int res,len;
+    len = strlen(((QUICK_PHRASE**)a)[0]->strCode);
+    res = strncmp(((QUICK_PHRASE**)a)[0]->strCode, ((QUICK_PHRASE**)b)[0]->strCode, len);
+    if (res)
+        return res;
+    else
+    {
+        return 1;
+    }
+
+}
 
 /**
  * @brief 加载快速输入词典
@@ -53,67 +77,64 @@ void LoadQuickPhrase(void)
     char strCode[QUICKPHRASE_CODE_LEN+1];
     char strPhrase[QUICKPHRASE_PHRASE_LEN*2+1];
     QUICK_PHRASE *tempQuickPhrase;
-    QUICK_PHRASE *quickPhrase;
 
     uQuickPhraseCount=0;
 
     fp = UserConfigFile("QuickPhrase.mb", "rt", NULL);
     if (!fp) {
-	strcpy (strPath, PKGDATADIR "/data/");
-	strcat (strPath, "QuickPhrase.mb");
+    strcpy (strPath, PKGDATADIR "/data/");
+    strcat (strPath, "QuickPhrase.mb");
 
-	/* add by zxd begin */
+    /* add by zxd begin */
         if( access( strPath, 0) && getenv( "FCITXDIR") ) {
             strcpy( strPath, getenv( "FCITXDIR" ) );
             strcat (strPath, "/share/fcitx/data/AutoEng.dat");
         }
         /* add by zxd end */
-	
-	fp = fopen (strPath, "rt");
-	if (!fp)
-	    return;
+    
+    fp = fopen (strPath, "rt");
+    if (!fp)
+        return;
     }
-
-    quickPhrase=quickPhraseHead=(QUICK_PHRASE *)malloc(sizeof(QUICK_PHRASE));
-    quickPhraseHead->prev=NULL;
 
     // 这儿的处理比较简单。因为是单索引对单值。
     // 应该注意的是，它在内存中是以单链表保存的。
     for (;;) {
-	if (EOF==fscanf (fp, "%s", strCode))
-	    break;
-	if (EOF==fscanf (fp, "%s", strPhrase))
-	    break;
+    if (EOF==fscanf (fp, "%s", strCode))
+        break;
+    if (EOF==fscanf (fp, "%s", strPhrase))
+        break;
 
-	tempQuickPhrase=(QUICK_PHRASE *)malloc(sizeof(QUICK_PHRASE));
-	strcpy(tempQuickPhrase->strCode,strCode);
-	strcpy(tempQuickPhrase->strPhrase,strPhrase);
+    tempQuickPhrase=(QUICK_PHRASE *)malloc(sizeof(QUICK_PHRASE));
+    strcpy(tempQuickPhrase->strCode,strCode);
+    strcpy(tempQuickPhrase->strPhrase,strPhrase);
 
-	quickPhrase->next=tempQuickPhrase;
-	tempQuickPhrase->prev=quickPhrase;
-	quickPhrase=tempQuickPhrase;
+    ArrayAddPointer(quickPhrases, &tempQuickPhrase);
+
     }
-    quickPhrase->next=NULL;
+
+    if (quickPhrases)
+    {
+        ArraySort(quickPhrases, PhraseCmp);
+    }
 
     fclose(fp);
 }
 
 void FreeQuickPhrase(void)
 {
-    QUICK_PHRASE *tempQuickPhrase,*quickPhrase;
+    QUICK_PHRASE *quickPhrase;
 
-    if ( !quickPhraseHead )
-	return;
+    if ( !quickPhrases )
+    return;
 
-    quickPhrase=quickPhraseHead->next;
-    while (quickPhrase) {
-	tempQuickPhrase=quickPhrase->next;
-	free(quickPhrase);
-	quickPhrase=tempQuickPhrase;
+    int i;
+    ArrayForeach(i, quickPhrases)
+    {
+        quickPhrase = ArrayCell(quickPhrases, i, QUICK_PHRASE*);
+        free(quickPhrase);
     }
-
-    free(quickPhraseHead);
-    quickPhraseHead = NULL;
+    ArrayFree(quickPhrases);
 }
 
 INPUT_RETURN_VALUE QuickPhraseDoInput (int iKey)
@@ -121,32 +142,32 @@ INPUT_RETURN_VALUE QuickPhraseDoInput (int iKey)
     int retVal;
 
     if (iKey >= '0' && iKey <= '9') {
-	if (!iCandWordCount)
-	    return IRV_TO_PROCESS;
+    if (!iCandWordCount)
+        return IRV_TO_PROCESS;
 
-	iKey -= '0';
-	if (iKey == 0)
-	    iKey = 10;
+    iKey -= '0';
+    if (iKey == 0)
+        iKey = 10;
 
-	if (iKey > iCandWordCount)
-	    retVal = IRV_DO_NOTHING;
-	else {
-	    strcpy (strStringGet, quickPhraseCandWords[iKey-1]->strPhrase);
-	    retVal = IRV_GET_CANDWORDS;
-	    uMessageDown = 0;
-	}
+    if (iKey > iCandWordCount)
+        retVal = IRV_DO_NOTHING;
+    else {
+        strcpy (strStringGet, quickPhraseCandWords[iKey-1]->strPhrase);
+        retVal = IRV_GET_CANDWORDS;
+        uMessageDown = 0;
+    }
     }
     else if (iKey==' ') {
-	if (!iCandWordCount)
-	    retVal = IRV_TO_PROCESS;
-	else {
-	    strcpy (strStringGet, quickPhraseCandWords[0]->strPhrase);
-	    retVal = IRV_GET_CANDWORDS;
-	    uMessageDown = 0;
-	}
+    if (!iCandWordCount)
+        retVal = IRV_TO_PROCESS;
+    else {
+        strcpy (strStringGet, quickPhraseCandWords[0]->strPhrase);
+        retVal = IRV_GET_CANDWORDS;
+        uMessageDown = 0;
+    }
     }
     else
-	retVal = IRV_TO_PROCESS;
+    retVal = IRV_TO_PROCESS;
 
     return retVal;
 }
@@ -154,86 +175,61 @@ INPUT_RETURN_VALUE QuickPhraseDoInput (int iKey)
 INPUT_RETURN_VALUE QuickPhraseGetCandWords (SEARCH_MODE mode)
 {
     int i, iInputLen;
+    QUICK_PHRASE searchKey, *pKey, **currentQuickPhrase;
     char strTemp[2];
 
-    if ( !quickPhraseHead )
+    pKey = &searchKey;
+
+    if ( !quickPhrases )
         return IRV_DISPLAY_MESSAGE;
 
-//    if (mode==SM_FIRST) {
-	currentQuickPhrase=quickPhraseHead->next;
-	iCandPageCount=0;
-	iCurrentCandPage=0;
-	iCandWordCount=0;
-	iInputLen = strlen(strCodeInput);
-/*
-	while (currentQuickPhrase) {
-	    if (!strcmp(strCodeInput, currentQuickPhrase->strCode))
-		break;
+    iInputLen = strlen(strCodeInput);
+    if (iInputLen > QUICKPHRASE_CODE_LEN)
+        return IRV_DISPLAY_MESSAGE;
 
-	    currentQuickPhrase=currentQuickPhrase->next;
-	}
+    strcpy(searchKey.strCode, strCodeInput);
 
-	if ( !currentQuickPhrase ) {
-	    uMessageDown = 0;
-	    return IRV_DISPLAY_MESSAGE;
-	    //return IRV_DISPLAY_CANDWORDS;
-	}
+    if (mode==SM_FIRST) {
+    currentQuickPhrase=ArrayPos(quickPhrases, 0);
+    iCandPageCount=0;
+    iCurrentCandPage=0;
+    iCandWordCount=0;
+    currentQuickPhrase = ArrayBsearch(&pKey, quickPhrases, False, PhraseCmp);
+    iFirstQuickPhrase = ArrayIndex(quickPhrases, currentQuickPhrase);
+    iLastQuickPhrase = ArrayIndex(quickPhrases, ArrayBsearch(&pKey, quickPhrases, False, PhraseCmpA));
+
+    iCandPageCount = (iLastQuickPhrase - iFirstQuickPhrase) / iMaxCandWord;
+    if ( !currentQuickPhrase || strncmp(strCodeInput,currentQuickPhrase[0]->strCode,iInputLen) ) {
+        uMessageDown = 0;
+        currentQuickPhrase = NULL;
+        return IRV_DISPLAY_MESSAGE;
+    }
+
     }
     else if (mode==SM_NEXT) {
-	if (iCurrentCandPage>=iCandPageCount)
-	    return IRV_DO_NOTHING;
-	iCandWordCount=0;
-	iCurrentCandPage++;
+    if (iCurrentCandPage>=iCandPageCount)
+        return IRV_DO_NOTHING;
+    iCandWordCount=0;
+    iCurrentCandPage++;
     }
     else {
-	if (!iCurrentCandPage)
-	    return IRV_DO_NOTHING;
-	iCurrentCandPage--;
+    if (iCurrentCandPage <= 0)
+        return IRV_DO_NOTHING;
+    iCandWordCount=0;
+    iCurrentCandPage--;
     }
 
-    if ( mode!=SM_PREV) {
-*/	while (currentQuickPhrase ) {
-	    if (!strncmp(strCodeInput,currentQuickPhrase->strCode,iInputLen)) {
-		quickPhraseCandWords[iCandWordCount++]=currentQuickPhrase;
-		if (iCandPageCount==MAX_CAND_WORD) {
-/*		    quickPhrase=currentQuickPhrase;
-		    while (quickPhrase) {
-			if (!strcmp(strCodeInput,quickPhrase->strCode)) {
-			    iCandPageCount++;
-			    break;
-			}
-		    }
-*/		    break;
-		}
-	    }
-	    currentQuickPhrase=currentQuickPhrase->next;
-	}
-/*    }
-    else {
-	i=0;
-
-	for (;;) {
-	    if (!strcmp(strCodeInput,currentQuickPhrase->strCode)) {
-		i++;
-		currentQuickPhrase=currentQuickPhrase->prev;
-		if (i==MAX_CAND_WORD)
-		    break;
-	    }
-	    iCandWordCount=0;
-	    quickPhrase=currentQuickPhrase;
-	    for (;;) {
-		if (!strcmp(strCodeInput,currentQuickPhrase->strCode)) {
-		    iCandWordCount++;
-		    quickPhraseCandWords[MAX_CAND_WORD-iCandWordCount]=currentQuickPhrase;
-		    currentQuickPhrase=currentQuickPhrase->prev;
-		    if (iCandWordCount==MAX_CAND_WORD)
-			break;
-		}
-	    }
-	    currentQuickPhrase=quickPhrase;
-	}
+    ArrayForeachFrom( iFirstQuickPhrase + iCurrentCandPage * iMaxCandWord, i, quickPhrases)
+    {
+        currentQuickPhrase = ArrayPos(quickPhrases, i);
+        if (!strncmp(strCodeInput,currentQuickPhrase[0]->strCode,iInputLen)) {
+        quickPhraseCandWords[iCandWordCount++]=currentQuickPhrase[0];
+        if (iCandWordCount==iMaxCandWord) {
+            break;
+        }
+        }
     }
-*/
+
     if (!iCandWordCount)
         return IRV_DISPLAY_MESSAGE;
 
@@ -241,20 +237,20 @@ INPUT_RETURN_VALUE QuickPhraseGetCandWords (SEARCH_MODE mode)
     strTemp[1]='\0';
 
     for (i = 0; i < iCandWordCount; i++) {
-	strTemp[0] = i + 1 + '0';
-	if (i == 9)
-	    strTemp[0] = '0';
-	strcpy (messageDown[uMessageDown].strMsg, strTemp);
-	messageDown[uMessageDown++].type = MSG_INDEX;
+    strTemp[0] = i + 1 + '0';
+    if (i == 9)
+        strTemp[0] = '0';
+    strcpy (messageDown[uMessageDown].strMsg, strTemp);
+    messageDown[uMessageDown++].type = MSG_INDEX;
 
-	strcpy (messageDown[uMessageDown].strMsg, quickPhraseCandWords[i]->strPhrase);
-	messageDown[uMessageDown++].type = ((i == 0) ? MSG_FIRSTCAND : MSG_OTHER);
+    strcpy (messageDown[uMessageDown].strMsg, quickPhraseCandWords[i]->strPhrase);
+    messageDown[uMessageDown++].type = ((i == 0) ? MSG_FIRSTCAND : MSG_OTHER);
 
-	//编码提示
-	strcpy (messageDown[uMessageDown].strMsg, quickPhraseCandWords[i]->strCode + iInputLen);
-	if (i != (iCandWordCount - 1))
-	    strcat (messageDown[uMessageDown].strMsg, " ");
-	messageDown[uMessageDown++].type = MSG_CODE;
+    //编码提示
+    strcpy (messageDown[uMessageDown].strMsg, quickPhraseCandWords[i]->strCode + iInputLen);
+    if (i != (iCandWordCount - 1))
+        strcat (messageDown[uMessageDown].strMsg, " ");
+    messageDown[uMessageDown++].type = MSG_CODE;
     }
 
     return IRV_DISPLAY_CANDWORDS;

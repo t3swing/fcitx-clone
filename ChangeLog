@@ -1,4 +1,9 @@
 
+2010-04-26: CSSlayer <wengxt@gmail.com>
+	* 修复QuickPhrase的一些崩溃问题，加入翻页支持
+	* 不建议在QuickPhrase中使用翻页键作为快捷键
+	* 加入一个变长数组的文件
+
 2010-04-24: CSSlayer <wengxt@gmail.com>
 	* utf8版本去除GBK字符集选项，kimpanel添加显示虚拟键盘状态的按钮
 	* 这个按钮提示信息中有快捷键，不能直接按

@@ -205,6 +205,8 @@ extern char    *strFullCorner;
 extern Bool	bUseDBus;
 extern CARD16	connect_id;
 
+extern int iFirstQuickPhrase;
+
 #ifdef _ENABLE_DBUS
 extern Property logo_prop;
 extern Property state_prop;
@@ -224,7 +226,7 @@ extern XFontSet fontSetMainWindow;
 #ifdef _ENABLE_RECORDING
 extern FILE	*fpRecord;
 extern Bool	bRecording;
-extern Bool 	bWrittenRecord;
+extern Bool     bWrittenRecord;
 #endif
 
 #ifdef _ENABLE_TRAY
@@ -233,12 +235,12 @@ extern Bool	tray_mapped;
 #endif
 
 char *sCornerTrans[] = {
-	"　", "！", "＂", "＃", "￥", "％", "＆", "＇", "（", "）", "＊", "＋", "，", "－", "．", "／", 
-	"０", "１", "２", "３", "４", "５", "６", "７", "８", "９", "：", "；", "＜", "＝", "＞", "？",
-	"＠", "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ", "Ｌ", "Ｍ", "Ｎ", "Ｏ",
-	"Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ", "Ｗ", "Ｘ", "Ｙ", "Ｚ", "［", "＼", "］", "＾", "＿",
-	"｀", "ａ", "ｂ", "ｃ", "ｄ", "ｅ", "ｆ", "ｇ", "ｈ", "ｉ", "ｊ", "ｋ", "ｌ", "ｍ", "ｎ", "ｏ",
-	"ｐ", "ｑ", "ｒ", "ｓ", "ｔ", "ｕ", "ｖ", "ｗ", "ｘ", "ｙ", "ｚ", "｛", "｜", "｝", "￣",
+    "　", "！", "＂", "＃", "￥", "％", "＆", "＇", "（", "）", "＊", "＋", "，", "－", "．", "／", 
+    "０", "１", "２", "３", "４", "５", "６", "７", "８", "９", "：", "；", "＜", "＝", "＞", "？",
+    "＠", "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ", "Ｌ", "Ｍ", "Ｎ", "Ｏ",
+    "Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ", "Ｗ", "Ｘ", "Ｙ", "Ｚ", "［", "＼", "］", "＾", "＿",
+    "｀", "ａ", "ｂ", "ｃ", "ｄ", "ｅ", "ｆ", "ｇ", "ｈ", "ｉ", "ｊ", "ｋ", "ｌ", "ｍ", "ｎ", "ｏ",
+    "ｐ", "ｑ", "ｒ", "ｓ", "ｔ", "ｕ", "ｖ", "ｗ", "ｘ", "ｙ", "ｚ", "｛", "｜", "｝", "￣",
 };
 
 void ResetInput (void)
@@ -263,17 +265,19 @@ void ResetInput (void)
     iInCap = 0;
 
     if (!IsIM (strNameOfPinyin))
-	bShowCursor = False;
+    bShowCursor = False;
 
     if (im[iIMIndex].ResetIM)
-	im[iIMIndex].ResetIM ();
+    im[iIMIndex].ResetIM ();
+
+    iFirstQuickPhrase = -1;
 }
 
 void CloseIM (IMForwardEventStruct * call_data)
 {
     CloseInputWindow();
     
-	XUnmapWindow (dpy, VKWindow);
+    XUnmapWindow (dpy, VKWindow);
 
     IMPreeditEnd (ims, (XPointer) call_data);
     SetConnectID (call_data->connect_id, IS_CLOSED);
@@ -282,48 +286,48 @@ void CloseIM (IMForwardEventStruct * call_data)
     SwitchIM (-2);
     
     if (!bUseDBus) {
-	DrawMainWindow ();
+    DrawMainWindow ();
 
 #ifdef _ENABLE_TRAY
-	DrawTrayWindow (INACTIVE_ICON, 0, 0, TRAY_ICON_HEIGHT, TRAY_ICON_WIDTH);
+    DrawTrayWindow (INACTIVE_ICON, 0, 0, TRAY_ICON_HEIGHT, TRAY_ICON_WIDTH);
 #endif
     }
 #ifdef _ENABLE_DBUS
     else
-	updateProperty(&state_prop);
+    updateProperty(&state_prop);
 #endif
 }
 
 void ChangeIMState (CARD16 _connect_id)
 {
     if (ConnectIDGetState (_connect_id) == IS_ENG) {
-	SetConnectID (_connect_id, IS_CHN);
-	iState = IS_CHN;
+    SetConnectID (_connect_id, IS_CHN);
+    iState = IS_CHN;
 
     if (bVK) {
-		DisplayVKWindow ();
-	}
+        DisplayVKWindow ();
+    }
     else
-		DisplayInputWindow ();
+        DisplayInputWindow ();
     }
     else {
-	SetConnectID (_connect_id, IS_ENG);
-	iState = IS_ENG;
-	ResetInput ();
-	ResetInputWindow ();
+    SetConnectID (_connect_id, IS_ENG);
+    iState = IS_ENG;
+    ResetInput ();
+    ResetInputWindow ();
 
-	CloseInputWindow();
-	}
-	XUnmapWindow (dpy, VKWindow);
+    CloseInputWindow();
+    }
+    XUnmapWindow (dpy, VKWindow);
     
     if (!bUseDBus) {
-	if (hideMainWindow != HM_HIDE)
-	    DrawMainWindow ();
+    if (hideMainWindow != HM_HIDE)
+        DrawMainWindow ();
     }
 
 #ifdef _ENABLE_DBUS 
     if (bUseDBus) {
-	updateProperty(&state_prop);
+    updateProperty(&state_prop);
     }
 #endif
 }
@@ -340,14 +344,14 @@ void ConvertPunc (void)
     s2 = strStringGet;
 
     while (*s2) {
-	pPunc = GetPunc (*s2);
-	if (pPunc) {
-	    strcat (s1, pPunc);
-	    s1 += strlen (pPunc);
-	}
-	else
-	    *s1++ = *s2;
-	s2++;
+    pPunc = GetPunc (*s2);
+    if (pPunc) {
+        strcat (s1, pPunc);
+        s1 += strlen (pPunc);
+    }
+    else
+        *s1++ = *s2;
+    s2++;
     }
     *s2 = '\0';
 
@@ -374,8 +378,8 @@ void ProcessKey (IMForwardEventStruct * call_data)
     iKey = GetKey (keysym, iKeyState, keyCount);
 
     if (!iKey) {
-	IMForwardEvent (ims, (XPointer) call_data);
-	return;
+    IMForwardEvent (ims, (XPointer) call_data);
+    return;
     }
 
     /*
@@ -384,8 +388,8 @@ void ProcessKey (IMForwardEventStruct * call_data)
      * 但这段代码对新的xine-ui已经不起作用了
      */
      /*if (kev->same_screen && (kev->keycode == switchKey || kev->keycode == i2ndSelectKey || kev->keycode == i3rdSelectKey)) {
-	IMForwardEvent (ims, (XPointer) call_data);
-	return;
+    IMForwardEvent (ims, (XPointer) call_data);
+    return;
      }*/
 
     retVal = IRV_TO_PROCESS;
@@ -400,648 +404,677 @@ void ProcessKey (IMForwardEventStruct * call_data)
 
     /* ******************************************* */
     if (call_data->event.type == KeyRelease) {
-	if (ConnectIDGetState (call_data->connect_id) != IS_CLOSED) {
-	    if ((kev->time - lastKeyPressedTime) < 500 && (!bIsDoInputOnly)) {
-		if (iKeyState == KEY_CTRL_SHIFT_COMP && (iKey == 225 || iKey == 227)) {
-		    if ( !bLocked ) {
-		        if (ConnectIDGetState (call_data->connect_id) == IS_CHN)
-			    SwitchIM (-1);
-		        else if (IsHotKey (iKey, hkTrigger))
-			    CloseIM (call_data);
-		    }
-		    else if ( bVK )
-		        ChangVK();
-		}
-		else if (iKey == CTRL_LSHIFT) {
-		    if ( !bLocked ) {
-		        if (ConnectIDGetState (call_data->connect_id) == IS_CHN)
-			    SwitchIM (-1);
-		        else if (IsHotKey (iKey, hkTrigger))
-			    CloseIM (call_data);
-		    }
-		    else if ( bVK )
-		        ChangVK();
-		}
-		else if (kev->keycode == switchKey && keyReleased == KR_CTRL && !bDoubleSwitchKey) {
-		    /* 按下临时英文键会把已经输入的英文送到客户程序中，但实际使用发现，这种方式不具人性化
-		     * if (iCodeInputCount) {
-			strcpy (strStringGet, strCodeInput);
-			retVal = IRV_ENG;
-		    }
-		    else
-			retVal = IRV_TO_PROCESS;
-		    */
-		    keyReleased = KR_OTHER;
-		    ChangeIMState (call_data->connect_id);
-		    retVal = IRV_DONOT_PROCESS;
-	        }
-		else if ((kev->keycode == i2ndSelectKey && keyReleased == KR_2ND_SELECTKEY)
-			 || (iKey == (i2ndSelectKey ^ 0xFF) && keyReleased == KR_2ND_SELECTKEY_OTHER)) {
-		    if (!bIsInLegend) {
-			pstr = im[iIMIndex].GetCandWord (1);
-			if (pstr) {
-			    strcpy (strStringGet, pstr);
-			    if (bIsInLegend)
-				retVal = IRV_GET_LEGEND;
-			    else
-				retVal = IRV_GET_CANDWORDS;
-			}
-			else if (iCandWordCount)
-			    retVal = IRV_DISPLAY_CANDWORDS;
-			else
-			    retVal = IRV_TO_PROCESS;
-		    }
-		    else {
-			strcpy (strStringGet, " ");
-			uMessageDown = 0;
-			retVal = IRV_GET_CANDWORDS;
-		    }
+    if (ConnectIDGetState (call_data->connect_id) != IS_CLOSED) {
+        if ((kev->time - lastKeyPressedTime) < 500 && (!bIsDoInputOnly)) {
+        if (iKeyState == KEY_CTRL_SHIFT_COMP && (iKey == 225 || iKey == 227)) {
+            if ( !bLocked ) {
+                if (ConnectIDGetState (call_data->connect_id) == IS_CHN)
+        	    SwitchIM (-1);
+                else if (IsHotKey (iKey, hkTrigger))
+        	    CloseIM (call_data);
+            }
+            else if ( bVK )
+                ChangVK();
+        }
+        else if (iKey == CTRL_LSHIFT) {
+            if ( !bLocked ) {
+                if (ConnectIDGetState (call_data->connect_id) == IS_CHN)
+        	    SwitchIM (-1);
+                else if (IsHotKey (iKey, hkTrigger))
+        	    CloseIM (call_data);
+            }
+            else if ( bVK )
+                ChangVK();
+        }
+        else if (kev->keycode == switchKey && keyReleased == KR_CTRL && !bDoubleSwitchKey) {
+            /* 按下临时英文键会把已经输入的英文送到客户程序中，但实际使用发现，这种方式不具人性化
+             * if (iCodeInputCount) {
+        	strcpy (strStringGet, strCodeInput);
+        	retVal = IRV_ENG;
+            }
+            else
+        	retVal = IRV_TO_PROCESS;
+            */
+            keyReleased = KR_OTHER;
+            ChangeIMState (call_data->connect_id);
+            retVal = IRV_DONOT_PROCESS;
+            }
+        else if ((kev->keycode == i2ndSelectKey && keyReleased == KR_2ND_SELECTKEY)
+        	 || (iKey == (i2ndSelectKey ^ 0xFF) && keyReleased == KR_2ND_SELECTKEY_OTHER)) {
+            if (!bIsInLegend) {
+        	pstr = im[iIMIndex].GetCandWord (1);
+        	if (pstr) {
+        	    strcpy (strStringGet, pstr);
+        	    if (bIsInLegend)
+        		retVal = IRV_GET_LEGEND;
+        	    else
+        		retVal = IRV_GET_CANDWORDS;
+        	}
+        	else if (iCandWordCount)
+        	    retVal = IRV_DISPLAY_CANDWORDS;
+        	else
+        	    retVal = IRV_TO_PROCESS;
+            }
+            else {
+        	strcpy (strStringGet, " ");
+        	uMessageDown = 0;
+        	retVal = IRV_GET_CANDWORDS;
+            }
 
-		    keyReleased = KR_OTHER;
-		}
-		else if ((kev->keycode == i3rdSelectKey && keyReleased == KR_3RD_SELECTKEY)
-			 || (iKey == (i3rdSelectKey ^ 0xFF) && keyReleased == KR_3RD_SELECTKEY_OTHER) ) {
-		    if (!bIsInLegend) {
-			pstr = im[iIMIndex].GetCandWord (2);
-			if (pstr) {
-			    strcpy (strStringGet, pstr);
-			    if (bIsInLegend)
-				retVal = IRV_GET_LEGEND;
-			    else
-				retVal = IRV_GET_CANDWORDS;
-			}
-			else if (iCandWordCount)
-			    retVal = IRV_DISPLAY_CANDWORDS;
-		    }
-		    else {
-			strcpy (strStringGet, "　");
-			uMessageDown = 0;
-			retVal = IRV_GET_CANDWORDS;
-		    }
+            keyReleased = KR_OTHER;
+        }
+        else if ((kev->keycode == i3rdSelectKey && keyReleased == KR_3RD_SELECTKEY)
+        	 || (iKey == (i3rdSelectKey ^ 0xFF) && keyReleased == KR_3RD_SELECTKEY_OTHER) ) {
+            if (!bIsInLegend) {
+        	pstr = im[iIMIndex].GetCandWord (2);
+        	if (pstr) {
+        	    strcpy (strStringGet, pstr);
+        	    if (bIsInLegend)
+        		retVal = IRV_GET_LEGEND;
+        	    else
+        		retVal = IRV_GET_CANDWORDS;
+        	}
+        	else if (iCandWordCount)
+        	    retVal = IRV_DISPLAY_CANDWORDS;
+            }
+            else {
+        	strcpy (strStringGet, "　");
+        	uMessageDown = 0;
+        	retVal = IRV_GET_CANDWORDS;
+            }
 
-		    keyReleased = KR_OTHER;
-		}
-	    }
-	}
-	else
-	    call_data->event.type = KeyPress;
+            keyReleased = KR_OTHER;
+        }
+        }
+    }
+    else
+        call_data->event.type = KeyPress;
     }
 
     if (retVal == IRV_TO_PROCESS) {
-	if (call_data->event.type == KeyPress) {
-	    if (kev->keycode != switchKey)
-		keyReleased = KR_OTHER;
-	    else {
-		if ((keyReleased == KR_CTRL) && (kev->time - lastKeyPressedTime < iTimeInterval) && bDoubleSwitchKey) {
-	    	    SendHZtoClient(call_data, strCodeInput);
-		    ChangeIMState (call_data->connect_id);
-	        }
-	    }
+    if (call_data->event.type == KeyPress) {
+        if (kev->keycode != switchKey)
+        keyReleased = KR_OTHER;
+        else {
+        if ((keyReleased == KR_CTRL) && (kev->time - lastKeyPressedTime < iTimeInterval) && bDoubleSwitchKey) {
+                SendHZtoClient(call_data, strCodeInput);
+            ChangeIMState (call_data->connect_id);
+            }
+        }
 
-	    lastKeyPressedTime = kev->time;
-	    if (kev->keycode == switchKey) {
-		keyReleased = KR_CTRL;
-		retVal = IRV_DO_NOTHING;
-	    }
-	    else if (IsHotKey (iKey, hkTrigger)) {
-		if (ConnectIDGetState (call_data->connect_id) == IS_ENG) {
-		    SetConnectID (call_data->connect_id, IS_CHN);
+        lastKeyPressedTime = kev->time;
+        if (kev->keycode == switchKey) {
+        keyReleased = KR_CTRL;
+        retVal = IRV_DO_NOTHING;
+        }
+        else if (IsHotKey (iKey, hkTrigger)) {
+        if (ConnectIDGetState (call_data->connect_id) == IS_ENG) {
+            SetConnectID (call_data->connect_id, IS_CHN);
 
-		    EnterChineseMode (False);
-		    if (!bUseDBus)
-			DrawMainWindow ();
+            EnterChineseMode (False);
+            if (!bUseDBus)
+        	DrawMainWindow ();
 
-		    if (bShowInputWindowTriggering && !bCorner) {
-			    DisplayInputWindow ();
-		    }
-		    else
-		        MoveInputWindow(call_data->connect_id);
-		}
-		else
-		    CloseIM (call_data);
+            if (bShowInputWindowTriggering && !bCorner) {
+        	    DisplayInputWindow ();
+            }
+            else
+                MoveInputWindow(call_data->connect_id);
+        }
+        else
+            CloseIM (call_data);
 
-		retVal = IRV_DO_NOTHING;
-	    }
-	}
+        retVal = IRV_DO_NOTHING;
+        }
+    }
 
-	if (retVal == IRV_TO_PROCESS) {
-	    if (call_data->event.type == KeyPress) {
-		if (ConnectIDGetState (call_data->connect_id) == IS_CHN) {
-		    if (bVK)
-			retVal = DoVKInput (iKey);
-		    else {
-			if (iKeyState == KEY_NONE) {
-			    if (kev->keycode == i2ndSelectKey) {
-				keyReleased = KR_2ND_SELECTKEY;
-				return;
-			    }
-			    else if (kev->keycode == i3rdSelectKey) {
-				keyReleased = KR_3RD_SELECTKEY;
-				return;
-			    }
-			    else if (iKey == (i2ndSelectKey ^ 0xFF)) {
-				if (iCandWordCount >= 2) {
-				    keyReleased = KR_2ND_SELECTKEY_OTHER;
-				    return;
-				}
-			    }
-			    else if (iKey == (i3rdSelectKey ^ 0xFF)) {
-				if (iCandWordCount >= 2) {
-				    keyReleased = KR_3RD_SELECTKEY_OTHER;
-				    return;
-				}
-			    }
-			}
+    if (retVal == IRV_TO_PROCESS) {
+        if (call_data->event.type == KeyPress) {
+        if (ConnectIDGetState (call_data->connect_id) == IS_CHN) {
+            if (bVK)
+        	retVal = DoVKInput (iKey);
+            else {
+        	if (iKeyState == KEY_NONE) {
+        	    if (kev->keycode == i2ndSelectKey) {
+        		keyReleased = KR_2ND_SELECTKEY;
+        		return;
+        	    }
+        	    else if (kev->keycode == i3rdSelectKey) {
+        		keyReleased = KR_3RD_SELECTKEY;
+        		return;
+        	    }
+        	    else if (iKey == (i2ndSelectKey ^ 0xFF)) {
+        		if (iCandWordCount >= 2) {
+        		    keyReleased = KR_2ND_SELECTKEY_OTHER;
+        		    return;
+        		}
+        	    }
+        	    else if (iKey == (i3rdSelectKey ^ 0xFF)) {
+        		if (iCandWordCount >= 2) {
+        		    keyReleased = KR_3RD_SELECTKEY_OTHER;
+        		    return;
+        		}
+        	    }
+        	}
 
-			if (iKey == CTRL_LSHIFT || iKey == SHIFT_LCTRL) {
-			    if (bLocked)
-				retVal = IRV_TO_PROCESS;
-			}
-			else {
-			    //调用输入法模块
-			    if (bCorner && (iKey >= 32 && iKey <= 126)) {
-				//有人报 空格 的全角不对，正确的是0xa1 0xa1
-				//但查资料却说全角符号总是以0xa3开始。
-				//由于0xa3 0xa0可能会显示乱码，因此采用0xa1 0xa1的方式
-				sprintf (strStringGet, "%s", sCornerTrans[iKey - 32]);
-				retVal = IRV_GET_CANDWORDS;
-			    }
-			    else {
-				if (!iInCap) {
-				    char            strTemp[MAX_USER_INPUT];
+        	if (iKey == CTRL_LSHIFT || iKey == SHIFT_LCTRL) {
+        	    if (bLocked)
+        		retVal = IRV_TO_PROCESS;
+        	}
+        	else {
+        	    //调用输入法模块
+        	    if (bCorner && (iKey >= 32 && iKey <= 126)) {
+        		//有人报 空格 的全角不对，正确的是0xa1 0xa1
+        		//但查资料却说全角符号总是以0xa3开始。
+        		//由于0xa3 0xa0可能会显示乱码，因此采用0xa1 0xa1的方式
+        		sprintf (strStringGet, "%s", sCornerTrans[iKey - 32]);
+        		retVal = IRV_GET_CANDWORDS;
+        	    }
+        	    else {
+        		if (!iInCap) {
+        		    char            strTemp[MAX_USER_INPUT];
 
-				    retVal = im[iIMIndex].DoInput (iKey);
-				    if (!bCursorAuto && !IsIM (strNameOfPinyin) && !IsIM (strNameOfShuangpin))
-					iCursorPos = iCodeInputCount;
+        		    retVal = im[iIMIndex].DoInput (iKey);
+        		    if (!bCursorAuto && !IsIM (strNameOfPinyin) && !IsIM (strNameOfShuangpin))
+        			iCursorPos = iCodeInputCount;
 
-				    //为了实现自动英文转换
-				    strcpy (strTemp, strCodeInput);
-				    if (retVal == IRV_TO_PROCESS) {
-					strTemp[strlen (strTemp) + 1] = '\0';
-					strTemp[strlen (strTemp)] = iKey;
-				    }
+        		    //为了实现自动英文转换
+        		    strcpy (strTemp, strCodeInput);
+        		    if (retVal == IRV_TO_PROCESS) {
+        			strTemp[strlen (strTemp) + 1] = '\0';
+        			strTemp[strlen (strTemp)] = iKey;
+        		    }
 
-				    if (SwitchToEng (strTemp)) {
-					iInCap = 3;
-					if (retVal != IRV_TO_PROCESS) {
-					    iCodeInputCount--;
-					    retVal = IRV_TO_PROCESS;
-					}
-				    }
+        		    if (SwitchToEng (strTemp)) {
+        			iInCap = 3;
+        			if (retVal != IRV_TO_PROCESS) {
+        			    iCodeInputCount--;
+        			    retVal = IRV_TO_PROCESS;
+        			}
+        		    }
 
-				    if (iKey!= (XK_BackSpace & 0x00FF))
-					cLastIsAutoConvert = 0;
-				}
-				else if (iInCap == 2 && semicolonToDo == K_SEMICOLON_QUICKPHRASE && !iLegendCandWordCount)
-				    retVal = QuickPhraseDoInput (iKey);
+        		    if (iKey!= (XK_BackSpace & 0x00FF))
+        			cLastIsAutoConvert = 0;
+        		}
+        		else if (iInCap == 2 && semicolonToDo == K_SEMICOLON_QUICKPHRASE && !iLegendCandWordCount)
+        		    retVal = QuickPhraseDoInput (iKey);
 
-				if (!bIsDoInputOnly && retVal == IRV_TO_PROCESS) {
-				    if (!iInCap && iKey >= 'A' && iKey <= 'Z' && bEngAfterCap && !(kev->state & KEY_CAPSLOCK)) {
-					iInCap = 1;
-					if (!bIsInLegend && iCandWordCount) {
-					    pstr = im[iIMIndex].GetCandWord (0);
-					    iCandWordCount = 0;
-					    if (pstr) {
-						SendHZtoClient (call_data, pstr);
-						strcpy (strStringGet, pstr);
-						//粗略统计字数
-						iHZInputed += (int) (utf8_strlen (strStringGet));
-						iCodeInputCount = 0;
-					    }
-					}
-				    }
-				    else if (iKey == ';' && semicolonToDo != K_SEMICOLON_NOCHANGE && !iCodeInputCount) {
-					if (iInCap != 2)
-					    iInCap = 2;
-					else
-					    iKey = ' ';	//使用第2个分号输入中文分号
-				    }
-				    else if (!iInCap) {
-					if (IsHotKey (iKey, hkPrevPage))
-					    retVal = im[iIMIndex].GetCandWords (SM_PREV);
-					else if (IsHotKey (iKey, hkNextPage))
-					    retVal = im[iIMIndex].GetCandWords (SM_NEXT);
-				    }
+        		if (!bIsDoInputOnly && retVal == IRV_TO_PROCESS) {
+        		    if (!iInCap && iKey >= 'A' && iKey <= 'Z' && bEngAfterCap && !(kev->state & KEY_CAPSLOCK)) {
+        			iInCap = 1;
+        			if (!bIsInLegend && iCandWordCount) {
+        			    pstr = im[iIMIndex].GetCandWord (0);
+        			    iCandWordCount = 0;
+        			    if (pstr) {
+        				SendHZtoClient (call_data, pstr);
+        				strcpy (strStringGet, pstr);
+        				//粗略统计字数
+        				iHZInputed += (int) (utf8_strlen (strStringGet));
+        				iCodeInputCount = 0;
+        			    }
+        			}
+        		    }
+        		    else if (iKey == ';' && semicolonToDo != K_SEMICOLON_NOCHANGE && !iCodeInputCount) {
+        			if (iInCap != 2)
+        			    iInCap = 2;
+        			else
+        			    iKey = ' ';	//使用第2个分号输入中文分号
+        		    }
+        		    else if (!iInCap) {
+        			if (IsHotKey (iKey, hkPrevPage))
+        			    retVal = im[iIMIndex].GetCandWords (SM_PREV);
+        			else if (IsHotKey (iKey, hkNextPage))
+        			    retVal = im[iIMIndex].GetCandWords (SM_NEXT);
+        		    }
 
-				    if (retVal == IRV_TO_PROCESS) {
-					if (iInCap) {
-					    if ((iKey == ' ') && (iCodeInputCount == 0)) {
-						strcpy (strStringGet, "；");
-						retVal = IRV_ENG;
-						uMessageUp = uMessageDown = 0;
-						iInCap = 0;
-					    }
-					    else {
-						if (isprint (iKey) && iKey < 128) {
-						    if (iCodeInputCount == MAX_USER_INPUT)
-							retVal = IRV_DO_NOTHING;
-						    else {
-							if (!(iInCap == 2 && !iCodeInputCount && iKey == ';')) {
-							    strCodeInput[iCodeInputCount++] = iKey;
-							    strCodeInput[iCodeInputCount] = '\0';
-							    bShowCursor = True;
-							    iCursorPos = iCodeInputCount;
-							    if (semicolonToDo == K_SEMICOLON_QUICKPHRASE && iInCap == 2)
-								retVal = QuickPhraseGetCandWords (SM_FIRST);
-							    else
-								retVal = IRV_DISPLAY_MESSAGE;
-							}
-							else
-							    retVal = IRV_DISPLAY_MESSAGE;
-						    }
-						}
-						else if (iKey == (XK_BackSpace & 0x00FF) || iKey == CTRL_H) {
-						    if (iCodeInputCount)
-							iCodeInputCount--;
-						    strCodeInput[iCodeInputCount] = '\0';
-						    iCursorPos = iCodeInputCount;
-						    if (!iCodeInputCount)
-							retVal = IRV_CLEAN;
-						    else if (semicolonToDo == K_SEMICOLON_QUICKPHRASE && iInCap == 2)
-							retVal = QuickPhraseGetCandWords (SM_FIRST);
-						    else
-							retVal = IRV_DISPLAY_MESSAGE;
-						}
+        		    if (retVal == IRV_TO_PROCESS) {
+        			if (iInCap) {
+        			    if ((iKey == ' ') && (iCodeInputCount == 0)) {
+        				strcpy (strStringGet, "；");
+        				retVal = IRV_ENG;
+        				uMessageUp = uMessageDown = 0;
+        				iInCap = 0;
+        			    }
+        			    else {
+        				if (isprint (iKey) && iKey < 128) {
+        				    if (iCodeInputCount == MAX_USER_INPUT)
+        					retVal = IRV_DO_NOTHING;
+        				    else {
+        					if (!(iInCap == 2 && !iCodeInputCount && iKey == ';')) {
+        					    strCodeInput[iCodeInputCount++] = iKey;
+        					    strCodeInput[iCodeInputCount] = '\0';
+        					    bShowCursor = True;
+        					    iCursorPos = iCodeInputCount;
+        					    if (semicolonToDo == K_SEMICOLON_QUICKPHRASE && iInCap == 2)
+                                {
+                                    if (iFirstQuickPhrase == -1)
+                                        retVal = QuickPhraseGetCandWords (SM_FIRST);
+                                    else
+                                    {
+                                        if (IsHotKey (iKey, hkPrevPage) || IsHotKey (iKey, hkNextPage))
+                                        {
+                                            if (iCodeInputCount)
+                                                iCodeInputCount--;
+                                            strCodeInput[iCodeInputCount] = '\0';
+                                            iCursorPos = iCodeInputCount;
+                                        }
 
-						uMessageUp = 1;
-						if (iInCap == 2) {
-						    if (semicolonToDo == K_SEMICOLON_ENG) {
-							strcpy (messageUp[0].strMsg, "英文输入 ");
-							iCursorPos += strlen("英文输入 ");
-						    }
-						    else {
-							strcpy (messageUp[0].strMsg, "自定义输入 ");
-							iCursorPos += strlen("自定义输入 ");
-						    }
+                                        if (IsHotKey (iKey, hkPrevPage))
+                                            retVal = QuickPhraseGetCandWords (SM_PREV);
+                                        else if (IsHotKey (iKey, hkNextPage))
+                                            retVal = QuickPhraseGetCandWords (SM_NEXT);
+                                        else
+                                            retVal = QuickPhraseGetCandWords (SM_FIRST);
+                                    }
+                                }
+                                else
+                                    retVal = IRV_DISPLAY_MESSAGE;
+        					}
+        					else
+        					    retVal = IRV_DISPLAY_MESSAGE;
+        				    }
+        				}
+        				else if (iKey == (XK_BackSpace & 0x00FF) || iKey == CTRL_H) {
+        				    if (iCodeInputCount)
+        					iCodeInputCount--;
+        				    strCodeInput[iCodeInputCount] = '\0';
+        				    iCursorPos = iCodeInputCount;
+        				    if (!iCodeInputCount)
+        					retVal = IRV_CLEAN;
+        				    else if (semicolonToDo == K_SEMICOLON_QUICKPHRASE && iInCap == 2)
+                            {
+                                if (iFirstQuickPhrase == -1)
+                                    retVal = QuickPhraseGetCandWords (SM_FIRST);
+                                else if (IsHotKey (iKey, hkPrevPage))
+                                    retVal = QuickPhraseGetCandWords (SM_PREV);
+                                else if (IsHotKey (iKey, hkNextPage))
+                                    retVal = QuickPhraseGetCandWords (SM_NEXT);
+                                else
+                                    retVal = QuickPhraseGetCandWords (SM_FIRST);
+                           }
+        				    else
+        					retVal = IRV_DISPLAY_MESSAGE;
+        				}
 
-						    if (iCodeInputCount) {
-							uMessageUp = 2;
-							//strcat (messageUp[0].strMsg, "  ");
-							strcpy (messageUp[1].strMsg, strCodeInput);
-							messageUp[1].type = MSG_INPUT;
-							iCursorPos += iCodeInputCount;
-						    }
+        				uMessageUp = 1;
+        				if (iInCap == 2) {
+        				    if (semicolonToDo == K_SEMICOLON_ENG) {
+        					strcpy (messageUp[0].strMsg, "英文输入 ");
+        					iCursorPos += strlen("英文输入 ");
+        				    }
+        				    else {
+        					strcpy (messageUp[0].strMsg, "自定义输入 ");
+        					iCursorPos += strlen("自定义输入 ");
+        				    }
 
-						    if (retVal != IRV_DISPLAY_CANDWORDS) {
-							if (iCodeInputCount)
-							    strcpy (messageDown[0].strMsg, "按 Enter 输入英文");
-							else
-							    strcpy (messageDown[0].strMsg, "空格输入；Enter输入;");
-							uMessageDown = 1;
-							messageDown[0].type = MSG_TIPS;
-						    }
-						    messageUp[0].type = MSG_TIPS;
-						}
-						else {
-						    uMessageDown = 1;
-						    messageDown[0].type = MSG_TIPS;
-						    strcpy (messageUp[0].strMsg, strCodeInput);
-						    strcpy (messageDown[0].strMsg, "按 Enter 输入英文");
-						    messageUp[0].type = MSG_INPUT;
-						}
-					    }
-					}
-					else if ((bLastIsNumber && bEngPuncAfterNumber) && (iKey == '.' || iKey == ',' || iKey == ':') && !iCandWordCount) {
-					    cLastIsAutoConvert = iKey;
-					    bLastIsNumber = False;
-					    retVal = IRV_TO_PROCESS;
-					}
-					else {
-					    if (bChnPunc) {
-						char           *pPunc;
+        				    if (iCodeInputCount) {
+        					uMessageUp = 2;
+        					//strcat (messageUp[0].strMsg, "  ");
+        					strcpy (messageUp[1].strMsg, strCodeInput);
+        					messageUp[1].type = MSG_INPUT;
+        					iCursorPos += iCodeInputCount;
+        				    }
 
-						pstr = NULL;
-						pPunc = GetPunc (iKey);
-						if (pPunc) {
-						    strStringGet[0] = '\0';
-						    if (!bIsInLegend)
-							pstr = im[iIMIndex].GetCandWord (0);
-						    if (pstr)
-							strcpy (strStringGet, pstr);
-						    strcat (strStringGet, pPunc);
-						    uMessageDown = uMessageUp = 0;
+        				    if (retVal != IRV_DISPLAY_CANDWORDS) {
+        					if (iCodeInputCount)
+        					    strcpy (messageDown[0].strMsg, "按 Enter 输入英文");
+        					else
+        					    strcpy (messageDown[0].strMsg, "空格输入；Enter输入;");
+        					uMessageDown = 1;
+        					messageDown[0].type = MSG_TIPS;
+        				    }
+        				    messageUp[0].type = MSG_TIPS;
+        				}
+        				else {
+        				    uMessageDown = 1;
+        				    messageDown[0].type = MSG_TIPS;
+        				    strcpy (messageUp[0].strMsg, strCodeInput);
+        				    strcpy (messageDown[0].strMsg, "按 Enter 输入英文");
+        				    messageUp[0].type = MSG_INPUT;
+        				}
+        			    }
+        			}
+        			else if ((bLastIsNumber && bEngPuncAfterNumber) && (iKey == '.' || iKey == ',' || iKey == ':') && !iCandWordCount) {
+        			    cLastIsAutoConvert = iKey;
+        			    bLastIsNumber = False;
+        			    retVal = IRV_TO_PROCESS;
+        			}
+        			else {
+        			    if (bChnPunc) {
+        				char           *pPunc;
 
-						    retVal = IRV_PUNC;
-						}
-						else if ((iKey == (XK_BackSpace & 0x00FF) || iKey == CTRL_H) && cLastIsAutoConvert ) {
-						    char *pPunc;
+        				pstr = NULL;
+        				pPunc = GetPunc (iKey);
+        				if (pPunc) {
+        				    strStringGet[0] = '\0';
+        				    if (!bIsInLegend)
+        					pstr = im[iIMIndex].GetCandWord (0);
+        				    if (pstr)
+        					strcpy (strStringGet, pstr);
+        				    strcat (strStringGet, pPunc);
+        				    uMessageDown = uMessageUp = 0;
 
-						    IMForwardEvent (ims, (XPointer) call_data);
-						    pPunc = GetPunc(cLastIsAutoConvert);
-						    if ( pPunc )
-						    	SendHZtoClient(call_data, pPunc);
+        				    retVal = IRV_PUNC;
+        				}
+        				else if ((iKey == (XK_BackSpace & 0x00FF) || iKey == CTRL_H) && cLastIsAutoConvert ) {
+        				    char *pPunc;
 
-						    retVal = IRV_DO_NOTHING;
-					        }
-						else if (isprint (iKey) && iKey < 128) {
-						    if (iKey >= '0' && iKey <= '9')
-							bLastIsNumber = True;
-						    else {
-							bLastIsNumber = False;
-							if (iKey == ' ')
-							    retVal = IRV_DONOT_PROCESS_CLEAN;	//为了与mozilla兼容
-							else {
-							    strStringGet[0] = '\0';
-							    if (!bIsInLegend)
-								pstr = im[iIMIndex].GetCandWord (0);
-							    if (pstr)
-								strcpy (strStringGet, pstr);
-							    iLen = strlen (strStringGet);
-							    uMessageDown = uMessageUp = 0;
-							    strStringGet[iLen] = iKey;
-							    strStringGet[iLen + 1] = '\0';
-							    retVal = IRV_ENG;
-							}
-						    }
-						}
-					    }
-					    cLastIsAutoConvert = 0;
-					}
-				    }
-				}
+        				    IMForwardEvent (ims, (XPointer) call_data);
+        				    pPunc = GetPunc(cLastIsAutoConvert);
+        				    if ( pPunc )
+        				        SendHZtoClient(call_data, pPunc);
 
-				if (retVal == IRV_TO_PROCESS) {
-				    if (iKey == ESC) {
-					if (iCodeInputCount || iInCap || bIsInLegend)
-					    retVal = IRV_CLEAN;
-					else
-					    retVal = IRV_DONOT_PROCESS;
-				    }
-				    else if (iKey == CTRL_5) {
-					LoadConfig (False);
+        				    retVal = IRV_DO_NOTHING;
+        			        }
+        				else if (isprint (iKey) && iKey < 128) {
+        				    if (iKey >= '0' && iKey <= '9')
+        					bLastIsNumber = True;
+        				    else {
+        					bLastIsNumber = False;
+        					if (iKey == ' ')
+        					    retVal = IRV_DONOT_PROCESS_CLEAN;	//为了与mozilla兼容
+        					else {
+        					    strStringGet[0] = '\0';
+        					    if (!bIsInLegend)
+        						pstr = im[iIMIndex].GetCandWord (0);
+        					    if (pstr)
+        						strcpy (strStringGet, pstr);
+        					    iLen = strlen (strStringGet);
+        					    uMessageDown = uMessageUp = 0;
+        					    strStringGet[iLen] = iKey;
+        					    strStringGet[iLen + 1] = '\0';
+        					    retVal = IRV_ENG;
+        					}
+        				    }
+        				}
+        			    }
+        			    cLastIsAutoConvert = 0;
+        			}
+        		    }
+        		}
 
-					if (!bUseDBus) {
-					    if (!mainWindow)
-					        CreateMainWindow();
-					    if (hideMainWindow != HM_HIDE) {
-						DisplayMainWindow ();
-						DrawMainWindow ();
-					    }
+        		if (retVal == IRV_TO_PROCESS) {
+        		    if (iKey == ESC) {
+        			if (iCodeInputCount || iInCap || bIsInLegend)
+        			    retVal = IRV_CLEAN;
+        			else
+        			    retVal = IRV_DONOT_PROCESS;
+        		    }
+        		    else if (iKey == CTRL_5) {
+        			LoadConfig (False);
+
+        			if (!bUseDBus) {
+        			    if (!mainWindow)
+        			        CreateMainWindow();
+        			    if (hideMainWindow != HM_HIDE) {
+        				DisplayMainWindow ();
+        				DrawMainWindow ();
+        			    }
 #ifdef _ENABLE_TRAY
-					    if (!tray.window) {
-					        CreateTrayWindow();
-					        DrawTrayWindow (INACTIVE_ICON,0,0,TRAY_ICON_HEIGHT, TRAY_ICON_WIDTH);
-					    }
+        			    if (!tray.window) {
+        			        CreateTrayWindow();
+        			        DrawTrayWindow (INACTIVE_ICON,0,0,TRAY_ICON_HEIGHT, TRAY_ICON_WIDTH);
+        			    }
 #endif
-					    if (!aboutWindow)
-						CreateAboutWindow();
-					    InitGC (inputWindow);
-					    InitMainWindowColor ();
-					    InitInputWindowColor ();
-					    InitVKWindowColor ();
-					}
-					else {
-					    XUnmapWindow(dpy, mainWindow);
+        			    if (!aboutWindow)
+        				CreateAboutWindow();
+        			    InitGC (inputWindow);
+        			    InitMainWindowColor ();
+        			    InitInputWindowColor ();
+        			    InitVKWindowColor ();
+        			}
+        			else {
+        			    XUnmapWindow(dpy, mainWindow);
 #ifdef _ENABLE_TRAY
-					    XDestroyWindow(dpy,tray.window);
-					    tray.window = (Window) NULL;
-					    tray_mapped = False;
+        			    XDestroyWindow(dpy,tray.window);
+        			    tray.window = (Window) NULL;
+        			    tray_mapped = False;
 #endif
-					}
+        			}
 
-					SetIM ();
-					if (!bUseDBus) {
-					    CreateFont ();
-					    CalculateInputWindowHeight ();
-					}
+        			SetIM ();
+        			if (!bUseDBus) {
+        			    CreateFont ();
+        			    CalculateInputWindowHeight ();
+        			}
 
-					FreeQuickPhrase ();
-					LoadQuickPhrase ();
+        			FreeQuickPhrase ();
+        			LoadQuickPhrase ();
 
-					FreeAutoEng ();
-					LoadAutoEng ();
+        			FreeAutoEng ();
+        			LoadAutoEng ();
 
-					FreePunc ();
-					LoadPuncDict ();
-					SwitchIM(-2);
-					if (!bUseDBus)
-					    DrawMainWindow();
+        			FreePunc ();
+        			LoadPuncDict ();
+        			SwitchIM(-2);
+        			if (!bUseDBus)
+        			    DrawMainWindow();
 
-					retVal = IRV_DO_NOTHING;
-				    }
-				    else if (iKey == ENTER) {
-					if (iInCap) {
-					    if (!iCodeInputCount)
-						strcpy (strStringGet, ";");
-					    else
-						strcpy (strStringGet, strCodeInput);
-					    retVal = IRV_PUNC;
-					    uMessageUp = uMessageDown = 0;
-					    iInCap = 0;
-					}
-					else if (!iCodeInputCount)
-					    retVal = IRV_DONOT_PROCESS;
-					else {
-					    switch (enterToDo) {
-					    case K_ENTER_NOTHING:
-						retVal = IRV_DO_NOTHING;
-						break;
-					    case K_ENTER_CLEAN:
-						retVal = IRV_CLEAN;
-						break;
-					    case K_ENTER_SEND:
-						uMessageDown = uMessageUp = 0;
-						strcpy (strStringGet, strCodeInput);
-						retVal = IRV_ENG;
-						break;
-					    }
-					}
-				    }
-				    else if (isprint (iKey) && iKey < 128)
-					retVal = IRV_DONOT_PROCESS_CLEAN;
-				    else
-					retVal = IRV_DONOT_PROCESS;
-				}
-			    }
-			}
-		    }
-		}
+        			retVal = IRV_DO_NOTHING;
+        		    }
+        		    else if (iKey == ENTER) {
+        			if (iInCap) {
+        			    if (!iCodeInputCount)
+        				strcpy (strStringGet, ";");
+        			    else
+        				strcpy (strStringGet, strCodeInput);
+        			    retVal = IRV_PUNC;
+        			    uMessageUp = uMessageDown = 0;
+        			    iInCap = 0;
+        			}
+        			else if (!iCodeInputCount)
+        			    retVal = IRV_DONOT_PROCESS;
+        			else {
+        			    switch (enterToDo) {
+        			    case K_ENTER_NOTHING:
+        				retVal = IRV_DO_NOTHING;
+        				break;
+        			    case K_ENTER_CLEAN:
+        				retVal = IRV_CLEAN;
+        				break;
+        			    case K_ENTER_SEND:
+        				uMessageDown = uMessageUp = 0;
+        				strcpy (strStringGet, strCodeInput);
+        				retVal = IRV_ENG;
+        				break;
+        			    }
+        			}
+        		    }
+        		    else if (isprint (iKey) && iKey < 128)
+        			retVal = IRV_DONOT_PROCESS_CLEAN;
+        		    else
+        			retVal = IRV_DONOT_PROCESS;
+        		}
+        	    }
+        	}
+            }
+        }
 
-		if (retVal == IRV_TO_PROCESS || retVal == IRV_DONOT_PROCESS) {
-		    if (IsHotKey (iKey, hkCorner))
-			retVal = ChangeCorner ();
-		    else if (IsHotKey (iKey, hkPunc))
-			retVal = ChangePunc ();
-		    else if (IsHotKey (iKey, hkLegend))
-			retVal = ChangeLegend ();
-		    else if (IsHotKey (iKey, hkTrack))
-			retVal = ChangeTrack ();
-		    else if (IsHotKey (iKey, hkGBT))
-			retVal = ChangeGBKT ();
-		    else if (IsHotKey (iKey, hkHideMainWindow)) {
-			if (bMainWindow_Hiden) {
-			    bMainWindow_Hiden = False;
-			    if (!bUseDBus) {
-				DisplayMainWindow();
-				DrawMainWindow();
-			    }
-		    	}
-			else {
-			    bMainWindow_Hiden = True;
-			    if (!bUseDBus) 
-				XUnmapWindow(dpy,mainWindow);
-			}
-			retVal = IRV_DO_NOTHING;
-		    }
-		    else if (IsHotKey (iKey, hkSaveAll)) {
-			SaveIM();
-			uMessageDown = 1;
-			strcpy(messageDown[0].strMsg,"词库已保存");
-			messageDown[0].type = MSG_TIPS;
-			retVal = IRV_DISPLAY_MESSAGE;
-		    }
-		    else if (IsHotKey (iKey, hkVK) ) 
-		        SwitchVK ();
+        if (retVal == IRV_TO_PROCESS || retVal == IRV_DONOT_PROCESS) {
+            if (IsHotKey (iKey, hkCorner))
+        	retVal = ChangeCorner ();
+            else if (IsHotKey (iKey, hkPunc))
+        	retVal = ChangePunc ();
+            else if (IsHotKey (iKey, hkLegend))
+        	retVal = ChangeLegend ();
+            else if (IsHotKey (iKey, hkTrack))
+        	retVal = ChangeTrack ();
+            else if (IsHotKey (iKey, hkGBT))
+        	retVal = ChangeGBKT ();
+            else if (IsHotKey (iKey, hkHideMainWindow)) {
+        	if (bMainWindow_Hiden) {
+        	    bMainWindow_Hiden = False;
+        	    if (!bUseDBus) {
+        		DisplayMainWindow();
+        		DrawMainWindow();
+        	    }
+                }
+        	else {
+        	    bMainWindow_Hiden = True;
+        	    if (!bUseDBus) 
+        		XUnmapWindow(dpy,mainWindow);
+        	}
+        	retVal = IRV_DO_NOTHING;
+            }
+            else if (IsHotKey (iKey, hkSaveAll)) {
+        	SaveIM();
+        	uMessageDown = 1;
+        	strcpy(messageDown[0].strMsg,"词库已保存");
+        	messageDown[0].type = MSG_TIPS;
+        	retVal = IRV_DISPLAY_MESSAGE;
+            }
+            else if (IsHotKey (iKey, hkVK) ) 
+                SwitchVK ();
 #ifdef _ENABLE_RECORDING
-		    else if (IsHotKey (iKey, hkRecording) )
-		        ChangeRecording ();
-		    else if (IsHotKey (iKey, hkResetRecording) )
-		        ResetRecording ();
+            else if (IsHotKey (iKey, hkRecording) )
+                ChangeRecording ();
+            else if (IsHotKey (iKey, hkResetRecording) )
+                ResetRecording ();
 #endif
-		}
-	    }
-	    else
-		retVal = IRV_DONOT_PROCESS;
-	}
+        }
+        }
+        else
+        retVal = IRV_DONOT_PROCESS;
+    }
     }
     
     switch (retVal) {
     case IRV_DO_NOTHING:
-	break;
+    break;
     case IRV_TO_PROCESS:
     case IRV_DONOT_PROCESS:
     case IRV_DONOT_PROCESS_CLEAN:
-	IMForwardEvent (ims, (XPointer) call_data);
+    IMForwardEvent (ims, (XPointer) call_data);
 
-	if (retVal != IRV_DONOT_PROCESS_CLEAN)
-	    return;
+    if (retVal != IRV_DONOT_PROCESS_CLEAN)
+        return;
     case IRV_CLEAN:
-	ResetInput ();
-	ResetInputWindow ();
-	CloseInputWindow();
+    ResetInput ();
+    ResetInputWindow ();
+    CloseInputWindow();
 
-	return;
+    return;
     case IRV_DISPLAY_CANDWORDS:
-	bShowNext = bShowPrev = False;
-	if (bIsInLegend) {
-	    if (iCurrentLegendCandPage > 0)
-		bShowPrev = True;
-	    if (iCurrentLegendCandPage < iLegendCandPageCount)
-		bShowNext = True;
-	}
-	else {
-	    if (iCurrentCandPage > 0)
-		bShowPrev = True;
-	    if (iCurrentCandPage < iCandPageCount)
-		bShowNext = True;
-	}
+    bShowNext = bShowPrev = False;
+    if (bIsInLegend) {
+        if (iCurrentLegendCandPage > 0)
+        bShowPrev = True;
+        if (iCurrentLegendCandPage < iLegendCandPageCount)
+        bShowNext = True;
+    }
+    else {
+        if (iCurrentCandPage > 0)
+        bShowPrev = True;
+        if (iCurrentCandPage < iCandPageCount)
+        bShowNext = True;
+    }
 
-	DisplayInputWindow ();
-	if (!bUseDBus) {
-	    DrawInputWindow ();
-	}
+    DisplayInputWindow ();
+    if (!bUseDBus) {
+        DrawInputWindow ();
+    }
 
-	break;
+    break;
     case IRV_DISPLAY_LAST:
-	bShowNext = bShowPrev = False;
-	uMessageUp = 1;
-	messageUp[0].strMsg[0] = strCodeInput[0];
-	messageUp[0].strMsg[1] = '\0';
-	messageUp[0].type = MSG_INPUT;
-	uMessageDown = 1;
-	strcpy (messageDown[0].strMsg, strStringGet);
-	messageDown[0].type = MSG_TIPS;
-	DisplayInputWindow ();
+    bShowNext = bShowPrev = False;
+    uMessageUp = 1;
+    messageUp[0].strMsg[0] = strCodeInput[0];
+    messageUp[0].strMsg[1] = '\0';
+    messageUp[0].type = MSG_INPUT;
+    uMessageDown = 1;
+    strcpy (messageDown[0].strMsg, strStringGet);
+    messageDown[0].type = MSG_TIPS;
+    DisplayInputWindow ();
 
-	break;
+    break;
     case IRV_DISPLAY_MESSAGE:
-	bShowNext = False;
-	bShowPrev = False;
+    bShowNext = False;
+    bShowPrev = False;
 
-	DisplayInputWindow ();
-	if (!bUseDBus) {
-	    DrawInputWindow ();
-	}
+    DisplayInputWindow ();
+    if (!bUseDBus) {
+        DrawInputWindow ();
+    }
 
-	break;
+    break;
     case IRV_GET_LEGEND:
-	SendHZtoClient (call_data, strStringGet);
-	iHZInputed += (int) (utf8_strlen (strStringGet));	//粗略统计字数
-	if (iLegendCandWordCount) {
-	    bShowNext = bShowPrev = False;
-	    if (iCurrentLegendCandPage > 0)
-		bShowPrev = True;
-	    if (iCurrentLegendCandPage < iLegendCandPageCount)
-		bShowNext = True;
-	    bLastIsNumber = False;
-	    iCodeInputCount = 0;
-		DisplayInputWindow ();
-	    if (!bUseDBus) {
-		DrawInputWindow ();
-	    }
-	}
-	else {
-	    ResetInput ();
-		CloseInputWindow();
-	}
+    SendHZtoClient (call_data, strStringGet);
+    iHZInputed += (int) (utf8_strlen (strStringGet));	//粗略统计字数
+    if (iLegendCandWordCount) {
+        bShowNext = bShowPrev = False;
+        if (iCurrentLegendCandPage > 0)
+        bShowPrev = True;
+        if (iCurrentLegendCandPage < iLegendCandPageCount)
+        bShowNext = True;
+        bLastIsNumber = False;
+        iCodeInputCount = 0;
+        DisplayInputWindow ();
+        if (!bUseDBus) {
+        DrawInputWindow ();
+        }
+    }
+    else {
+        ResetInput ();
+        CloseInputWindow();
+    }
 
-	break;
+    break;
     case IRV_GET_CANDWORDS:
-	SendHZtoClient (call_data, strStringGet);
-	bLastIsNumber = False;
-	if (bPhraseTips && im[iIMIndex].PhraseTips && !bVK)
-	    DoPhraseTips ();
-	iHZInputed += (int) (utf8_strlen (strStringGet));	
+    SendHZtoClient (call_data, strStringGet);
+    bLastIsNumber = False;
+    if (bPhraseTips && im[iIMIndex].PhraseTips && !bVK)
+        DoPhraseTips ();
+    iHZInputed += (int) (utf8_strlen (strStringGet));	
 
-	if (bVK || (!uMessageDown && (!bPhraseTips || (bPhraseTips && !lastIsSingleHZ))))
-		CloseInputWindow();
-	else {
-		DisplayInputWindow ();
-	    if (!bUseDBus) {
-		DrawInputWindow ();
-	    }
-	}
+    if (bVK || (!uMessageDown && (!bPhraseTips || (bPhraseTips && !lastIsSingleHZ))))
+        CloseInputWindow();
+    else {
+        DisplayInputWindow ();
+        if (!bUseDBus) {
+        DrawInputWindow ();
+        }
+    }
 
-	ResetInput ();
+    ResetInput ();
     lastIsSingleHZ = 0;
-	break;
+    break;
     case IRV_ENG:
-	//如果处于中文标点模式，应该将其中的标点转换为全角
-	if (bChnPunc && bConvertPunc)
-	    ConvertPunc ();
+    //如果处于中文标点模式，应该将其中的标点转换为全角
+    if (bChnPunc && bConvertPunc)
+        ConvertPunc ();
     case IRV_PUNC:
-	iHZInputed += (int) (utf8_strlen (strStringGet));	//粗略统计字数
-	ResetInput ();
-	if (!uMessageDown)
-	    CloseInputWindow();
+    iHZInputed += (int) (utf8_strlen (strStringGet));	//粗略统计字数
+    ResetInput ();
+    if (!uMessageDown)
+        CloseInputWindow();
     case IRV_GET_CANDWORDS_NEXT:
-	SendHZtoClient (call_data, strStringGet);
-	bLastIsNumber = False;
-	lastIsSingleHZ = 0;
+    SendHZtoClient (call_data, strStringGet);
+    bLastIsNumber = False;
+    lastIsSingleHZ = 0;
 
-	if (retVal == IRV_GET_CANDWORDS_NEXT || lastIsSingleHZ == -1) {
-	    iHZInputed += (int) (utf8_strlen (strStringGet));	//粗略统计字数
-		DisplayInputWindow ();
-	}
+    if (retVal == IRV_GET_CANDWORDS_NEXT || lastIsSingleHZ == -1) {
+        iHZInputed += (int) (utf8_strlen (strStringGet));	//粗略统计字数
+        DisplayInputWindow ();
+    }
 
-	break;
+    break;
     default:
-	;
+    ;
     }
 
     //计算打字速度的功能
     if (retVal == IRV_DISPLAY_MESSAGE || retVal == IRV_DISPLAY_CANDWORDS || retVal == IRV_PUNC) {
-	if (!bStartRecordType) {
-	    bStartRecordType = True;
-	    timeStart = time (NULL);
-	}
+    if (!bStartRecordType) {
+        bStartRecordType = True;
+        timeStart = time (NULL);
+    }
     }
 }
 
 Bool IsHotKey (int iKey, HOTKEYS * hotkey)
 {
     if (iKey == hotkey[0] || iKey == hotkey[1])
-	return True;
+    return True;
     return False;
 }
 
@@ -1055,12 +1088,12 @@ INPUT_RETURN_VALUE ChangeCorner (void)
     SwitchIM(iIMIndex);
     
     if (!bUseDBus) {
-	DrawMainWindow ();
-    	CloseInputWindow();
+    DrawMainWindow ();
+        CloseInputWindow();
     }
 #ifdef _ENABLE_DBUS
     else
-	updateProperty(&corner_prop);
+    updateProperty(&corner_prop);
 #endif
 
     SaveProfile ();
@@ -1073,13 +1106,13 @@ INPUT_RETURN_VALUE ChangePunc (void)
     bChnPunc = !bChnPunc;
     
     if (!bUseDBus) 
-    	DrawMainWindow ();
+        DrawMainWindow ();
     
     SaveProfile ();
 
 #ifdef _ENABLE_DBUS
     if (bUseDBus)
-	updateProperty(&punc_prop);
+    updateProperty(&punc_prop);
 #endif
 
     return IRV_DO_NOTHING;
@@ -1092,15 +1125,15 @@ INPUT_RETURN_VALUE ChangeGBKT (void)
     ResetInputWindow ();
 
     if (!bUseDBus) {
-	DrawMainWindow ();
-    	CloseInputWindow();
+    DrawMainWindow ();
+        CloseInputWindow();
     }
 
     SaveProfile ();
 
 #ifdef _ENABLE_DBUS
     if (bUseDBus)
-	updateProperty(&gbkt_prop);
+    updateProperty(&gbkt_prop);
 #endif
 
     return IRV_CLEAN;
@@ -1112,17 +1145,17 @@ INPUT_RETURN_VALUE ChangeLegend (void)
     ResetInput ();
     
     if (!bUseDBus) {
-	ResetInputWindow ();
-	
-	DrawMainWindow ();
-    	CloseInputWindow();
+    ResetInputWindow ();
+    
+    DrawMainWindow ();
+        CloseInputWindow();
     }
 
     SaveProfile ();
 
 #ifdef _ENABLE_DBUS
     if (bUseDBus)
-	updateProperty(&legend_prop);
+    updateProperty(&legend_prop);
 #endif
     return IRV_CLEAN;
 }
@@ -1140,7 +1173,7 @@ void ChangeLock (void)
     bLocked = !bLocked;
     
     if (!bUseDBus)
-	DrawMainWindow ();
+    DrawMainWindow ();
 
     SaveProfile ();
 }
@@ -1179,74 +1212,74 @@ void SwitchIM (INT8 index)
     char	*str;
 
     if (index != (INT8) - 2 && bVK)
-	return;
+    return;
 
     iLastIM = (iIMIndex >= iIMCount) ? (iIMCount - 1) : iIMIndex;
     if (index == (INT8) - 1) {
-	if (iIMIndex == (iIMCount - 1))
-	    iIMIndex = 0;
-	else
-	    iIMIndex++;
+    if (iIMIndex == (iIMCount - 1))
+        iIMIndex = 0;
+    else
+        iIMIndex++;
     }
     else if (index != (INT8) - 2) {
-	if (index >= iIMCount)
-	    iIMIndex = iIMCount - 1;
-	else {
-		iIMIndex = index;
-	}
+    if (index >= iIMCount)
+        iIMIndex = iIMCount - 1;
+    else {
+        iIMIndex = index;
+    }
     }
 
     if (bVK)
         str = vks[iCurrentVK].strName;
     else if (bCorner)
-	str = strFullCorner;
+    str = strFullCorner;
     else
-	str = im[iIMIndex].strName;
+    str = im[iIMIndex].strName;
 
     if (!bUseDBus) {
 #ifdef _USE_XFT
-	MAINWND_WIDTH = ((bCompactMainWindow) ? _MAINWND_WIDTH_COMPACT : _MAINWND_WIDTH) + StringWidth (str, xftMainWindowFont) + 4;
+    MAINWND_WIDTH = ((bCompactMainWindow) ? _MAINWND_WIDTH_COMPACT : _MAINWND_WIDTH) + StringWidth (str, xftMainWindowFont) + 4;
 #else
-	MAINWND_WIDTH = ((bCompactMainWindow) ? _MAINWND_WIDTH_COMPACT : _MAINWND_WIDTH) + StringWidth (str, fontSetMainWindow) + 4;
+    MAINWND_WIDTH = ((bCompactMainWindow) ? _MAINWND_WIDTH_COMPACT : _MAINWND_WIDTH) + StringWidth (str, fontSetMainWindow) + 4;
 #endif
-	if (!bShowVK && bCompactMainWindow)
-	    MAINWND_WIDTH -= 24;
+    if (!bShowVK && bCompactMainWindow)
+        MAINWND_WIDTH -= 24;
 
-	XResizeWindow (dpy, mainWindow, MAINWND_WIDTH, MAINWND_HEIGHT);
+    XResizeWindow (dpy, mainWindow, MAINWND_WIDTH, MAINWND_HEIGHT);
 
-	DrawMainWindow ();
+    DrawMainWindow ();
     }
 
     if (index != (INT8) - 2) {
-	if (im[iLastIM].Destroy)
-	    im[iLastIM].Destroy ();
-	if (im[iIMIndex].Init)
-	    im[iIMIndex].Init ();
+    if (im[iLastIM].Destroy)
+        im[iLastIM].Destroy ();
+    if (im[iIMIndex].Init)
+        im[iIMIndex].Init ();
     }
 
     ResetInput ();
-	CloseInputWindow();
+    CloseInputWindow();
 
     SaveProfile ();
 
 #ifdef _ENABLE_DBUS
     if (bUseDBus) {
-	
-	if ((index == (INT8)-2) || (index == (INT8)-2)) {
-	    strcpy(logo_prop.label, "Fcitx");
-	    iState = IS_ENG;
-	}
-	else {
-	    int iIndex = ConnectIDGetState(connect_id);
-	    
-	    if (iIndex == IS_CHN) {
-		strcpy(logo_prop.label, im[iIMIndex].strName);
-		iState = IS_CHN;
-	    }
-	}
-	
-	updateProperty(&logo_prop);
-	updateProperty(&state_prop);
+    
+    if ((index == (INT8)-2) || (index == (INT8)-2)) {
+        strcpy(logo_prop.label, "Fcitx");
+        iState = IS_ENG;
+    }
+    else {
+        int iIndex = ConnectIDGetState(connect_id);
+        
+        if (iIndex == IS_CHN) {
+        strcpy(logo_prop.label, im[iIMIndex].strName);
+        iState = IS_CHN;
+        }
+    }
+    
+    updateProperty(&logo_prop);
+    updateProperty(&state_prop);
     }
 #endif
 }
@@ -1254,16 +1287,16 @@ void SwitchIM (INT8 index)
 void DoPhraseTips (void)
 {
     if (!bPhraseTips)
-	return;
+    return;
 
     if (im[iIMIndex].PhraseTips ())
-	lastIsSingleHZ = -1;
+    lastIsSingleHZ = -1;
     else
-	lastIsSingleHZ = 0;
+    lastIsSingleHZ = 0;
 }
 
 void RegisterNewIM (char *strName, void (*ResetIM) (void),
-		    INPUT_RETURN_VALUE (*DoInput) (int), INPUT_RETURN_VALUE (*GetCandWords) (SEARCH_MODE), char *(*GetCandWord) (int), char *(*GetLegendCandWord) (int), Bool (*PhraseTips) (void), void (*Init) (void), void (*Destroy) (void))
+            INPUT_RETURN_VALUE (*DoInput) (int), INPUT_RETURN_VALUE (*GetCandWords) (SEARCH_MODE), char *(*GetCandWord) (int), char *(*GetLegendCandWord) (int), Bool (*PhraseTips) (void), void (*Init) (void), void (*Destroy) (void))
 {
 #ifdef _DEBUG
     printf ("REGISTER %s\n", strName);
@@ -1284,7 +1317,7 @@ void RegisterNewIM (char *strName, void (*ResetIM) (void),
 Bool IsIM (char *strName)
 {
     if (strstr (im[iIMIndex].strName, strName))
-	return True;
+    return True;
 
     return False;
 }
@@ -1292,7 +1325,7 @@ Bool IsIM (char *strName)
 void SaveIM (void)
 {
     if (iTableChanged)
-	SaveTableDict ();
+    SaveTableDict ();
     SavePY();
 }
 
@@ -1302,22 +1335,22 @@ void SetIM (void)
     Bool	    bFlag[INPUT_METHODS];
 
     if (im)
-	free (im);
+    free (im);
 
     if (inputMethods[IM_TABLE])
-	LoadTableInfo ();
+    LoadTableInfo ();
 
     iIMCount = iTableCount;
     if (inputMethods[IM_PY])
-	iIMCount++;
+    iIMCount++;
     if (inputMethods[IM_SP])
-	iIMCount++;
+    iIMCount++;
     if (inputMethods[IM_QW])
-	iIMCount++;
+    iIMCount++;
 
     iIMCount += EIM_MAX;
     if (!iIMCount)
-	iIMCount = 1;
+    iIMCount = 1;
 
     im = (IM *) malloc (sizeof (IM) * iIMCount);
     iIMCount = 0;
@@ -1327,52 +1360,52 @@ void SetIM (void)
         bFlag[i] = False;
 
     for ( i = 0; i < INPUT_METHODS; i++ ) {
-	l = 0;
-	for ( j = 0; j < INPUT_METHODS; j++ ) {
-	    if ( !bFlag[j] ) {
-	        k = j;
-	        l = 1;
-	    }
+    l = 0;
+    for ( j = 0; j < INPUT_METHODS; j++ ) {
+        if ( !bFlag[j] ) {
+            k = j;
+            l = 1;
+        }
         }
 
         l = 0;
-	for ( j = (INPUT_METHODS-1); j>=0; j-- ) {
-	    if ( (inputMethods[k] >= inputMethods[j]) && !bFlag[j] ) {
-	        k = j;
-	        l = 1;
-	    }
-	}
+    for ( j = (INPUT_METHODS-1); j>=0; j-- ) {
+        if ( (inputMethods[k] >= inputMethods[j]) && !bFlag[j] ) {
+            k = j;
+            l = 1;
+        }
+    }
 
-	if ( !l )
-	    break;
+    if ( !l )
+        break;
 
-	bFlag[k] = True;
-	if ( inputMethods[k]>0 ) {
-	    switch (k) {
-	    case IM_PY:
-		RegisterNewIM (strNameOfPinyin, ResetPYStatus, DoPYInput, PYGetCandWords, PYGetCandWord, PYGetLegendCandWord, NULL, PYInit, SavePY);
-		break;
-	    case IM_SP:
-		RegisterNewIM (strNameOfShuangpin, ResetPYStatus, DoPYInput, PYGetCandWords, PYGetCandWord, PYGetLegendCandWord, NULL, SPInit, SavePY);
-		break;
-	    case IM_QW:
-		RegisterNewIM (strNameOfQuwei, NULL, DoQWInput, QWGetCandWords, QWGetCandWord, NULL, NULL, NULL, NULL);
-		break;
-	    case IM_TABLE:for (l = 0; l < iTableCount; l++) {
-		    RegisterNewIM (table[l].strName, TableResetStatus, DoTableInput, TableGetCandWords, TableGetCandWord, TableGetLegendCandWord, TablePhraseTips, TableInit, FreeTableIM);
-		    table[l].iIMIndex = iIMCount - 1;
-	        }
-	    default:
-	        break;
-	    }
-	}
+    bFlag[k] = True;
+    if ( inputMethods[k]>0 ) {
+        switch (k) {
+        case IM_PY:
+        RegisterNewIM (strNameOfPinyin, ResetPYStatus, DoPYInput, PYGetCandWords, PYGetCandWord, PYGetLegendCandWord, NULL, PYInit, SavePY);
+        break;
+        case IM_SP:
+        RegisterNewIM (strNameOfShuangpin, ResetPYStatus, DoPYInput, PYGetCandWords, PYGetCandWord, PYGetLegendCandWord, NULL, SPInit, SavePY);
+        break;
+        case IM_QW:
+        RegisterNewIM (strNameOfQuwei, NULL, DoQWInput, QWGetCandWords, QWGetCandWord, NULL, NULL, NULL, NULL);
+        break;
+        case IM_TABLE:for (l = 0; l < iTableCount; l++) {
+            RegisterNewIM (table[l].strName, TableResetStatus, DoTableInput, TableGetCandWords, TableGetCandWord, TableGetLegendCandWord, TablePhraseTips, TableInit, FreeTableIM);
+            table[l].iIMIndex = iIMCount - 1;
+            }
+        default:
+            break;
+        }
+    }
     }
 
     if ( (!inputMethods[IM_SP] && (!inputMethods[IM_TABLE] || !iTableCount)) && !iIMCount )	 //至少应该有一种输入法
-	RegisterNewIM (strNameOfPinyin, ResetPYStatus, DoPYInput, PYGetCandWords, PYGetCandWord, PYGetLegendCandWord, NULL, PYInit, NULL);
+    RegisterNewIM (strNameOfPinyin, ResetPYStatus, DoPYInput, PYGetCandWords, PYGetCandWord, PYGetLegendCandWord, NULL, PYInit, NULL);
 
     if (strExternIM[0] && strExternIM[1])
-	LoadExtraIM(strExternIM);
+    LoadExtraIM(strExternIM);
 
     SwitchIM (iIMIndex);
 }
