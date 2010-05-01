@@ -36,4 +36,3 @@ void *custom_bsearch(const void *key, const void *base,
             return (void *) (((const char *) base) + (l * size));
     }
 }
-

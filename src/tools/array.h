@@ -28,6 +28,8 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
+#include "util.h"
+
 typedef struct ARRAY
 {
     void* data;
@@ -42,6 +44,8 @@ typedef struct ARRAY
 #define ArrayPos(array, len) ((array)->data +ArrayElementLen((array),len))
 #define ArrayIndex(array, cell) ((cell)?((((void*)cell) - (array)->data) / (array)->eleSize):(array)->len)
 #define ArrayCell(array, len, type) (((type*)((array)->data +ArrayElementLen((array),len)))[0])
+#define ArrayFirst(array) (ArrayPos(array, 0))
+#define ArrayLast(array) (ArrayPos(array, (array)->len))
 #define MAX(a,b) ((a) > (b)?(a):(b))
 
 #define ArrayAddVals(array, d, l, s)                                              \
@@ -90,6 +94,7 @@ do {                                                                            
 void *custom_bsearch(const void *key, const void *base,
 		size_t nmemb, size_t size, int accurate,
 		int (*compar)(const void *, const void *));
+void *malloc0(size_t byte);
 
 #define ArrayBsearch(key, array, accurate, cmpFunc) \
     custom_bsearch((void*)key, (array)->data, (array)->len, (array)->eleSize, accurate, cmpFunc)
@@ -97,6 +102,8 @@ void *custom_bsearch(const void *key, const void *base,
 #define ArrayAddVal(array, d, s) ArrayAddVals(array, d, 1, s)
 #define ArrayAddInt(array, intdata) ArrayAddVal(array, intdata, sizeof(int))
 #define ArrayAddPointer(array, pdata) ArrayAddVal(array, pdata, sizeof(void*))
+#define ArrayAdd(array, pdata, type) ArrayAddVal(array, pdata, sizeof(type))
+#define ArrayAddNew(array, type) ArrayAddVal(array, malloc0(sizeof(type), sizeof(type))
 
 #endif /* ifndef ARRAY_H */
 
