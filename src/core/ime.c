@@ -53,7 +53,7 @@
 #include "im/special/QuickPhrase.h"
 #include "im/special/AutoEng.h"
 #include "im/extra/extra.h"
-
+#include "ui/skin.h"
 #include "interface/DBus.h"
 
 IM             *im = NULL;
@@ -1240,8 +1240,10 @@ void SwitchIM (INT8 index)
 #endif
 	if (!bShowVK && bCompactMainWindow)
 	    MAINWND_WIDTH -= 24;
-
+if(ISDEFAULT)
 	XResizeWindow (dpy, mainWindow, MAINWND_WIDTH, MAINWND_HEIGHT);
+else
+	XResizeWindow (dpy, mainWindow, skin_config.SkinMainBar.mbbg_xpm.width, skin_config.SkinMainBar.mbbg_xpm.height);
 
 	DrawMainWindow ();
     }
@@ -1278,6 +1280,34 @@ void SwitchIM (INT8 index)
 	updateProperty(&state_prop);
 	}
 #endif
+}
+
+void SelectIM(int imidx)
+{
+//	int i=0;
+	INT8        iLastIM;
+	iIMIndex=imidx;
+
+    iLastIM = (iIMIndex >= iIMCount) ? (iIMCount - 1) : iIMIndex;
+
+	if (im[iLastIM].Destroy)
+	    im[iLastIM].Destroy ();
+	if (im[iIMIndex].Init)
+	    im[iIMIndex].Init ();
+	ResetInput ();
+	DrawMainWindow ();
+/*
+	while(1)
+	{
+		if( iIMIndex == imidx )
+			break;
+		SwitchIM(-1);
+
+		i++;
+		if(i >20)
+			break;
+	}*/
+	//printf("im[%d]:%s\n",iIMIndex,im[iIMIndex].strName);
 }
 
 void DoPhraseTips (void)

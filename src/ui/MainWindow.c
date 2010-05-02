@@ -55,6 +55,7 @@
 #include "ft-0.xpm"
 #include "ft-1.xpm"
 
+#include "ui/skin.h"
 #include "ui/ui.h"
 #include "im/special/vk.h"
 
@@ -142,12 +143,15 @@ Bool CreateMainWindow (void)
 	iBackPixel = mainWindowColor.backColor.pixel;
     else
 	iBackPixel = WhitePixel (dpy, DefaultScreen (dpy));
-
+    if( !ISDEFAULT)  
+    	load_skin_config();
     mainWindow = XCreateSimpleWindow (dpy, DefaultRootWindow (dpy), iMainWindowX, iMainWindowY, MAINWND_WIDTH, MAINWND_HEIGHT, 0, WhitePixel (dpy, DefaultScreen (dpy)), iBackPixel);
     if (mainWindow == (Window) NULL)
 	return False;
 
     XChangeWindowAttributes (dpy, mainWindow, attribmask, &attrib);
+    if( !ISDEFAULT)
+     	loadPixmap2MainWindow();
     XSelectInput (dpy, mainWindow, ExposureMask | ButtonPressMask | ButtonReleaseMask  | PointerMotionMask);
     
     //Set the name of the window
@@ -174,8 +178,10 @@ void DisplayMainWindow (void)
 
 void DrawMainWindow (void)
 {
+if(ISDEFAULT)
+{
     INT8            iIndex = 0;
-    INT16           iPos;
+    INT16           iPos=0;
 
     int             rv;
     XImage         *mask;
@@ -352,6 +358,93 @@ void DrawMainWindow (void)
     }
     else
 	XUnmapWindow (dpy, mainWindow);
+}
+else
+{
+    INT8            iIndex = 0;
+	GC gc = XCreateGC( dpy, mainWindow, 0, NULL );
+    if ( bMainWindow_Hiden )
+    	return;
+	
+    iIndex = IS_CLOSED;
+
+#ifdef _DEBUG
+    fprintf (stderr, "DRAW MainWindow\n");
+#endif
+	
+    if (hideMainWindow == HM_SHOW || (hideMainWindow == HM_AUTO && (ConnectIDGetState (connect_id) != IS_CLOSED))) {
+	
+		putMainBarImage(gc, Bar,Barmask,skin_config.SkinMainBar.mbbg_xpm);
+		putMainBarImage(gc, Logo,Logomask,skin_config.SkinMainBar.logo_xpm);	
+		putMainBarImage(gc, Punc[bChnPunc],Puncmask[bChnPunc],skin_config.SkinMainBar.enpunc_xpm);
+
+		putMainBarImage(gc, Corner[bCorner],Cornermask[bCorner],skin_config.SkinMainBar.halfcorner_xpm);
+
+		putMainBarImage(gc, GBK[bUseGBK],GBKmask[bUseGBK],skin_config.SkinMainBar.gbkoff_xpm);
+		putMainBarImage(gc, LX[bUseLegend],LXmask[bUseLegend],skin_config.SkinMainBar.lxoff_xpm);
+		putMainBarImage(gc, GBKT[bUseGBKT],GBKTmask[bUseGBKT],skin_config.SkinMainBar.chs_xpm);
+		putMainBarImage(gc, VK,VKmask,skin_config.SkinMainBar.vkhide_xpm);
+	
+	iIndex = ConnectIDGetState (connect_id);
+	if( iIndex == 1)
+	{
+		//英文
+		putMainBarImage(gc, English,Englishmask,skin_config.SkinMainBar.english_xpm);
+		return ;
+	}
+
+		switch(iIMIndex)
+		{
+			case 0:
+				//智能拼音
+				putMainBarImage(gc, Pinyin,Pinyinmask,skin_config.SkinMainBar.pinyin_xpm);
+				break;
+			case 1:
+				//智能双拼
+				putMainBarImage(gc, Shuangpin,Shuangpinmask,skin_config.SkinMainBar.shuangpin_xpm);	
+				break;
+			case 2:			
+				//区位输入
+				putMainBarImage(gc, Quwei,Quweimask,skin_config.SkinMainBar.quwei_xpm);
+				break;
+			case 3:
+				//五笔字型
+				putMainBarImage(gc, Wubi,Wubimask,skin_config.SkinMainBar.wubi_xpm);
+				break;
+			case 4:
+				//五笔拼音
+				putMainBarImage(gc, Mix,Mixmask,skin_config.SkinMainBar.mixpywb_xpm);
+				break;
+			case 5:
+				//二笔
+				putMainBarImage(gc, Erbi,Erbimask,skin_config.SkinMainBar.erbi_xpm);
+				break;
+			case 6:
+				//仓颉
+				putMainBarImage(gc, CangJi,CangJimask,skin_config.SkinMainBar.cj_xpm);
+				break;
+			case 7:
+				//晚风
+				putMainBarImage(gc, Wanfeng,Wanfengmask,skin_config.SkinMainBar.wanfeng_xpm);	
+				break;
+			case 8:
+				//冰蟾全息
+				putMainBarImage(gc, Bingcan,Bingcanmask,skin_config.SkinMainBar.bingcan_xpm);
+				break;
+			case 9:
+				//自然码
+				putMainBarImage(gc, Ziran,Ziranmask,skin_config.SkinMainBar.ziran_xpm);
+				break;
+			default:
+				//其他输入法
+				putMainBarImage(gc, Otherim,Otherimmask,skin_config.SkinMainBar.otherim_xpm);		
+				break;
+		}
+		XFreeGC (dpy, gc);
+    }
+    else
+	XUnmapWindow (dpy, mainWindow);
+}
 }
 
 void InitMainWindowColor (void)

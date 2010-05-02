@@ -557,3 +557,26 @@ void SwitchVK (void)
     if ( !bUseDBus )
 	DrawMainWindow ();
 }
+void SelectVK(int vkidx)
+{
+	int             x, y;
+
+	x = iMainWindowX;
+	if ((x + VK_WINDOW_WIDTH) >= DisplayWidth (dpy, iScreen))
+	    x = DisplayWidth (dpy, iScreen) - VK_WINDOW_WIDTH - 1;
+	if (x < 0)
+	    x = 0;
+
+	y = iMainWindowY + MAINWND_HEIGHT + 2;
+	if ((y + VK_WINDOW_HEIGHT) >= DisplayHeight (dpy, iScreen))
+	    y = iMainWindowY - VK_WINDOW_HEIGHT - 2;
+	if (y < 0)
+	    y = 0;
+
+
+	XUnmapWindow (dpy, VKWindow);
+	iCurrentVK=vkidx;
+	DrawVKWindow();
+	XMoveWindow (dpy, VKWindow, x, y);
+	DisplayVKWindow();
+}

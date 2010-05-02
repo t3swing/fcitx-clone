@@ -100,9 +100,10 @@ Bool ProcessTrayIcon(char** data, XImage** image, Pixmap* pixmapshape, Pixmap* p
 }
 
 void DrawTrayWindow(int f_state, int x, int y, int w, int h) {
+
     if ( !bUseTrayIcon )
 	return;
-	
+
     if (!tray_mapped) {
         tray_mapped = True;
         if (!tray_find_dock(dpy, tray.window))

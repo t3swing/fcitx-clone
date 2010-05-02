@@ -190,6 +190,11 @@ void tray_send_opcode(Display* dpy, Window w,
 Window tray_get_dock(Display* dpy)
 {
     Window dock = XGetSelectionOwner(dpy, Atoms[ATOM_SELECTION]);
+    {
+		XWindowAttributes attr;
+		 XGetWindowAttributes(dpy, dock, &attr);
+	 	printf("x:%d y:%d\n",attr.x,attr.y);
+	}
     return dock;
 }
 

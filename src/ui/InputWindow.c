@@ -43,7 +43,7 @@
 #include "tools/tools.h"
 
 #include "interface/DBus.h"
-
+#include "skin.h"
 //下面的顺序不能颠倒
 #include "next.xpm"
 #include "prev.xpm"
@@ -85,6 +85,14 @@ MESSAGE         messageDown[32];	//输入条下部分显示的内容
 uint            uMessageDown = 0;
 
 XImage         *pNext = NULL, *pPrev = NULL;
+
+Pixmap Input;
+Pixmap Next;
+Pixmap Prev;
+
+Pixmap Inputmask;
+Pixmap NextInputmask;
+Pixmap PrevInputmask;
 
 Bool            bShowPrev = False;
 Bool            bShowNext = False;
@@ -169,6 +177,8 @@ Bool CreateInputWindow (void)
 	return False;
 
     XChangeWindowAttributes (dpy, inputWindow, attribmask, &attrib);
+       if( !ISDEFAULT)  
+      		 	loadPixmap2InputWindow();
     XSelectInput (dpy, inputWindow, ButtonPressMask | ButtonReleaseMask  | PointerMotionMask | ExposureMask);
 
     //Set the name of the window
@@ -195,8 +205,10 @@ void CalculateInputWindowHeight (void)
 #else
     iHeight = FontHeight (fontSet);
 #endif
-
+ if( ISDEFAULT)  
     iInputWindowHeight = iHeight * 2 + iHeight / 2 + 8;
+ else
+    iInputWindowHeight=skin_config.SkinInputBar.ibbg_xpm.height;
 }
 
 void DisplayInputWindow (void)
@@ -400,9 +412,19 @@ void DrawInputWindow(void)
     XClearArea (dpy, inputWindow, 2, 2, iInputWindowWidth - 2, iInputWindowHeight / 2 - 2, False);
     XClearArea (dpy, inputWindow, 2, iInputWindowHeight / 2 + 1, iInputWindowWidth - 2, iInputWindowHeight / 2 - 2, False);
 
+	if( !ISDEFAULT)  
+	{
+		//if(skin_config.SkinInputBar.ibbg_xpm.width >iInputWindowWidth)
+		//	iInputWindowWidth=skin_config.SkinInputBar.ibbg_xpm.width;
+		DisplayInputBar(iInputWindowWidth+skin_config.SkinInputBar.layoutright);
     DisplayMessageUp ();
     DisplayMessageDown ();
 
+		return;
+	}
+	
+	DisplayMessageUp ();
+	DisplayMessageDown ();
     //**************************
     attrib.valuemask = 0;
 
@@ -450,11 +472,18 @@ void DisplayMessageUp (void)
     int             iCursorPixPos = 0;
     int             iChar;
     char            strText[MESSAGE_MAX_LENGTH];
+    int iHeight;
 
 #ifdef _USE_XFT
     char            strTemp[MESSAGE_MAX_LENGTH];
     char           *p1, *p2;
     Bool            bEn;
+#endif
+
+#ifdef _USE_XFT
+    iHeight = FontHeight (xftFont);
+#else
+    iHeight = FontHeight (fontSet);
 #endif
 
     char           *strGBKT;
@@ -480,7 +509,10 @@ void DisplayMessageUp (void)
 #ifdef _ENABLE_RECORDING
 	    OutputString (inputWindow, (bEn) ? xftFontEn : xftFont, strGBKT, iInputWindowUpWidth + iPos, (2 * iInputWindowHeight - 1) / 5, messageColor[(messageUp[i].type==MSG_RECORDING)? MSG_TIPS:messageUp[i].type].color);
 #else
+	if( ISDEFAULT)  
 	    OutputString (inputWindow, (bEn) ? xftFontEn : xftFont, strGBKT, iInputWindowUpWidth + iPos, (2 * iInputWindowHeight - 1) / 5, messageColor[messageUp[i].type].color);
+	else
+		OutputString (inputWindow, (bEn) ? xftFontEn : xftFont, strGBKT, iInputWindowUpWidth + iPos, skin_config.SkinInputBar.inputposition, messageColor[messageUp[i].type].color);
 #endif
 	    iPos += StringWidth (strGBKT, (bEn) ? xftFontEn : xftFont);
 
@@ -493,7 +525,10 @@ void DisplayMessageUp (void)
 #ifdef _ENABLE_RECORDING
 	OutputString (inputWindow, fontSet, strGBKT, iInputWindowUpWidth, (2 * iInputWindowHeight - 1) / 5, messageColor[(messageUp[i].type==MSG_RECORDING)? MSG_TIPS:messageUp[i].type].gc);
 #else
+	if( ISDEFAULT)  
 	OutputString (inputWindow, fontSet, strGBKT, iInputWindowUpWidth, (2 * iInputWindowHeight - 1) / 5, messageColor[messageUp[i].type].gc);
+	else
+		OutputString (inputWindow, fontSet, strGBKT, iInputWindowUpWidth, skin_config.SkinInputBar.inputposition, messageColor[messageUp[i].type].gc);
 #endif
 	iPos = StringWidth (strGBKT, fontSet);
 
@@ -541,11 +576,17 @@ void DisplayMessageDown (void)
 {
     uint            i;
     uint            iPos;
-
+	int iHeight;
 #ifdef _USE_XFT
     char            strTemp[MESSAGE_MAX_LENGTH];
     char           *p1, *p2;
     Bool            bEn;
+#endif
+
+#ifdef _USE_XFT
+    iHeight = FontHeight (xftFont);
+#else
+    iHeight = FontHeight (fontSet);
 #endif
 
     char           *strGBKT;
@@ -569,7 +610,10 @@ void DisplayMessageDown (void)
 	    strGBKT = bUseGBKT ? ConvertGBKSimple2Tradition (strTemp) : strTemp;
 
 	    iInputWindowDownWidth = StringWidth (strGBKT, (bEn) ? xftFontEn : xftFont);
+	   if( ISDEFAULT)  
 	    OutputString (inputWindow, (bEn) ? xftFontEn : xftFont, strGBKT, iPos, (9 * iInputWindowHeight - 12) / 10, messageColor[messageDown[i].type].color);
+	   else
+	    OutputString (inputWindow, (bEn) ? xftFontEn : xftFont, strGBKT, iPos,  skin_config.SkinInputBar.outputposition+iHeight, messageColor[messageDown[i].type].color);
 	    iPos += iInputWindowDownWidth;
 
 	    if (bUseGBKT)
@@ -579,7 +623,10 @@ void DisplayMessageDown (void)
 	strGBKT = bUseGBKT ? ConvertGBKSimple2Tradition (messageDown[i].strMsg) : messageDown[i].strMsg;
 
 	iInputWindowDownWidth = StringWidth (strGBKT, fontSet);
+	if( ISDEFAULT)  
 	OutputString (inputWindow, fontSet, strGBKT, iPos, (9 * iInputWindowHeight - 12) / 10, messageColor[messageDown[i].type].gc);
+	else
+		OutputString (inputWindow, fontSet, strGBKT, iPos, skin_config.SkinInputBar.outputposition+iHeight, messageColor[messageDown[i].type].gc);
 	iPos += iInputWindowDownWidth;
 
 	if (bUseGBKT)
@@ -590,8 +637,22 @@ void DisplayMessageDown (void)
 
 void DrawCursor (int iPos)
 {
+	 int             iHeight;
+#ifdef _USE_XFT
+    iHeight = FontHeight (xftFont);
+#else
+    iHeight = FontHeight (fontSet);
+#endif
+	if( !ISDEFAULT)  
+    {
+    XDrawLine(dpy,inputWindow,cursorColor.gc,iPos+1,skin_config.SkinInputBar.inputposition+3,iPos+1,skin_config.SkinInputBar.inputposition-iHeight+1);
+    XDrawLine(dpy,inputWindow,cursorColor.gc,iPos+2,skin_config.SkinInputBar.inputposition+3,iPos+2,skin_config.SkinInputBar.inputposition-iHeight+1);
+    }
+    else
+    {
     XDrawLine (dpy, inputWindow, cursorColor.gc, iPos, 8, iPos, iInputWindowHeight / 2 - 4);
     XDrawLine (dpy, inputWindow, cursorColor.gc, iPos + 1, 8, iPos + 1, iInputWindowHeight / 2 - 4);
+    }
 }
 
 void MoveInputWindow(CARD16 connect_id)
@@ -620,7 +681,15 @@ void MoveInputWindow(CARD16 connect_id)
 	}
 
 	if (!bUseDBus)
+		if(ISDEFAULT)
 	    XMoveResizeWindow (dpy, inputWindow, iTempInputWindowX, iTempInputWindowY, iInputWindowWidth, iInputWindowHeight);
+		else//iInputWindowWidth+skin_config.SkinInputBar.layoutright
+	    {
+	    	if(iInputWindowWidth+skin_config.SkinInputBar.layoutright<skin_config.SkinInputBar.ibbg_xpm.width)
+	    		XMoveResizeWindow (dpy, inputWindow, iTempInputWindowX, iTempInputWindowY, skin_config.SkinInputBar.ibbg_xpm.width, iInputWindowHeight);
+	    	else
+	    		XMoveResizeWindow (dpy, inputWindow, iTempInputWindowX, iTempInputWindowY,iInputWindowWidth+skin_config.SkinInputBar.layoutright, iInputWindowHeight);
+	    }
 #ifdef _ENABLE_DBUS
 	else
 	{
@@ -650,7 +719,17 @@ void MoveInputWindow(CARD16 connect_id)
 	    iInputWindowX = pos ? pos->x : iInputWindowX;
 
 	if (!bUseDBus)
-	    XMoveResizeWindow (dpy, inputWindow, iInputWindowX, pos ? pos->y : iInputWindowY, iInputWindowWidth, iInputWindowHeight);
+	{
+		    if(ISDEFAULT)
+	    		XMoveResizeWindow (dpy, inputWindow, iInputWindowX, pos ? pos->y : iInputWindowY, iInputWindowWidth, iInputWindowHeight);
+	    	else 
+				{
+					if(skin_config.SkinInputBar.ibbg_xpm.width >iInputWindowWidth+skin_config.SkinInputBar.layoutright)
+						XMoveResizeWindow (dpy, inputWindow, iInputWindowX, pos ? pos->y : iInputWindowY, skin_config.SkinInputBar.ibbg_xpm.width, iInputWindowHeight); 
+					else
+						XMoveResizeWindow (dpy, inputWindow, iInputWindowX, pos ? pos->y : iInputWindowY, iInputWindowWidth+skin_config.SkinInputBar.layoutright, iInputWindowHeight); 
+				}
+	}
 #ifdef _ENABLE_DBUS
 	else
 	    KIMUpdateSpotLocation(iInputWindowX, pos ? pos->y : iInputWindowY);

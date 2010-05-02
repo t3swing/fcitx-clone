@@ -41,6 +41,7 @@
 #include "version.h"
 #include "ui/MainWindow.h"
 #include "ui/InputWindow.h"
+#include "ui/skin.c"
 #include "im/pinyin/PYFA.h"
 #include "im/pinyin/py.h"
 #include "im/pinyin/sp.h"
@@ -70,6 +71,8 @@ extern WINDOW_COLOR VKWindowColor;
 extern MESSAGE_COLOR VKWindowFontColor;
 extern MESSAGE_COLOR VKWindowAlphaColor;
 extern ENTER_TO_DO enterToDo;
+extern char  skinType[];
+char  colorScheme[64];
 
 extern HOTKEYS  hkTrigger[];
 extern HOTKEYS  hkGBK[];
@@ -187,7 +190,7 @@ extern int utf8_in_gb18030[];
 
 pthread_rwlock_t plock;
 
-#define FCITX_CONFIG_DIR "/fcitx-utf8/"
+#define FCITX_CONFIG_DIR "/fcitx-skin/"
 
 Bool MyStrcmp (char *str1, char *str2)
 {
@@ -363,12 +366,11 @@ static int read_configure(Configure *config, char *str)
 }
 
 /* 主窗口输入法名称色 */
-inline static int main_window_input_method_name_color(Configure *c, void *a, int isread)
+inline static int main_window_input_method_name_color(char * a)//(Configure *c, void *a, int isread)
 {
     int r[3], b[3], g[3], i;
-    FILE *fp;
-
-    if(isread){
+//    FILE *fp;
+//    if(isread){
         if(sscanf((char *)a, "%d %d %d %d %d %d %d %d %d",
                     &r[0], &g[0], &b[0], &r[1], &g[1], &b[1], &r[2], &g[2], &b[2]) != 9)
         {
@@ -381,7 +383,7 @@ inline static int main_window_input_method_name_color(Configure *c, void *a, int
             IMNameColor[i].color.green = g[i] << 8;
             IMNameColor[i].color.blue  = b[i] << 8;
         }
-    }else{
+/*    }else{
         fp = (FILE *)a;
         fprintf(fp, "%s=", c->name);
         for(i = 0; i < 3; i++)
@@ -391,7 +393,7 @@ inline static int main_window_input_method_name_color(Configure *c, void *a, int
                     IMNameColor[i].color.blue  >> 8);
         fprintf(fp, "\n");
     }
-
+*/
     return 0;
 }
 
@@ -803,16 +805,6 @@ Configure interface_config[] = {
         .value.integer = &iMaxCandWord,
     },
     {
-        .name = "主窗口使用3D界面",
-        .value_type = CONFIG_INTEGER,
-        .value.integer = &_3DEffectMainWindow,
-    },
-    {
-        .name = "输入条使用3D界面",
-        .value_type = CONFIG_INTEGER,
-        .value.integer = (int *)&_3DEffectInputWindow,
-    },
-    {
         .name = "主窗口隐藏模式",
         .value_type = CONFIG_INTEGER,
         .value.integer = (int *)&hideMainWindow,
@@ -823,7 +815,7 @@ Configure interface_config[] = {
         .value.integer = &bShowVK,
     },
     {
-        .name = "输入条居中",
+        .name = "输入条是否居中",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bCenterInputWindow,
     },
@@ -831,22 +823,6 @@ Configure interface_config[] = {
         .name = "首次显示输入条",
         .value_type = CONFIG_INTEGER,
         .value.integer = &bShowInputWindowTriggering,
-    },
-    {
-        .name = "输入条固定宽度",
-        .comment = "输入条固定宽度(仅适用于码表输入法)，0表示不固定宽度",
-        .value_type = CONFIG_INTEGER,
-        .value.integer = &iFixedInputWindowWidth,
-    },
-    {
-        .name = "输入条偏移量X",
-        .value_type = CONFIG_INTEGER,
-        .value.integer = &iOffsetX,
-    },
-    {
-        .name = "输入条偏移量Y",
-        .value_type = CONFIG_INTEGER,
-        .value.integer = &iOffsetY,
     },
     {
         .name = "序号后加点",
@@ -863,92 +839,17 @@ Configure interface_config[] = {
         .value_type = CONFIG_INTEGER,
         .value.integer = &bShowVersion,
     },
+ 		{
+        .name = "皮肤类型",
+        .value_type = CONFIG_STRING,
+        .value.str_value.string = skinType,
+        .value.str_value.string_length = 64,  
+ 		},
     {
-        .name = "光标色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(cursorColor.color),
-    },
-    {
-        .name = "主窗口背景色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(mainWindowColor.backColor),
-    },
-    {
-        .name = "主窗口线条色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(mainWindowLineColor.color),
-    },
-    {
-        .name = "主窗口输入法名称色",
-        .value_type = CONFIG_OTHER,
-        .config_rw = main_window_input_method_name_color,
-    },
-    {
-        .name = "输入窗背景色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(inputWindowColor.backColor),
-    },
-    {
-        .name = "输入窗提示色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(messageColor[0].color),
-    },
-    {
-        .name = "输入窗用户输入色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(messageColor[1].color),
-    },
-    {
-        .name = "输入窗序号色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(messageColor[2].color),
-    },
-    {
-        .name = "输入窗第一个候选字色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(messageColor[3].color),
-    },
-    {
-        .name = "输入窗用户词组色",
-        .comment = "该颜色值只用于拼音中的用户自造词",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(messageColor[4].color),
-    },
-    {
-        .name = "输入窗提示编码色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(messageColor[5].color),
-    },
-    {
-        .name = "输入窗其它文本色",
-        .comment = "五笔、拼音的单字/系统词组均使用该颜色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(messageColor[6].color),
-    },
-    {
-        .name = "输入窗线条色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(inputWindowLineColor.color),
-    },
-    {
-        .name = "输入窗箭头色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(colorArrow),
-    },
-    {
-        .name = "虚拟键盘窗背景色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(VKWindowColor.backColor),
-    },
-    {
-        .name = "虚拟键盘窗字母色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(VKWindowAlphaColor.color),
-    },
-    {
-        .name = "虚拟键盘窗符号色",
-        .value_type = CONFIG_COLOR,
-        .value.color = &(VKWindowFontColor.color),
+        .name = "配色方案",
+        .value_type = CONFIG_STRING,
+        .value.str_value.string = colorScheme,
+        .value.str_value.string_length = 64,  
     },
     {
         .name = NULL,
@@ -1264,6 +1165,57 @@ Configure_group configure_groups[] = {
 };
 
 /**
+* 加载配色方案文件
+*/
+void load_CS_config()
+{
+	FILE    *fp;
+	char    buf[PATH_MAX]={0};
+	char tmp[64]={0};
+	
+//如果不是采用默认皮肤,加载默认配色方案,皮肤配色不全需加载这里.
+	if(!ISDEFAULT)
+	{
+		strcpy(colorScheme,"默认方案");
+	}
+		
+	sprintf(buf, "%s/xpm/cs.conf", PKGDATADIR);
+	fp = fopen(buf, "r");
+	
+	if(!fp){
+		perror("fopen");
+		return ;	// 没有配置文件,直接退出.
+	}
+	
+	_3DEffectMainWindow=fill_skin_config_int(fp,colorScheme,"主窗口使用3D界面");
+	_3DEffectInputWindow=fill_skin_config_int(fp,colorScheme,"输入条使用3D界面");
+	iFixedInputWindowWidth=fill_skin_config_int(fp,colorScheme,"输入条固定宽度");
+	iOffsetX=fill_skin_config_int(fp,colorScheme,"输入条偏移量X");
+	iOffsetY=fill_skin_config_int(fp,colorScheme,"输入条偏移量Y");
+	fill_skin_config_color(fp,colorScheme,"光标色",&(cursorColor.color));
+	fill_skin_config_color(fp,colorScheme,"主窗口背景色",&(mainWindowColor.backColor));
+	fill_skin_config_color(fp,colorScheme,"主窗口线条色",&(mainWindowLineColor.color));
+	fill_skin_config_str(fp,colorScheme,"主窗口输入法名称色",tmp);
+
+	main_window_input_method_name_color(tmp);
+	fill_skin_config_color(fp,colorScheme,"输入窗背景色",&(inputWindowColor.backColor));
+	fill_skin_config_color(fp,colorScheme,"输入窗提示色",&(messageColor[0].color));
+	fill_skin_config_color(fp,colorScheme,"输入窗用户输入色",&(messageColor[1].color));
+	fill_skin_config_color(fp,colorScheme,"输入窗序号色",&(messageColor[2].color));
+	fill_skin_config_color(fp,colorScheme,"输入窗第一个候选字色",&(messageColor[3].color));
+	fill_skin_config_color(fp,colorScheme,"输入窗用户词组色",&(messageColor[4].color));
+	fill_skin_config_color(fp,colorScheme,"输入窗提示编码色",&(messageColor[5].color));
+	fill_skin_config_color(fp,colorScheme,"输入窗其它文本色",&(messageColor[6].color));
+	fill_skin_config_color(fp,colorScheme,"输入窗线条色",&(inputWindowLineColor.color));
+	fill_skin_config_color(fp,colorScheme,"输入窗箭头色",&(colorArrow));
+	fill_skin_config_color(fp,colorScheme,"虚拟键盘窗背景色",&(VKWindowColor.backColor));
+	fill_skin_config_color(fp,colorScheme,"虚拟键盘窗字母色",&(VKWindowAlphaColor.color));
+	fill_skin_config_color(fp,colorScheme,"虚拟键盘窗符号色",&(VKWindowFontColor.color));
+	
+	fclose(fp);
+}
+
+/**
  * @brief 读取用户的配置文件
  * @param bMode 标识配置文件是用户家目录下的，还是从安装目录下拷贝过来的
  * @return void
@@ -1365,7 +1317,6 @@ void LoadConfig (Bool bMode)
              * #文件尾
              */
 
-
             if(group_idx < 0){
                 fprintf(stderr, "error: configure file: no group name at beginning\n");
                 exit(1);
@@ -1381,6 +1332,7 @@ void LoadConfig (Bool bMode)
         }
 
         fclose(fp);
+       
     }
 
     /* 如果配置文件中没有设置打开/关闭输入法的热键，那么设置CTRL-SPACE为默认热键 */
@@ -1394,6 +1346,8 @@ void LoadConfig (Bool bMode)
 	Trigger_Keys[1].modifier = 0;
 	Trigger_Keys[1].modifier_mask = 0;
     }
+    
+   load_CS_config();
 }
 
 /**
