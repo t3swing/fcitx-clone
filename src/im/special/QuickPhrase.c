@@ -23,10 +23,11 @@
 #include "im/special/QuickPhrase.h"
 #include "ui/InputWindow.h"
 #include "tools/tools.h"
-#include "tools/array.h"
+#include "tools/utarray.h"
+#include "tools/util.h"
 
 uint uQuickPhraseCount;
-ARRAY *quickPhrases = NULL;
+UT_array *quickPhrases = NULL;
 int iFirstQuickPhrase = -1;
 int iLastQuickPhrase;
 QUICK_PHRASE *quickPhraseCandWords[MAX_CAND_WORD];
@@ -44,14 +45,14 @@ extern char strStringGet[];
 
 int PhraseCmp(const void* a, const void* b)
 {
-    return strcmp(((QUICK_PHRASE**)a)[0]->strCode, ((QUICK_PHRASE**)b)[0]->strCode);
+    return strcmp(((QUICK_PHRASE*)a)->strCode, ((QUICK_PHRASE*)b)->strCode);
 }
 
 int PhraseCmpA(const void* a, const void* b)
 {
     int res,len;
-    len = strlen(((QUICK_PHRASE**)a)[0]->strCode);
-    res = strncmp(((QUICK_PHRASE**)a)[0]->strCode, ((QUICK_PHRASE**)b)[0]->strCode, len);
+    len = strlen(((QUICK_PHRASE*)a)->strCode);
+    res = strncmp(((QUICK_PHRASE*)a)->strCode, ((QUICK_PHRASE*)b)->strCode, len);
     if (res)
         return res;
     else
@@ -76,7 +77,8 @@ void LoadQuickPhrase(void)
     char            strPath[PATH_MAX];
     char strCode[QUICKPHRASE_CODE_LEN+1];
     char strPhrase[QUICKPHRASE_PHRASE_LEN*2+1];
-    QUICK_PHRASE *tempQuickPhrase;
+    QUICK_PHRASE tempQuickPhrase;
+    UT_icd qp_icd = {sizeof(QUICK_PHRASE), NULL, NULL, NULL};
 
     uQuickPhraseCount=0;
 
@@ -99,23 +101,23 @@ void LoadQuickPhrase(void)
 
     // 这儿的处理比较简单。因为是单索引对单值。
     // 应该注意的是，它在内存中是以单链表保存的。
+    utarray_new(quickPhrases, &qp_icd);
     for (;;) {
     if (EOF==fscanf (fp, "%s", strCode))
         break;
     if (EOF==fscanf (fp, "%s", strPhrase))
         break;
 
-    tempQuickPhrase=(QUICK_PHRASE *)malloc(sizeof(QUICK_PHRASE));
-    strcpy(tempQuickPhrase->strCode,strCode);
-    strcpy(tempQuickPhrase->strPhrase,strPhrase);
+    strcpy(tempQuickPhrase.strCode,strCode);
+    strcpy(tempQuickPhrase.strPhrase,strPhrase);
 
-    ArrayAddPointer(quickPhrases, &tempQuickPhrase);
+    utarray_push_back(quickPhrases, &tempQuickPhrase);
 
     }
 
     if (quickPhrases)
     {
-        ArraySort(quickPhrases, PhraseCmp);
+        utarray_sort(quickPhrases, PhraseCmp);
     }
 
     fclose(fp);
@@ -123,18 +125,10 @@ void LoadQuickPhrase(void)
 
 void FreeQuickPhrase(void)
 {
-    QUICK_PHRASE *quickPhrase;
-
     if ( !quickPhrases )
     return;
 
-    int i;
-    ArrayForeach(i, quickPhrases)
-    {
-        quickPhrase = ArrayCell(quickPhrases, i, QUICK_PHRASE*);
-        free(quickPhrase);
-    }
-    ArrayFree(quickPhrases);
+    utarray_free(quickPhrases);
 }
 
 INPUT_RETURN_VALUE QuickPhraseDoInput (int iKey)
@@ -175,7 +169,7 @@ INPUT_RETURN_VALUE QuickPhraseDoInput (int iKey)
 INPUT_RETURN_VALUE QuickPhraseGetCandWords (SEARCH_MODE mode)
 {
     int i, iInputLen;
-    QUICK_PHRASE searchKey, *pKey, **currentQuickPhrase;
+    QUICK_PHRASE searchKey, *pKey, *currentQuickPhrase;
     char strTemp[2];
 
     pKey = &searchKey;
@@ -190,16 +184,16 @@ INPUT_RETURN_VALUE QuickPhraseGetCandWords (SEARCH_MODE mode)
     strcpy(searchKey.strCode, strCodeInput);
 
     if (mode==SM_FIRST) {
-    currentQuickPhrase=ArrayPos(quickPhrases, 0);
+    currentQuickPhrase=(QUICK_PHRASE*)utarray_front(quickPhrases);
     iCandPageCount=0;
     iCurrentCandPage=0;
     iCandWordCount=0;
-    currentQuickPhrase = ArrayBsearch(&pKey, quickPhrases, False, PhraseCmp);
-    iFirstQuickPhrase = ArrayIndex(quickPhrases, currentQuickPhrase);
-    iLastQuickPhrase = ArrayIndex(quickPhrases, ArrayBsearch(&pKey, quickPhrases, False, PhraseCmpA));
+    currentQuickPhrase = utarray_custom_bsearch(pKey, quickPhrases, False, PhraseCmp);
+    iFirstQuickPhrase = utarray_eltidx(quickPhrases, currentQuickPhrase);
+    iLastQuickPhrase = utarray_eltidx(quickPhrases, utarray_custom_bsearch(&pKey, quickPhrases, False, PhraseCmpA));
 
     iCandPageCount = (iLastQuickPhrase - iFirstQuickPhrase) / iMaxCandWord;
-    if ( !currentQuickPhrase || strncmp(strCodeInput,currentQuickPhrase[0]->strCode,iInputLen) ) {
+    if ( !currentQuickPhrase || strncmp(strCodeInput,currentQuickPhrase->strCode,iInputLen) ) {
         uMessageDown = 0;
         currentQuickPhrase = NULL;
         return IRV_DISPLAY_MESSAGE;
@@ -219,11 +213,12 @@ INPUT_RETURN_VALUE QuickPhraseGetCandWords (SEARCH_MODE mode)
     iCurrentCandPage--;
     }
 
-    ArrayForeachFrom( iFirstQuickPhrase + iCurrentCandPage * iMaxCandWord, i, quickPhrases)
+    for( currentQuickPhrase = (QUICK_PHRASE*) utarray_eltptr(quickPhrases, iFirstQuickPhrase + iCurrentCandPage * iMaxCandWord);
+         currentQuickPhrase != NULL;
+         currentQuickPhrase = (QUICK_PHRASE*) utarray_next(quickPhrases, currentQuickPhrase))
     {
-        currentQuickPhrase = ArrayPos(quickPhrases, i);
-        if (!strncmp(strCodeInput,currentQuickPhrase[0]->strCode,iInputLen)) {
-        quickPhraseCandWords[iCandWordCount++]=currentQuickPhrase[0];
+        if (!strncmp(strCodeInput,currentQuickPhrase->strCode,iInputLen)) {
+        quickPhraseCandWords[iCandWordCount++]=currentQuickPhrase;
         if (iCandWordCount==iMaxCandWord) {
             break;
         }

@@ -26,7 +26,34 @@
  * @date 2010-05-02
  */
 
+#ifndef UTIL_H
+#define UTIL_H
+
+#include <stdlib.h>
+
+#ifdef HAVE_GETTEXT
+#include <gettext.h>
+#define _(msgid) gettext(msgid)
+#else
+#define _(msgid) (msgid)
+#endif
+
+typedef enum ErrorLevel
+{
+    DEBUG,
+    ERROR,
+    INFO,
+    FATAL,
+    WARNING
+} ErrorLevel;
+
 char *trim(char *s);
-char *GetXDGPath(size_t *len, const char* homeEnv, const char* homeDefault, const *dirsEnv, const *dirsDefault);
+char **GetXDGPath(size_t *len, const char* homeEnv, const char* homeDefault, const char *dirsEnv, const char*dirsDefault);
 void *malloc0(size_t bytes);
 
+void *custom_bsearch(const void *key, const void *base,
+        size_t nmemb, size_t size, int accurate,
+        int (*compar)(const void *, const void *));
+
+void FcitxLog(ErrorLevel, const char* fmt, ...);
+#endif

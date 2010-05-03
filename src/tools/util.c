@@ -26,6 +26,11 @@
  * @date 2010-05-02
  */
 
+#include <ctype.h>
+#include <string.h>
+#include <stdio.h>
+#include "tools/util.h"
+
 /** 
  * @brief 去除字符串首末尾空白字符
  * 
@@ -63,24 +68,24 @@ char *trim(char *s)
  * 
  * @return 字符串数组
  */
-char *GetXDGPath(
+char **GetXDGPath(
         size_t *len,
         const char* homeEnv,
         const char* homeDefault,
-        const *dirsEnv,
-        const *dirsDefault)
+        const char*dirsEnv,
+        const char*dirsDefault)
 {
     char* dirHome;
     const char *xdgDirHome = getenv(homeEnv);
     if (xdgDirHome && xdgDirHome[0])
     {
-        dirHome = strdup(dirNome);
+        dirHome = strdup(xdgDirHome);
     }
     else
     {
         const char *home = getenv("HOME");
         dirHome = malloc(strlen(home) + 1 + strlen(homeDefault) + 1);
-        sprintf(dirHome, "%s/%s", home, home_default);
+        sprintf(dirHome, "%s/%s", home, homeDefault);
     }
 
     char *dirs;
@@ -93,11 +98,11 @@ char *GetXDGPath(
     }
     else
     {
-        dirs = malloc (strlen(dirHome) + 1 + strlen(dirs_default) + 1);
+        dirs = malloc (strlen(dirHome) + 1 + strlen(dirsDefault) + 1);
         sprintf(dirs, "%s:%s", dirHome, dirsDefault);
     }
     
-    xfree(dirHome);
+    free(dirHome);
     
     /* count dirs and change ':' to '\0' */
     size_t dirsCount = 1;
@@ -113,7 +118,7 @@ char *GetXDGPath(
     /* alloc char pointer array and puts locations */
     size_t i;
     char **dirsArray = malloc(dirsCount * sizeof(char*));
-    for (i = 0; i < dirs_count; ++i) {
+    for (i = 0; i < dirsCount; ++i) {
         dirsArray[i] = dirs;
         while (*dirs) {
             dirs++;
@@ -140,4 +145,59 @@ void *malloc0(size_t bytes)
 
     memset(p, 0, bytes);
     return 0;
+}
+
+/** 
+ * @brief 
+ * 
+ * @param key
+ * @param base
+ * @param nmemb
+ * @param size
+ * @param accurate
+ * @param compar
+ * 
+ * @return 
+ */
+void *custom_bsearch(const void *key, const void *base,
+        size_t nmemb, size_t size, int accurate,
+        int (*compar)(const void *, const void *))
+{
+    if (accurate)
+        return bsearch(key, base, nmemb, size, compar);
+    else
+    {
+        size_t l, u, idx;
+        const void *p;
+        int comparison;
+        
+        l = 0;
+        u = nmemb;
+        while (l < u)
+        {
+            idx = (l + u) / 2;
+            p = (void *) (((const char *) base) + (idx * size));
+            comparison = (*compar) (key, p);
+            if (comparison <= 0)
+                u = idx;
+            else if (comparison > 0)
+                l = idx + 1;
+        }
+
+        if (u >= nmemb)
+            return NULL;
+        else
+            return (void *) (((const char *) base) + (l * size));
+    }
+}
+
+/** 
+ * @brief 
+ * 
+ * @param ErrorLevel
+ * @param fmt
+ * @param ...
+ */
+void FcitxLog(ErrorLevel e, const char* fmt, ...)
+{
 }

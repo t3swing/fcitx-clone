@@ -31,30 +31,30 @@
 
 typedef enum ConfigType
 {
-	Integer
+	Integer,
+    Color,
+    String
 } ConfigType;
 
 typedef struct ConfigOptionDesc
 {
     char *optionName;
-    char *descShort;
-    char *descLong;
+    char *desc;
     ConfigType type;
-    Bool required;
+    char *rawDefaultValue;
+    UT_hash_handle hh;
 } ConfigOptionDesc;
 
 typedef struct ConfigGroupDesc
 {
     char *groupName;
     ConfigOptionDesc *optionsDesc;
-    Bool required;
     UT_hash_handle hh;
 } ConfigGroupDesc;
 
 typedef struct ConfigFileDesc
 {
     ConfigGroupDesc *groupsDesc;
-    UT_hash_handle hh;
 } ConfigFileDesc;
 
 typedef struct ConfigOption
@@ -62,6 +62,7 @@ typedef struct ConfigOption
     char *optionName;
     char *rawValue;
     ConfigOptionDesc *optionDesc;
+    UT_hash_handle hh;
 } ConfigOption;
 
 typedef struct ConfigGroup
@@ -76,10 +77,12 @@ typedef struct ConfigFile
 {
     ConfigFileDesc *fileDesc;
     ConfigGroup* groups;
-    UT_hash_handle hh;
 } ConfigFile;
 
 ConfigFile *ParseConfigFile(char *filename, ConfigFileDesc*);
 Bool CheckConfig(ConfigFile *configFile, ConfigFileDesc* fileDesc);
 ConfigFileDesc *ParseConfigFileDesc(char* filename);
 ConfigFile* ParseIni(char* filename);
+void FreeConfigFile(ConfigFile* cfile);
+void FreeConfigGroup(ConfigGroup *group);
+void FreeConfigOption(ConfigOption *option);

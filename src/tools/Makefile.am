@@ -7,6 +7,4 @@ libtools_a_SOURCES= utf8.c utf8.h\
 					tools.c tools.h \
 					conf.c conf.h \
 					util.c util.h \
-					uthash.h \
-					array.c array.h
-
+					uthash.h utarray.h
